@@ -12,6 +12,11 @@
 public class Card
 {
 
- //test
-    
+  private String[] words = {"Trash", "Recycle", "Compost"};
+
+  
+
+
+
+ 
 }
