@@ -7,9 +7,10 @@ import java.util.Random;
    contain the mechanism to deal the cards randomly into the center  
 
    @author  Meenakshi Mukkamala
+   @author  Vaishnavi Kunapuli
    @version 04/27/2022
 
-   @author  Sources - Anne, Vaishnavi
+   @author  Sources -
  */
 public class Card
 { 
