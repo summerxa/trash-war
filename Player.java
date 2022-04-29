@@ -14,18 +14,48 @@ public class Player
      */
     private int points; 
 
+    /**
+     * a name for the player
+     */
+    private String name;
+
 
     /**
-    * Constructor that sets variable points to 0
-    */
-    public Player(){
+     * 
+     * @param name the name of the player
+     * sets the name of the player and the points to 0
+     */
+    public Player(String name){
+        this.name = name;
         points = 0;
     }
 
-    
-    public static void main (String args[])
+    /**
+     * 
+     * @return name
+     */
+    public String getName()
     {
-        Player p = new Player();
+        return name;
+    }
+
+    /**
+     * 
+     * @return points
+     */
+    public int getPoints()
+    {
+        return points;
+    }
+
+    /**
+     * 
+     * @param numPoints the number of points to add
+     * Adds numPoints to the current number of points
+     */
+    public void addPoints(int numPoints)
+    {
+        points += numPoints; 
     }
 
 }
