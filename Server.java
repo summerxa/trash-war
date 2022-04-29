@@ -21,6 +21,7 @@ public class Server {
      * Sends an update on the game state (change in points,
      * new card dealt, etc.) to all users.
      * @param type the integer code of the type of update.
+     * @param sender the client that sent the original update
      */
     public void sendUpdate(int type) {
 
@@ -29,6 +30,7 @@ public class Server {
     /**
      * Processes an update to the game state sent from another device.
      * @param type the integer code of the type of update.
+     * @param sender the player that sent the original update
      */
     public void processUpdate(int type) {
 
