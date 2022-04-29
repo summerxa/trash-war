@@ -10,23 +10,19 @@
    @author  Sources - Anne, Vaishnavi
  */
 public class Card
-{
-
-  private String[] words = {"Trash", "Recycle", "Compost"};
-
+{ 
   /**
-   * 
-   * @return
+   * Constructor
    */
-
-  public String chooseWord()
-  {
-    return "";
+  public Card(){
   }
 
-  
-
-
-
- 
+  /**
+   * Return the type of the card (Compost, Recycle, or Trash)
+   * @return String
+   */
+  public String typeOfCard(){
+    return null;
+  }
+    
 }
