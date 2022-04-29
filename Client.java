@@ -1,6 +1,6 @@
 /**
- * The server of the game. Its main purpose is to send updates
- * on the game state to the client player.
+ * A client that connects to the game. Its main purpose is to sync
+ * the local game state with the version stored on the server.
  * 
  * @author  Anne Xia
  * @version 04/27/2022
