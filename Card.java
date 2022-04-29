@@ -12,6 +12,19 @@
 public class Card
 {
 
- //test
+  /**
+   * Constructor
+   */
+  public Card(){
+
+  }
+
+  /**
+   * Return the type of the card (Compost, Recycle, or Trash)
+   * @return String
+   */
+  public String typeOfCard(){
+    return null;
+  }
     
 }
