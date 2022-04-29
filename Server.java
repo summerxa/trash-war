@@ -1,6 +1,6 @@
 /**
  * The server of the game. Its main purpose is to send updates
- * on the game state to every player.
+ * on the game state to the client player.
  * 
  * @author  Anne Xia
  * @version 04/27/2022
@@ -9,9 +9,7 @@
  */
 public class Server {
     /**
-     * Constructs a server containing the players.
-     * @param host the host of the server.
-     * @param players a list of all players, including the host.
+     * Constructs a server that begins accepting players.
      */
     public Server() {
 
@@ -21,7 +19,6 @@ public class Server {
      * Sends an update on the game state (change in points,
      * new card dealt, etc.) to all users.
      * @param type the integer code of the type of update.
-     * @param sender the client that sent the original update
      */
     public void sendUpdate(int type) {
 
@@ -37,7 +34,8 @@ public class Server {
     }
 
     /**
-     * Starts the game by creating a GameThread for each user.
+     * Starts the game by getting all connected users (including the host)
+     * and creating a GameThread for each user.
      */
     public void startGame() {
         
