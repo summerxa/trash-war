@@ -14,6 +14,16 @@ public class Card
 
   private String[] words = {"Trash", "Recycle", "Compost"};
 
+  /**
+   * 
+   * @return
+   */
+
+  public String chooseWord()
+  {
+    return "";
+  }
+
   
 
 
