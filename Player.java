@@ -58,4 +58,15 @@ public class Player
         points += numPoints; 
     }
 
+
+    /**
+     * 
+     * @param numPoints the number of points to subtract
+     * Subtracts numPoints from the current number of points
+     */
+    public void subtractPoints(int numPoints)
+    {
+        points -= numPoints;
+    }
+
 }
