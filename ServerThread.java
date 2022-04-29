@@ -1,3 +1,5 @@
+import java.util.*;
+
 /**
  * Once a "host" user chooses to create a server, this thread runs in the
  * background and accepts users who request to join the current game.
@@ -21,9 +23,9 @@ public class ServerThread extends Thread {
      * stopped. New users will no longer be able to connect
      * to the server.
      * 
-     * @return a server containing all players.
+     * @return a list containing all players.
      */
-    public Server stopThread() {
-        return null;
-    }
+//     public List<Player> stopThread() {
+//         return null;
+//     }
 }
