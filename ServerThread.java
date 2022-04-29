@@ -3,10 +3,10 @@ import java.net.*;
 
 /**
  * Once a "host" user chooses to create a server, this thread runs in the
- * background and accepts users who request to join the current game.
+ * background and accepts the client who requests to join the current game.
  * 
  * @author  Anne Xia
- * @version 04/27/2022
+ * @version 04/29/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
@@ -23,8 +23,8 @@ public class ServerThread extends Thread {
     }
     
     /**
-     * Begins running the thread, which allows users to connect to
-     * the game server until the thread is terminated.
+     * Waits for a client to connect to the game server,
+     * which then stops the thread.
      */
     public void run() {
         ServerSocket ss = new ServerSocket(port);
@@ -32,20 +32,19 @@ public class ServerThread extends Thread {
         try {
             Socket s = ss.accept();
             // get the client player
-            // stop the thread
         } catch (Exception e) {
             System.out.println("Error in ServerThread: " + e);
         }
     }
 
     /**
-     * Stops the thread, or does nothing if the thread has already been
-     * stopped. New users will no longer be able to connect
-     * to the server.
+     * Stops the thread before it exits on its own. Users will
+     * no longer be able to connect to the server.
      * 
      * @return a list containing all players.
      */
-//     public List<Player> stopThread() {
-//         return null;
-//     }
+    public ArrayList<Player> stopThread() {
+        // get the players
+        return null; // return list
+    }
 }
