@@ -16,7 +16,6 @@ public class Card
    * Constructor
    */
   public Card(){
-
   }
 
   /**
