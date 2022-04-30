@@ -5,15 +5,20 @@ import java.util.*;
  * on the game state to the client player.
  * 
  * @author  Anne Xia
- * @version 04/27/2022
+ * @version 04/30/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
 public class Server {
+    /**
+     * The port to use.
+     */
     public static final int PORT = 12345;
     
     private ServerThread sThread;
     private ArrayList<Player> players;
+    private Player host;
+    private GameThread client; // we will only have one player for now
 
     /**
      * Constructs a server that begins accepting players.
@@ -21,6 +26,7 @@ public class Server {
     public Server() {
         // whether this list contains the host or not is tbd
         players = new ArrayList<Player>();
+        // initialize the host
         sThread = new ServerThread();
         sThread.start();
     }
@@ -32,6 +38,12 @@ public class Server {
      */
     public void startGame() {
         players = sThread.stopThread(true);
+        // the last condition is because we expect this to be a 2-player game
+        if (players == null || players.isEmpty() || players.size() != 2) {
+            System.out.println("Something went wrong while accessing the players");
+            return;
+        }
+        // create threads
     }
 
     /**
