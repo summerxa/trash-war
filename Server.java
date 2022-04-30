@@ -1,3 +1,5 @@
+import java.util.*;
+
 /**
  * The server of the game. Its main purpose is to send updates
  * on the game state to the client player.
@@ -8,11 +10,35 @@
  * @author Sources - Meenakshi, Vaishnavi
  */
 public class Server {
+    public static final int PORT = 12345;
+    
+    private ServerThread sThread;
+    private ArrayList<Player> players;
+
     /**
      * Constructs a server that begins accepting players.
      */
     public Server() {
+        // whether this list contains the host or not is tbd
+        players = new ArrayList<Player>();
+        sThread = new ServerThread();
+        sThread.start();
+    }
 
+    
+    /**
+     * Starts the game by getting all connected users (including the host)
+     * and creating a GameThread for each user.
+     */
+    public void startGame() {
+        players = sThread.stopThread(true);
+    }
+
+    /**
+     * Stops the game by stopping each user's thread.
+     */
+    public void stopGame() {
+        
     }
 
     /**
@@ -34,17 +60,10 @@ public class Server {
     }
 
     /**
-     * Starts the game by getting all connected users (including the host)
-     * and creating a GameThread for each user.
+     * For debugging purposes only
+     * @param args
      */
-    public void startGame() {
-        
-    }
-
-    /**
-     * Stops the game by stopping each user's thread.
-     */
-    public void stopGame() {
-        
+    public static void main(String[] args) {
+        Server aTest = new Server();
     }
 }
