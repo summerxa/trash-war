@@ -8,6 +8,7 @@
  * @author Sources - Meenakshi, Vaishnavi
  */
 public class Server {
+
     /**
      * Constructs a server that begins accepting players.
      */
