@@ -1,3 +1,5 @@
+import java.net.*;
+
 /**
  * A client that connects to the game. Its main purpose is to sync
  * the local game state with the version stored on the server.
@@ -9,6 +11,7 @@
  */
 public class Client {
     private Score scores;
+    private Socket s;
     private Player self;
     private GameThread messenger;
     
@@ -16,7 +19,7 @@ public class Client {
      * Constructs a client and does nothing.
      */
     public Client() {
-        
+
     }
 
     /**
@@ -24,7 +27,11 @@ public class Client {
     * @param address the IP address of the server
     */
     public void connectToServer(String address) {
-        
+        try {
+            s = new Socket(address, Server.PORT);
+        } catch (Exception ex) {
+            System.out.println("Error connecting to server:" + ex);
+        }
     }
 
     /**
@@ -55,6 +62,6 @@ public class Client {
      */
     private void updatePoints(Player player, int newScore) {
         player.addPoints(newScore);
-        score.newGlobalScores();
+        scores.newGlobalScores();
     }
 }

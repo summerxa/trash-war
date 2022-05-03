@@ -55,6 +55,24 @@ public class Server {
     }
 
     /**
+     * Handles a player slapping a card.
+     * @param player the player who slapped the card.
+     */
+    public void onCardSlapped(Player player) {
+
+    }
+
+    /**
+     * Sends a message to the client that a player's
+     * score has changed.
+     * @param player the player whose score changed.
+     * @param newScore the new score of the player.
+     */
+    private void updatePoints(Player player, int newScore) {
+
+    }
+
+    /**
      * Sends an update on the game state (change in points,
      * new card dealt, etc.) to all users.
      * @param type the integer code of the type of update.
