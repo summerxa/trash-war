@@ -67,7 +67,7 @@ public class CenterDeck
      * 
      * @return
      */
-    public boolean sandwhich()
+    public boolean sandwich()
     {
         if (centerDeckCards.size() >= 2)
             return centerDeckCards.get(centerDeckCards.size() - 1).typeOfCard()
