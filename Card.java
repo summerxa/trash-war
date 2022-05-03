@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /**
    The Card class represents a card in the game. It either has an image that
    represents a trash, recyclable, or compostable item, or has the word
@@ -5,13 +7,13 @@
    contain the mechanism to deal the cards randomly into the center  
 
    @author  Meenakshi Mukkamala
+   @author  Vaishnavi Kunapuli
    @version 04/27/2022
 
-   @author  Sources - Anne, Vaishnavi
+   @author  Sources -
  */
 public class Card
-{
-
+{ 
   /**
    * Constructor
    */
@@ -23,7 +25,15 @@ public class Card
    * @return String
    */
   public String typeOfCard(){
-    return null;
+    
+    String[] type = {"Compost", "Recycle", "Trash"};
+    Random rand = new Random();
+    return type[rand.nextInt(3)];
   }
     
+  public static void main (String args[])
+  {
+     Card c = new Card();
+     System.out.println(c.typeOfCard());
+  }
 }

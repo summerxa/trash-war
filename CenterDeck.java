@@ -15,14 +15,14 @@ public class CenterDeck
      * Collection of all cards in the center deck TBD: What collection we are
      * going to use; temporarily ArrayList
      */
-    private ArrayList<Card> centerDeckCards = new ArrayList<Card>();
+    private ArrayList<Card> centerDeckCards;
 
     /**
      * Constructor
      */
     public CenterDeck()
     {
-
+        centerDeckCards = new ArrayList<Card>();
     }
 
 
@@ -130,7 +130,7 @@ public class CenterDeck
 
 
     /**
-     * Checks if the center deck is emtpy
+     * Checks if the center deck is empty
      * 
      * @return boolean
      */
