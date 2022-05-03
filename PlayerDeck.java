@@ -24,7 +24,8 @@ public class PlayerDeck implements MouseListener {
      * @return Card
      */
     public Card randomlyGenerateCard(){
-        return null;
+        Card c = new Card();
+        return c;
     }
 
 
