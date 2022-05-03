@@ -47,7 +47,7 @@ public class StateUpdate {
   * Gets the type of update.
   * @return type the type of update.
   */
-  public void getType() {
+  public int getType() {
     return type;
   }
   
