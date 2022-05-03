@@ -47,4 +47,14 @@ public class Client {
     public void stopGame() {
         
     }
+
+    /**
+     * 
+     * @param player a player
+     * @param newScore the new score
+     */
+    private void updatePoints(Player player, int newScore)
+    {
+        player.addPoints(newScore);
+    }
 }
