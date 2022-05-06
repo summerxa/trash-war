@@ -1,37 +1,37 @@
+import java.net.*;
+
 /**
  * A client that connects to the game. Its main purpose is to sync
  * the local game state with the version stored on the server.
  * 
  * @author  Anne Xia
- * @version 04/27/2022
+ * @version 05/03/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
 public class Client {
+    private Score scores;
+    private Socket s;
+    private Player self;
+    private GameThread messenger;
+    
     /**
-     * Constructs a client that connects to the given server.
-     * @param address the IP address of the server
+     * Constructs a client and does nothing.
      */
-    public Client(String address) {
+    public Client() {
 
     }
 
     /**
-     * Sends an update on the game state (change in points,
-     * new card dealt, etc.) to the server.
-     * @param type the integer code of the type of update.
-     */
-    public void sendUpdate(int type) {
-
-    }
-
-    /**
-     * Processes an update to the game state sent from another device.
-     * @param type the integer code of the type of update.
-     * @param sender the player that sent the original update
-     */
-    public void processUpdate(int type) {
-
+    * Connects to a given server.
+    * @param address the IP address of the server
+    */
+    public void connectToServer(String address) {
+        try {
+            s = new Socket(address, Server.PORT);
+        } catch (Exception ex) {
+            System.out.println("Error connecting to server:" + ex);
+        }
     }
 
     /**
@@ -47,14 +47,21 @@ public class Client {
     public void stopGame() {
         
     }
+    
+    /**
+    * Sends a slap card update to the server.
+    */
+    public void slapCard() {
+        messenger.slapCard(self);
+    }
 
     /**
-     * 
-     * @param player a player
-     * @param newScore the new score
+     * Updates the score of a given player.
+     * @param player a player.
+     * @param newScore the new score.
      */
-    private void updatePoints(Player player, int newScore)
-    {
+    private void updatePoints(Player player, int newScore) {
         player.addPoints(newScore);
+        scores.newGlobalScores();
     }
 }
