@@ -66,12 +66,15 @@ public class PlayerDeck implements MouseListener {
 
     }
 
-    /**
-     * Takes a card from the PlayerDeck and places it as the 
-     */
-    public void burn()
-    {
 
+    /**
+     * Takes a card from the PlayerDeck and places it as the bottom of the CenterDeck (index 0 of the linkedlist)
+     * @param d the centerdeck to burn the card in 
+     */
+    public void burn(CenterDeck d)
+    {
+        Card c = randomlyGenerateCard(); 
+        d.addBottom(c);
     }
 
     @Override

@@ -36,6 +36,15 @@ public class CenterDeck
         centerDeckCards.add(card);
     }
 
+    /**
+     * Adds a new card to the bottom of centerDeck
+     * 
+     * @param card
+     */
+    public void addBottom(Card card)
+    {
+        centerDeckCards.add(0, card);
+    }
 
     /**
      * Emptyies out all the cards in the center deck
