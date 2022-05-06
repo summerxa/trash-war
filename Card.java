@@ -35,5 +35,6 @@ public class Card
   {
      Card c = new Card();
      System.out.println(c.typeOfCard());
+  
   }
 }
