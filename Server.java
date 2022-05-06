@@ -9,6 +9,7 @@ import java.util.*;
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
+// TODO extends playercomputer, fix stuff
 public class Server {
 
     /**
@@ -27,7 +28,7 @@ public class Server {
     public Server() {
         // whether this list contains the host or not is tbd
         players = new ArrayList<Player>();
-        // initialize the host
+        // TODO initialize the host
         sThread = new ServerThread();
         sThread.start();
     }
@@ -44,7 +45,7 @@ public class Server {
             System.out.println("Something went wrong while accessing the players");
             return;
         }
-        // create threads
+        // TODO create threads
     }
 
     /**

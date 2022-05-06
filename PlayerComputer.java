@@ -13,6 +13,21 @@ public abstract class PlayerComputer {
      * The port to use.
      */
     public static final int PORT = 12345;
+    
+    /**
+     * Servers only: begins accepting Client players.
+    */
+    public void startServer() {
+        // do nothing
+    }
+    
+    /**
+     * Clients only: connects to a Server.
+     * @param address IP address of host server.
+    */
+    public void connectToServer(String address) {
+        // do nothing
+    }
   
     /**
      * Starts the game.
@@ -30,8 +45,7 @@ public abstract class PlayerComputer {
     public abstract void slapCard();
   
     /**
-     * Overloaded version of slapCard, optional method used exclusively
-     * by the Server class to process card slaps from client player.
+     * Overloaded version of slapCard for Server class.
      * @param player the player who slapped the card.
     */
     public void slapCard(Player player) {
@@ -47,6 +61,7 @@ public abstract class PlayerComputer {
   
     /**
      * Simulates a new card being dealt.
+     * Randomly generates a new card from the current player's deck.
     */
     public abstract void dealCard();
   
