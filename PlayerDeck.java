@@ -8,15 +8,21 @@
  */
 
 import java.awt.event.*;
+import java.util.Stack;
 
 public class PlayerDeck implements MouseListener {
+
+    private Stack<Card> playersCards;
+    CenterDeck d; 
+    
     /**
      * Constructor of the class
+     * @param d
      */
-    public PlayerDeck(){
+    public PlayerDeck(CenterDeck d){
 
-
-
+        playersCards = new Stack<Card>();
+        this.d = d;
     }
 
     /**
@@ -28,6 +34,17 @@ public class PlayerDeck implements MouseListener {
         return c;
     }
 
+    /**
+     * Populates the player's deck with randomly generated cards
+     * @param numCards
+     */
+    public void populate(int numCards)
+    {
+        for (int i = 0; i < numCards; i++)
+        {
+            playersCards.push(randomlyGenerateCard());
+        }
+    }
 
     /**
      * Check if a card of the players deck is clicked
@@ -60,10 +77,13 @@ public class PlayerDeck implements MouseListener {
     }
 
     /**
-     * Move a cardfrom the player's deck to the ceenter deck
+     * Move a cardfrom the player's deck to the center deck
+     * @param d
      */
-    public void moveCard(){
-
+    public void moveCard()
+    {
+        Card c = randomlyGenerateCard(); 
+        d.addCard(c);
     }
 
 
@@ -71,7 +91,7 @@ public class PlayerDeck implements MouseListener {
      * Takes a card from the PlayerDeck and places it as the bottom of the CenterDeck (index 0 of the linkedlist)
      * @param d the centerdeck to burn the card in 
      */
-    public void burn(CenterDeck d)
+    public void burn()
     {
         Card c = randomlyGenerateCard(); 
         d.addBottom(c);
