@@ -1,44 +1,51 @@
+import java.net.Socket;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * Sends and receives updates to and from the central game server,
  * updates local game state accordingly.
  * 
  * @author  Anne Xia
- * @version 04/27/2022
+ * @version 05/06/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
 public class GameThread extends Thread {
-    private boolean isServer;
-    private Server server;
-    private Client client;
+    private boolean isServer, isRunning;
+    private PlayerComputer self;
+    private Queue<StateUpdate> updates;
+
+    private Socket s;
+    // TODO input, output streams
 
     /**
-     * Constructs a GameThread for a host player.
-     * @param server the host's server.
+     * Constructs a GameThread for a
+     * @param pc either a Server or a Client object.
+     * @param isAServer true if this thread is for a host, otherwise false.
+     * @param socket a client socket.
      */
-    public GameThread(Server server) {
-        isServer = true;
-        this.server = server;
-        client = null;
-    }
+    public GameThread(PlayerComputer pc, boolean isAServer, Socket socket) {
+        isServer = isAServer;
+        self = pc;
+        s = socket;
 
-    /**
-     * Constructs a GameThread for a client player.
-     * @param client the client.
-     */
-    public GameThread(Client client) {
-        isServer = false;
-        this.client = client;
-        server = null;
+        updates = new LinkedList<StateUpdate>();
+        isRunning = true;
+        System.out.println("done");
     }
 
     /**
      * Begins running the thread. This thread will synchronize the game
-     * state between the server and clients until the game ends and the
+     * state between the server and client until the game ends and the
      * thread is terminated.
      */
     public void run() {
-
+        // TODO get input / output from s
+        while (isRunning) {
+            // TODO do stuff
+        }
     }
 
     /**
@@ -82,9 +89,10 @@ public class GameThread extends Thread {
 
     /**
      * Stops the thread, or does nothing if the thread has already been
-     * stopped. Sends out any remaining updates to all users.
+     * stopped. Sends out any remaining updates.
      */
     public void stopThread() {
-
+        isRunning = false;
+        // TODO send updates
     }
 }

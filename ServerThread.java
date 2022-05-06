@@ -6,12 +6,13 @@ import java.net.*;
  * background and accepts the client who requests to join the current game.
  * 
  * @author  Anne Xia
- * @version 04/29/2022
+ * @version 05/06/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
 public class ServerThread extends Thread {
     private ServerSocket ss;
+    private Socket s;
     private boolean isRunning;
 
     /**
@@ -41,9 +42,8 @@ public class ServerThread extends Thread {
         try {
             while (isRunning) {
                 try {
-                    Socket s = ss.accept();
-                    // get the client player
-                    // stopThread(true);
+                    s = ss.accept();
+                    // TODO get the client player
                 } catch (SocketTimeoutException te) {
                     continue;
                 } catch (Exception e) {
@@ -76,8 +76,8 @@ public class ServerThread extends Thread {
             }
         }
         if (getList) {
-            // get the players
-            return null; // return a list
+            // TODO get the players
+            return null; // TODO return a list
         }
         return null; // no need for a list, return nothing
     }
@@ -88,5 +88,13 @@ public class ServerThread extends Thread {
      */
     public boolean isStopped() {
         return !isRunning;
+    }
+
+    /**
+     * Gets the client socket.
+     * @return the client socket.
+     */
+    public Socket getSocket() {
+        return s;
     }
 }
