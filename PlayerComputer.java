@@ -30,8 +30,7 @@ public abstract class PlayerComputer {
     public abstract void slapCard();
   
     /**
-     * Overloaded version of slapCard, optional method used exclusively
-     * by the Server class to process card slaps from client player.
+     * Overloaded version of slapCard for Server class.
      * @param player the player who slapped the card.
     */
     public void slapCard(Player player) {
@@ -47,6 +46,7 @@ public abstract class PlayerComputer {
   
     /**
      * Simulates a new card being dealt.
+     * Randomly generates a new card from the current player's deck.
     */
     public abstract void dealCard();
   
