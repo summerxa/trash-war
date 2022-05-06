@@ -13,6 +13,21 @@ public abstract class PlayerComputer {
      * The port to use.
      */
     public static final int PORT = 12345;
+    
+    /**
+     * Servers only: begins accepting Client players.
+    */
+    public void startServer() {
+        // do nothing
+    }
+    
+    /**
+     * Clients only: connects to a Server.
+     * @param address IP address of host server.
+    */
+    public void connectToServer(String address) {
+        // do nothing
+    }
   
     /**
      * Starts the game.
