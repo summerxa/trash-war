@@ -15,14 +15,14 @@ public class CenterDeck
      * Collection of all cards in the center deck TBD: What collection we are
      * going to use; temporarily ArrayList
      */
-    private ArrayList<Card> centerDeckCards;
+    private LinkedList<Card> centerDeckCards;
 
     /**
      * Constructor
      */
     public CenterDeck()
     {
-        centerDeckCards = new ArrayList<Card>();
+        centerDeckCards = new LinkedList<Card>();
     }
 
 
@@ -34,7 +34,6 @@ public class CenterDeck
     public void addCard(Card card)
     {
         centerDeckCards.add(card);
-
     }
 
 
@@ -43,10 +42,7 @@ public class CenterDeck
      */
     public void emptyDeck()
     {
-        for(int i = 0; i < centerDeckCards.size(); i++){
-            centerDeckCards.remove(i);
-        }
-
+        centerDeckCards.clear();
     }
 
 
@@ -136,7 +132,7 @@ public class CenterDeck
      */
     public boolean isEmpty()
     {
-        return (centerDeckCards.size() == 0);
+        return centerDeckCards.isEmpty();
     }
 
 }

@@ -66,6 +66,14 @@ public class PlayerDeck implements MouseListener {
 
     }
 
+    /**
+     * Takes a card from the PlayerDeck and places it as the 
+     */
+    public void burn()
+    {
+
+    }
+
     @Override
     public void mousePressed(MouseEvent e)
     {
