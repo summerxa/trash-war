@@ -8,7 +8,7 @@ import java.util.Queue;
  * updates local game state accordingly.
  * 
  * @author  Anne Xia
- * @version 05/06/2022
+ * @version 05/07/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
@@ -21,7 +21,7 @@ public class GameThread extends Thread {
     // TODO input, output streams
 
     /**
-     * Constructs a GameThread for a
+     * Constructs a GameThread.
      * @param pc either a Server or a Client object.
      * @param isAServer true if this thread is for a host, otherwise false.
      * @param socket a client socket.
@@ -57,6 +57,7 @@ public class GameThread extends Thread {
         if (isServer) {
             return;
         }
+        // TODO push to queue
     }
 
     /**
@@ -69,22 +70,23 @@ public class GameThread extends Thread {
         if (!isServer) {
             return;
         }
+        // TODO push to queue
     }
 
     /**
-     * Sends an update on the game state.
-     * @param update the update to send.
+     * Sends updates on the game state.
      */
-    private void sendUpdate(StateUpdate update) {
-
+    private void sendUpdates() {
+        // TODO send size of queue
+        // TODO pop & send updates in queue
     }
 
     /**
-     * Processes an update on the game state.
-     * @param update the update to handle.
+     * Processes updates on the game state.
      */
-    private void getUpdate(StateUpdate update) {
-
+    private void getUpdates() {
+        // TODO read # of updates
+        // TODO read & process each update
     }
 
     /**
