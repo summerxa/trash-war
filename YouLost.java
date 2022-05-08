@@ -6,7 +6,7 @@
  * @author Sources - Meenakshi, Anne
  */
 
-public class YouLost {
+public class YouLost extends Draw{
 
     public YouLost() {
 

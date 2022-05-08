@@ -6,7 +6,7 @@
  * @author Sources - Meenakshi, Anne
  */
 
-public class YouWon {
+public class YouWon extends Draw{
 
     public YouWon() {
 

@@ -6,7 +6,7 @@
  * @version 04/29/2022
  * @author Sources - Meenakshi, Anne
  */
-public class Home {
+public class Home extends Draw{
 
     public Home() {
 
