@@ -5,11 +5,11 @@ import java.util.*;
  * on the game state to the client player.
  * 
  * @author  Anne Xia
- * @version 04/30/2022
+ * @version 05/06/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
-public class Server {
+public class Server extends PlayerComputer {
     /**
      * The port to use.
      */
@@ -18,7 +18,7 @@ public class Server {
     private ServerThread sThread;
     private ArrayList<Player> players;
     private Player host;
-    private GameThread client; // we will only have one player for now
+    private GameThread gThread; // we will only have one player for now
 
     /**
      * Constructs a server that begins accepting players.
@@ -26,7 +26,7 @@ public class Server {
     public Server() {
         // whether this list contains the host or not is tbd
         players = new ArrayList<Player>();
-        // initialize the host
+        // TODO initialize the host
         sThread = new ServerThread();
         sThread.start();
     }
@@ -40,35 +40,71 @@ public class Server {
         players = sThread.stopThread(true);
         // the last condition is because we expect this to be a 2-player game
         if (players == null || players.isEmpty() || players.size() != 2) {
-            System.out.println("Something went wrong while accessing the players");
+            System.out.println("Something went wrong while accessing the players.");
             return;
         }
-        // create threads
+        gThread = new GameThread(this, true, sThread.getSocket());
+        for (Player p : players) {
+            if (p == host) {
+                continue;
+            }
+            // TODO start game for player p
+        }
     }
 
     /**
      * Stops the game by stopping each user's thread.
      */
     public void stopGame() {
-        
+        gThread.stopThread();
+        for (Player p : players) {
+            if (p == host) {
+                continue;
+            }
+            // TODO stop game for player p
+        }
     }
 
     /**
-     * Sends an update on the game state (change in points,
-     * new card dealt, etc.) to all users.
-     * @param type the integer code of the type of update.
+     * Simulates this player slapping a card.
      */
-    public void sendUpdate(int type) {
-
+    public void slapCard() {
+        // TODO
     }
 
     /**
-     * Processes an update to the game state sent from another device.
-     * @param type the integer code of the type of update.
-     * @param sender the player that sent the original update
+     * Handles a non-host player slapping a card.
+     * @param player the player who slapped the card.
      */
-    public void processUpdate(int type) {
+    public void slapCard(Player player) {
+        // TODO
+    }
 
+    /**
+     * Sends a message to the client that a player's
+     * score has changed.
+     * @param player the player whose score changed.
+     * @param newScore the new score of the player.
+     */
+    public void updatePoints(Player player, int newScore) {
+        // TODO
+    }
+
+    /**
+     * Simulates a new card being dealt by this player.
+     * Randomly generates a new card from the deck.
+     */
+    public void dealCard() {
+        // TODO
+    }
+
+    /**
+     * Simulates a new card being dealt by a non-host player.
+     * @param player the player who dealt the card.
+     * @param card the card being dealt.
+     */
+    public void dealCard(Player player, Card card) {
+        // TODO
     }
 
     /**
@@ -77,5 +113,6 @@ public class Server {
      */
     public static void main(String[] args) {
         Server aTest = new Server();
+        aTest.startGame();
     }
 }

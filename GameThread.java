@@ -1,36 +1,100 @@
+import java.net.Socket;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * Sends and receives updates to and from the central game server,
  * updates local game state accordingly.
  * 
  * @author  Anne Xia
- * @version 04/27/2022
+ * @version 05/07/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
 public class GameThread extends Thread {
-    /**
-     * Begins running the thread. This thread will synchronize the game
-     * state between the server and clients until the game ends and the
-     * thread is terminated.
-     */
-    public void run() {
+    private boolean isServer, isRunning;
+    private PlayerComputer self;
+    private Queue<StateUpdate> updates;
 
+    private Socket s;
+    // TODO input, output streams
+
+    /**
+     * Constructs a GameThread.
+     * @param pc either a Server or a Client object.
+     * @param isAServer true if this thread is for a host, otherwise false.
+     * @param socket a client socket.
+     */
+    public GameThread(PlayerComputer pc, boolean isAServer, Socket socket) {
+        isServer = isAServer;
+        self = pc;
+        s = socket;
+
+        updates = new LinkedList<StateUpdate>();
+        isRunning = true;
+        System.out.println("done");
     }
 
     /**
-     * Sends an update (change in points, new card dealt, etc.) on the
-     * game state to the user handled by this specific thread.
-     * @param type the integer code of the type of update.
+     * Begins running the thread. This thread will synchronize the game
+     * state between the server and client until the game ends and the
+     * thread is terminated.
      */
-    public void sendUpdate(int type) {
+    public void run() {
+        // TODO get input / output from s
+        while (isRunning) {
+            // TODO do stuff
+        }
+    }
 
+    /**
+     * For clients only, sends a message to the server that this player
+     * has slapped a card.
+     * @param player the player who slapped a card.
+     */
+    public void slapCard(Player player) {
+        if (isServer) {
+            return;
+        }
+        // TODO push to queue
+    }
+
+    /**
+     * For servers only, sends a message to the client that a player's
+     * score has changed.
+     * @param player the player whose score changed.
+     * @param newScore the new score of the player.
+     */
+    public void changeScore(Player player, int newScore) {
+        if (!isServer) {
+            return;
+        }
+        // TODO push to queue
+    }
+
+    /**
+     * Sends updates on the game state.
+     */
+    private void sendUpdates() {
+        // TODO send size of queue
+        // TODO pop & send updates in queue
+    }
+
+    /**
+     * Processes updates on the game state.
+     */
+    private void getUpdates() {
+        // TODO read # of updates
+        // TODO read & process each update
     }
 
     /**
      * Stops the thread, or does nothing if the thread has already been
-     * stopped. Sends out any remaining updates to all users.
+     * stopped. Sends out any remaining updates.
      */
     public void stopThread() {
-
+        isRunning = false;
+        // TODO send updates
     }
 }
