@@ -5,7 +5,7 @@ import java.net.*;
  * the local game state with the version stored on the server.
  * 
  * @author  Anne Xia
- * @version 05/06/2022
+ * @version 05/08/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
@@ -36,6 +36,8 @@ public class Client extends PlayerComputer {
             System.out.println("Error connecting to server:" + ex);
         }
     }
+
+    // TODO start messenger elsewhere and fix these 2 methods accordingly
 
     /**
      * Starts the game by creating a GameThread for the current user.
@@ -73,6 +75,15 @@ public class Client extends PlayerComputer {
      * Randomly generates a new card from the deck.
      */
     public void dealCard() {
+        // TODO
+    }
+
+    /**
+     * Displays the random card generated. Method should be called
+     * only by GameThread, use the no-args version of this method for
+     * other card dealing.
+     */
+    public void dealCard(Player player, Card card) {
         // TODO
     }
 }
