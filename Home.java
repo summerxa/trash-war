@@ -29,7 +29,7 @@ public class Home extends Draw{
     public JFrame frame;
     public JLabel labell;
     public JTextField text;
-    public JLabel lab = new JLabel(  "                           Player IP Address:");
+    public JLabel lab = new JLabel(  "                           Hosts IP Address:");
     public JLabel space9 = new JLabel("");
     public JButton b = new JButton("Start");
 
@@ -72,11 +72,12 @@ public class Home extends Draw{
         
         Clicklistener click = new Clicklistener();
 
-        hostButton = new JButton("Host a game");
+        hostButton = new JButton("   Play Game     ");
         hostButton.addActionListener(click);
-        playerButton = new JButton("   Play Game     ");
+        playerButton = new JButton("Host a Game");
         playerButton.addActionListener(click);
-        labell = new JLabel("                            Give host your IP Address");
+        b.addActionListener(click);
+        labell = new JLabel("                            Give player your IP Address");
         text = new JTextField("");
         hostButton.setPreferredSize(new Dimension(300, 50));
         playerButton.setPreferredSize(new Dimension(300, 50));
@@ -159,6 +160,15 @@ public class Home extends Draw{
                  
                 } catch (Exception e1) {
                     // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+            }
+
+            if(e.getSource() == b){
+                try {
+                    new Game();
+                 
+                } catch (Exception e1) {
                     e1.printStackTrace();
                 }
             }
