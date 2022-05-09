@@ -2,7 +2,7 @@
  * Represents an update to the game state.
  * 
  * @author  Anne Xia
- * @version 05/06/2022
+ * @version 05/08/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
@@ -19,6 +19,12 @@ public class StateUpdate {
      * Deal card update.
      */
     public static final int DEAL_CARD = 9012;
+    /**
+     * Game over update.
+     * TODO figure out if this is actually needed
+     * TODO implement this update
+     */
+    public static final int STOP_GAME = 3456;
 
     private Player player;
     private int type;

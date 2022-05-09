@@ -5,7 +5,7 @@ import java.util.*;
  * on the game state to the client player.
  * 
  * @author  Anne Xia
- * @version 05/06/2022
+ * @version 05/08/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
@@ -19,6 +19,7 @@ public class Server extends PlayerComputer {
     private ArrayList<Player> players;
     private Player host;
     private GameThread gThread; // we will only have one player for now
+    private Score scores;
 
     /**
      * Constructs a server that begins accepting players.
@@ -27,6 +28,7 @@ public class Server extends PlayerComputer {
         // whether this list contains the host or not is tbd
         players = new ArrayList<Player>();
         // TODO initialize the host
+        // TODO initialize scores
         sThread = new ServerThread();
         sThread.start();
     }
@@ -44,12 +46,13 @@ public class Server extends PlayerComputer {
             return;
         }
         gThread = new GameThread(this, true, sThread.getSocket());
-        for (Player p : players) {
-            if (p == host) {
-                continue;
-            }
-            // TODO start game for player p
-        }
+        // TODO notify the client
+        // for (Player p : players) {
+        //     if (p == host) {
+        //         continue;
+        //     }
+        //     // start game for player p
+        // }
     }
 
     /**
@@ -57,12 +60,12 @@ public class Server extends PlayerComputer {
      */
     public void stopGame() {
         gThread.stopThread();
-        for (Player p : players) {
-            if (p == host) {
-                continue;
-            }
-            // TODO stop game for player p
-        }
+        // for (Player p : players) {
+        //     if (p == host) {
+        //         continue;
+        //     }
+        //     // stop game for player p
+        // }
     }
 
     /**
