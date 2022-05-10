@@ -25,6 +25,10 @@ public class PlayerDeck implements MouseListener {
         this.d = d;
     }
 
+    public Stack<Card> getplayersCards(){
+        return playersCards;
+    }
+
     /**
      * This method generates and returns a randomly generate card
      * @return Card

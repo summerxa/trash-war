@@ -10,6 +10,7 @@ import java.util.*;
 
 public class CenterDeck
 {
+   
 
     /**
      * Collection of all cards in the center deck TBD: What collection we are
@@ -22,6 +23,7 @@ public class CenterDeck
      */
     public CenterDeck()
     {
+        
         centerDeckCards = new LinkedList<Card>();
     }
 
@@ -74,9 +76,11 @@ public class CenterDeck
      */
     public boolean sandwich()
     {
-        if (centerDeckCards.size() >= 2)
+        if (centerDeckCards.size() >= 2) {
             return centerDeckCards.get(centerDeckCards.size() - 1).typeOfCard()
-                .equals(centerDeckCards.get(centerDeckCards.size() - 2).typeOfCard());
+            .equals(centerDeckCards.get(centerDeckCards.size() - 2).typeOfCard());
+            
+        }
         else
             return false;
     }

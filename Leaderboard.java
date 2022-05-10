@@ -6,7 +6,7 @@
  * @author Sources - Meenakshi, Anne
  */
 
-public class Leaderboard {
+public class Leaderboard extends Draw{
 
     public Leaderboard() {
 

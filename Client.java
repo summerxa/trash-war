@@ -5,28 +5,31 @@ import java.net.*;
  * the local game state with the version stored on the server.
  * 
  * @author  Anne Xia
- * @version 05/03/2022
+ * @version 05/08/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
-public class Client {
+public class Client extends PlayerComputer {
     private Score scores;
     private Socket s;
     private Player self;
     private GameThread messenger;
     
     /**
-     * Constructs a client and does nothing.
+     * Constructs a client and connects to a server..
+     * @param address the IP address of the server
      */
-    public Client() {
-
+    public Client(String address) {
+        // TODO initialize scores
+        // TODO create / get self Player
+        connectToServer(address);
     }
 
     /**
     * Connects to a given server.
     * @param address the IP address of the server
     */
-    public void connectToServer(String address) {
+    private void connectToServer(String address) {
         try {
             s = new Socket(address, Server.PORT);
         } catch (Exception ex) {
@@ -34,18 +37,20 @@ public class Client {
         }
     }
 
+    // TODO start messenger elsewhere and fix these 2 methods accordingly
+
     /**
      * Starts the game by creating a GameThread for the current user.
      */
     public void startGame() {
-        
+        messenger = new GameThread(this, false, s);
     }
 
     /**
      * Stops the game by stopping the current user's thread.
      */
     public void stopGame() {
-        
+        messenger.stopThread();
     }
     
     /**
@@ -60,8 +65,25 @@ public class Client {
      * @param player a player.
      * @param newScore the new score.
      */
-    private void updatePoints(Player player, int newScore) {
+    public void updatePoints(Player player, int newScore) {
         player.addPoints(newScore);
         scores.newGlobalScores();
+    }
+
+    /**
+     * Simulates a new card being dealt by this player.
+     * Randomly generates a new card from the deck.
+     */
+    public void dealCard() {
+        // TODO
+    }
+
+    /**
+     * Displays the random card generated. Method should be called
+     * only by GameThread, use the no-args version of this method for
+     * other card dealing.
+     */
+    public void dealCard(Player player, Card card) {
+        // TODO
     }
 }
