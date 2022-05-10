@@ -9,7 +9,7 @@ import java.util.Queue;
  * updates local game state accordingly.
  * 
  * @author  Anne Xia
- * @version 05/08/2022
+ * @version 05/10/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
@@ -89,6 +89,20 @@ public class GameThread extends Thread {
     public void dealCard(Player player, Card card) {
         updates.add(new StateUpdate(player, card));
     }
+    
+    /**
+     * Starts the game.
+     */
+    public void startGame() {
+        updates.add(new StateUpdate(StateUpdate.BGIN_GAME));
+    }
+    
+    /**
+     * Stops the game.
+     */
+    public void stopGame() {
+        updates.add(new StateUpdate(StateUpdate.STOP_GAME));
+    }
 
     /**
      * Sends updates on the game state.
@@ -109,10 +123,12 @@ public class GameThread extends Thread {
     private void getUpdates() {
         try {
             // lock?
+            boolean stopTheGame = false;
             Queue<StateUpdate> get = (Queue<StateUpdate>) iStream.readObject();
-            while (!get.isEmpty()) {
+            while (!get.isEmpty() && !stopTheGame) {
                 StateUpdate upd = get.remove();
-                switch (upd.getType()) {
+                int curType = upd.getType();
+                switch (curType) {
                     case StateUpdate.CARD_SLAP:
                         self.slapCard(upd.getPlayer());
                         break;
@@ -121,6 +137,13 @@ public class GameThread extends Thread {
                         break;
                     case StateUpdate.DEAL_CARD:
                         self.dealCard(upd.getPlayer(), upd.getCard());
+                        break;
+                    case StateUpdate.BGIN_GAME:
+                        self.startGame();
+                        break;
+                    case StateUpdate.STOP_GAME:
+                        stopTheGame = true;
+                        self.stopGame();
                         break;
                     default:
                         System.out.println("GameThread: Incorrect type for a state update");
