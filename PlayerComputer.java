@@ -13,6 +13,8 @@ public abstract class PlayerComputer {
      * The port to use.
      */
     public static final int PORT = 12345;
+    
+    protected List<Player> players;
 
     /**
      * Starts the game.
@@ -57,5 +59,22 @@ public abstract class PlayerComputer {
      */
     public void dealCard(Player player, Card card) {
         // do nothing
+    }
+    
+    /**
+     * Gets the player with a given name from the current
+     * object's list of players, or null if player not found.
+     * @param name player name to search for, or null if not found.
+     */
+    public Player getMatch(String name) {
+        if (players == null) {
+            return null;
+        }
+        for (Player p : players) {
+            if (p.getName().equals(name)) {
+                return p;
+            }
+        }
+        return null;
     }
 }
