@@ -22,7 +22,7 @@ public class ServerThread extends Thread {
      */
     public ServerThread() {
         isRunning = true;
-        players = new ArrayList<Player>;
+        players = new ArrayList<Player>();
         try {
             ss = new ServerSocket(Server.PORT);
             ss.setSoTimeout(2000);

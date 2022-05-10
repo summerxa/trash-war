@@ -91,7 +91,7 @@ public class Server extends PlayerComputer {
      */
     public void updatePoints(Player player, int newScore) {
         player.setPoints(newScore);
-        messenger.changeScore(player, newScore);
+        gThread.changeScore(player, newScore);
     }
     
     /**
