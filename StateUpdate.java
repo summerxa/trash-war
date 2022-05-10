@@ -2,7 +2,7 @@
  * Represents an update to the game state.
  * 
  * @author  Anne Xia
- * @version 05/08/2022
+ * @version 05/10/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
@@ -26,7 +26,7 @@ public class StateUpdate {
      */
     public static final int STOP_GAME = 3456;
 
-    private Player player;
+    private String player;
     private int type;
     private int score = -1;
     private Card card = null;
@@ -37,7 +37,7 @@ public class StateUpdate {
      */
     public StateUpdate(Player player) {
         type = CARD_SLAP;
-        this.player = player;
+        this.player = player.getName();
     }
 
     /**
@@ -47,18 +47,18 @@ public class StateUpdate {
      */
     public StateUpdate(Player player, int newScore) {
         type = NEW_SCORE;
-        this.player = player;
+        this.player = player.getName();
         score = newScore;
     }
 
     /**
      * Constructs a deal card update.
-     * @param player the player whose score changed.
-     * @param newScore the player's new score.
+     * @param player the player who dealt the card.
+     * @param newScore the card.
      */
     public StateUpdate(Player player, Card card) {
         type = DEAL_CARD;
-        this.player = player;
+        this.player = player.getName();
         this.card = card;
     }
 
@@ -71,10 +71,10 @@ public class StateUpdate {
     }
 
     /**
-     * Gets the player for this update.
-     * @return player the player for this update.
+     * Gets the name of the player.
+     * @return the name of the player.
      */
-    public Player getPlayer() {
+    public String getPlayer() {
         return player;
     }
 
@@ -104,11 +104,11 @@ public class StateUpdate {
     */
     public String toString() {
         if (type == CARD_SLAP) {
-            return type + " CARD_SLAP " + player.getName();
+            return type + " CARD_SLAP " + player;
         } else if (type == NEW_SCORE) {
-            return type + " NEW_SCORE " + player.getName() + " " + score;
+            return type + " NEW_SCORE " + player + " " + score;
         } else {
-            return type + " DEAL_CARD " + player.getName() + " " + card.typeOfCard();
+            return type + " DEAL_CARD " + player + " " + card.typeOfCard();
         }
     }
 }
