@@ -69,4 +69,11 @@ public class Player
         points -= numPoints;
     }
 
+    /**
+     * 
+     */
+    public void setPoints(int numPoints)
+    {
+        points = numPoints;
+    }
 }
