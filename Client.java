@@ -10,10 +10,12 @@ import java.net.*;
  * @author Sources - Meenakshi, Vaishnavi
  */
 public class Client extends PlayerComputer {
-    private Score scores;
     private Socket s;
-    private Player self;
     private GameThread messenger;
+    
+    private boolean isPlaying;
+    private Player self;
+    private Score scores;
     
     /**
      * Constructs a client and connects to a server..
@@ -26,36 +28,38 @@ public class Client extends PlayerComputer {
     }
 
     /**
-    * Connects to a given server.
-    * @param address the IP address of the server
-    */
+     * Connects to a given server.
+     * @param address the IP address of the server
+     */
     private void connectToServer(String address) {
         try {
             s = new Socket(address, Server.PORT);
+            isPlaying = false;
+            messenger = new GameThread(this, false, s);
+            messenger.start();
         } catch (Exception ex) {
             System.out.println("Error connecting to server:" + ex);
         }
     }
 
-    // TODO start messenger elsewhere and fix these 2 methods accordingly
-
     /**
      * Starts the game by creating a GameThread for the current user.
      */
     public void startGame() {
-        messenger = new GameThread(this, false, s);
+        isPlaying = true;
     }
 
     /**
      * Stops the game by stopping the current user's thread.
      */
     public void stopGame() {
+        isPlaying = false;
         messenger.stopThread();
     }
     
     /**
-    * Sends a slap card update to the server.
-    */
+     * Sends a slap card update to the server.
+     */
     public void slapCard() {
         messenger.slapCard(self);
     }
