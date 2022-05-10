@@ -20,9 +20,11 @@ public class StateUpdate {
      */
     public static final int DEAL_CARD = 9012;
     /**
+     * Game start update.
+     */
+    public static final int BGIN_GAME = 3456;
+    /**
      * Game over update.
-     * TODO figure out if this is actually needed
-     * TODO implement this update
      */
     public static final int STOP_GAME = 3456;
 
@@ -60,6 +62,14 @@ public class StateUpdate {
         type = DEAL_CARD;
         this.player = player.getName();
         this.card = card;
+    }
+    
+    /**
+     * Constructs a game start / end update.
+     * @param type either StateUpdate.BGIN_GAME or StateUpdate.STOP_GAME.
+     */
+    public StateUpdate(int type) {
+        this.type = type;
     }
 
     /**
