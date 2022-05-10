@@ -68,8 +68,8 @@ public class Player
     {
         points -= numPoints;
     }
-
-    /**
+   
+   /**
      * Sets the number of points to numPoints
      * @param numPoints
      */
@@ -77,4 +77,5 @@ public class Player
     {
         points = numPoints;
     }
+
 }
