@@ -3,7 +3,7 @@
  * methods to perform actions and update the game state.
  * 
  * @author  Anne Xia
- * @version 05/06/2022
+ * @version 05/10/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
 */
@@ -32,14 +32,6 @@ public abstract class PlayerComputer {
     public abstract void slapCard();
 
     /**
-     * Overloaded version of slapCard for Server class.
-     * @param player the player who slapped the card.
-     */
-    public void slapCard(Player player) {
-        // do nothing
-    }
-
-    /**
      * Updates the score of a given player.
      * @param player the player whose score to update.
      * @param newScore the new score of the player.
@@ -51,15 +43,6 @@ public abstract class PlayerComputer {
      * Randomly generates a new card from the current player's deck.
      */
     public abstract void dealCard();
-
-    /**
-     * Overloaded version of dealCard for Server class.
-     * @param player the player who dealt the card.
-     * @param card the card being dealt.
-     */
-    public void dealCard(Player player, Card card) {
-        // do nothing
-    }
     
     /**
      * Gets the player with a given name from the current
