@@ -5,7 +5,7 @@ import java.util.*;
  * on the game state to the client player.
  * 
  * @author  Anne Xia
- * @version 05/08/2022
+ * @version 05/10/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
@@ -16,8 +16,7 @@ public class Server extends PlayerComputer {
     public static final int PORT = 12345;
     
     private ServerThread sThread;
-    private ArrayList<Player> players;
-    private Player host;
+    private Player self;
     private GameThread gThread; // we will only have one player for now
     private Score scores;
 
@@ -46,33 +45,24 @@ public class Server extends PlayerComputer {
             return;
         }
         gThread = new GameThread(this, true, sThread.getSocket());
-        // TODO notify the client
-        // for (Player p : players) {
-        //     if (p == host) {
-        //         continue;
-        //     }
-        //     // start game for player p
-        // }
+        gThread.start();
+        gThread.startGame();
     }
 
     /**
      * Stops the game by stopping each user's thread.
      */
     public void stopGame() {
+        gThread.stopGame();
+        // TODO debug next line, make sure it doesn't kill the thread before it stops the game
         gThread.stopThread();
-        // for (Player p : players) {
-        //     if (p == host) {
-        //         continue;
-        //     }
-        //     // stop game for player p
-        // }
     }
 
     /**
      * Simulates this player slapping a card.
      */
     public void slapCard() {
-        // TODO
+        slapCard(self);
     }
 
     /**
@@ -80,7 +70,9 @@ public class Server extends PlayerComputer {
      * @param player the player who slapped the card.
      */
     public void slapCard(Player player) {
-        // TODO
+        // TODO check if slap is valid
+        // TODO update points locally
+        // TODO gThread.changeScore()
     }
 
     /**
@@ -90,24 +82,29 @@ public class Server extends PlayerComputer {
      * @param newScore the new score of the player.
      */
     public void updatePoints(Player player, int newScore) {
-        // TODO
+        player.setScore(newScore);
+        messenger.changeScore(player, newScore);
     }
-
+    
     /**
-     * Simulates a new card being dealt by this player.
-     * Randomly generates a new card from the deck.
+     * Simulates a new random card being dealt by the host.
      */
     public void dealCard() {
-        // TODO
+        Card card = new Card();
+        dealCard(self, card);
     }
 
     /**
-     * Simulates a new card being dealt by a non-host player.
+     * Simulates a new random card being dealt.
+     * Sends a message to the client that a new card was dealt.
      * @param player the player who dealt the card.
      * @param card the card being dealt.
      */
     public void dealCard(Player player, Card card) {
-        // TODO
+        if (card == null) {
+            card = new Card();
+        }
+        gThread.dealCard(player, card);
     }
 
     /**

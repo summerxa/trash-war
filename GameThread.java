@@ -130,13 +130,13 @@ public class GameThread extends Thread {
                 int curType = upd.getType();
                 switch (curType) {
                     case StateUpdate.CARD_SLAP:
-                        self.slapCard(upd.getPlayer());
+                        self.slapCard(getMatch(upd.getPlayer()));
                         break;
                     case StateUpdate.NEW_SCORE:
-                        self.updatePoints(upd.getPlayer(), upd.getScore());
+                        self.updatePoints(getMatch(upd.getPlayer()), upd.getScore());
                         break;
                     case StateUpdate.DEAL_CARD:
-                        self.dealCard(upd.getPlayer(), upd.getCard());
+                        self.dealCard(getMatch(upd.getPlayer()), upd.getCard());
                         break;
                     case StateUpdate.BGIN_GAME:
                         self.startGame();
