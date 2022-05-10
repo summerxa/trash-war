@@ -70,7 +70,8 @@ public class Player
     }
 
     /**
-     * 
+     * Sets the number of points to numPoints
+     * @param numPoints
      */
     public void setPoints(int numPoints)
     {
