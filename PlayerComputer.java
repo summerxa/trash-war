@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  * Abstract parent class for the Server and Client. Provides
  * methods to perform actions and update the game state.

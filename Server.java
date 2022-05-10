@@ -82,7 +82,7 @@ public class Server extends PlayerComputer {
      * @param newScore the new score of the player.
      */
     public void updatePoints(Player player, int newScore) {
-        player.setScore(newScore);
+        player.setPoints(newScore);
         messenger.changeScore(player, newScore);
     }
     
