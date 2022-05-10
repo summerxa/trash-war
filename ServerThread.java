@@ -6,7 +6,7 @@ import java.net.*;
  * background and accepts the client who requests to join the current game.
  * 
  * @author  Anne Xia
- * @version 05/06/2022
+ * @version 05/10/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
@@ -14,20 +14,19 @@ public class ServerThread extends Thread {
     private ServerSocket ss;
     private Socket s;
     private boolean isRunning;
+    
+    private List<Player> players;
 
     /**
      * Constructs a ServerThread.
-     * 
-     * @param list reference to an ArrayList of players,
-     *             will contain all connected players once thread is stopped,
-     *             or null if an error occurred.
      */
     public ServerThread() {
         isRunning = true;
+        players = new ArrayList<Player>;
         try {
             ss = new ServerSocket(Server.PORT);
             ss.setSoTimeout(2000);
-            // get the host player
+            // TODO get the host player
         } catch (Exception e) {
             ss = null;
             System.out.println("Error in ServerThread: " + e);
@@ -48,38 +47,26 @@ public class ServerThread extends Thread {
                     continue;
                 } catch (Exception e) {
                     System.out.println("Error in ServerThread: " + e);
-                    stopThread(false);
+                    stopThread();
                 }
             }
         } catch (Exception e) {
             System.out.println("Error in ServerThread: " + e);
-            stopThread(false);
+            stopThread();
         }
     }
 
     /**
-     * Stops the thread before it exits on its own. Users will
-     * no longer be able to connect to the server.
-     * 
-     * @param getList boolean, if true, returns an ArrayList of players.
-     * @return an ArrayList containing all players, or null if
-     *         getList is false.
+     * Stops the thread. Users will no longer be able to connect
+     * to the server.
      */
-    public ArrayList<Player> stopThread(boolean getList) {
+    public void stopThread() {
         isRunning = false;
-        if (ss != null) {
-            try {
-                ss.close();
-            } catch (Exception e) {
-                System.out.println("Error in ServerThread: " + e);
-                return null;
-            }
+        try {
+            ss.close();
+        } catch (Exception e) {
+            System.out.println("Error in ServerThread: " + e);
         }
-        if (getList) {
-            // TODO get the players
-            return null; // TODO return a list
-        }
-        return null; // no need for a list, return nothing
     }
 
     /**
@@ -96,5 +83,13 @@ public class ServerThread extends Thread {
      */
     public Socket getSocket() {
         return s;
+    }
+    
+    /**
+     * Gets the list of players.
+     * @return the list of players.
+     */
+    public List<Player> getPlayerList() {
+        return players;
     }
 }
