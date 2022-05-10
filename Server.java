@@ -26,8 +26,6 @@ public class Server extends PlayerComputer {
      * Constructs a server that begins accepting players.
      */
     public Server() {
-        // whether this list contains the host or not is tbd
-        players = new ArrayList<Player>();
         isPlaying = false;
         // TODO initialize the host
         // TODO initialize scores
@@ -41,9 +39,10 @@ public class Server extends PlayerComputer {
      * and creating a GameThread for each user.
      */
     public void startGame() {
-        players = sThread.stopThread(true);
+        sThread.stopThread();
+        players = sThread.getPlayerList();
         // the last condition is because we expect this to be a 2-player game
-        if (players == null || players.isEmpty() || players.size() != 2) {
+        if (players == null || players.isEmpty() || players.size() > 2) {
             System.out.println("Something went wrong while accessing the players.");
             return;
         }
