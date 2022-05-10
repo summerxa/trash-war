@@ -7,7 +7,7 @@
  */
 public class Score {
     /**
-     * Ordered Array of ten players with highest scores
+     * Ordered Array of ten players with highest scores from greatest to least
      */
     private int[] globalScores;
     /**
@@ -22,10 +22,45 @@ public class Score {
     }
 
     public void newGlobalScores(){
-        if(currentScore > globalScores[0]){
-            // find its correct location in globalScores array.
-            // shift all scores down
-            // place the new score in its right spot
+
+        int i = 0;
+        int curr = currentScore;
+
+        while ((i < globalScores.length) && (currentScore <= globalScores[i]))
+        {
+            i++;
+        }
+        
+        while (i < globalScores.length)
+        {
+            int temp = globalScores[i];
+            globalScores[i] = curr; 
+            curr = temp; 
+            i++;
+
+        }
+    }
+
+    public void setCurrent(int score)
+    {
+        currentScore = score;
+    }
+
+    public int[] getGlobalScores()
+    {
+        return globalScores;
+    }
+
+    public static void main(String args[])
+    {
+        Score sc = new Score();
+        sc.setCurrent(13);
+        sc.newGlobalScores();
+
+        int[] result = sc.getGlobalScores();
+        for (int num : result)
+        {
+            System.out.println(num);
         }
     }
 

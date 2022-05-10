@@ -31,10 +31,4 @@ public class Card
     return type[rand.nextInt(3)];
   }
     
-  public static void main (String args[])
-  {
-     Card c = new Card();
-     System.out.println(c.typeOfCard());
-  
-  }
 }
