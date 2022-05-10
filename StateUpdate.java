@@ -26,7 +26,7 @@ public class StateUpdate {
     /**
      * Game over update.
      */
-    public static final int STOP_GAME = 3456;
+    public static final int STOP_GAME = 7890;
 
     private String player;
     private int type;
