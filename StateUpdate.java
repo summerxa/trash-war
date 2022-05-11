@@ -118,7 +118,7 @@ public class StateUpdate {
         } else if (type == NEW_SCORE) {
             return type + " NEW_SCORE " + player + " " + score;
         } else {
-            return type + " DEAL_CARD " + player + " " + card.typeOfCard();
+            return type + " DEAL_CARD " + player + " " + card.getType();
         }
     }
 }
