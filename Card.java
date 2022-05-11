@@ -15,9 +15,17 @@ import java.util.Random;
 public class Card
 { 
   /**
+   * a String variable to store the type of card
+   */
+  String type;
+
+  /**
    * Constructor
    */
   public Card(){
+    String[] typ = {"Compost", "Recycle", "Trash"};
+    Random rand = new Random();
+    type = typ[rand.nextInt(3)];
   }
 
   /**
@@ -25,10 +33,8 @@ public class Card
    * @return String
    */
   public String typeOfCard(){
-    
-    String[] type = {"Compost", "Recycle", "Trash"};
-    Random rand = new Random();
-    return type[rand.nextInt(3)];
+    return type; 
+   
   }
     
 }
