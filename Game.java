@@ -20,7 +20,8 @@ public class Game
 
     public JButton playerDeck1;
     public JButton playerDeck2;
-
+    public JButton centerDeck;
+    public JPanel panel;
     public static void main(String[] args)
         throws Exception
     {
@@ -33,7 +34,7 @@ public class Game
         throws Exception
     {
         MusicPlayer m = new MusicPlayer();
-        String filePath = "bensound-moose.wav";
+        String filePath = "TrashWarImagesAndSounds\\bensound-moose.wav";
         m.playMusic(filePath);
         design();
     }
@@ -53,25 +54,26 @@ public class Game
 
         JLabel space = new JLabel(
             "                                                                                                            ");
-        Image img = ImageIO.read(new File("playerDeck1.jpg"));
+        Image img = ImageIO.read(new File("TrashWarImagesAndSounds\\playerDeck1.jpg"));
         img = getScaledImage(img, 1000, 500);
-        JPanel panel = new JPanel();
+        panel = new JPanel();
 
         panel.setSize(1000, 500);
         panel.setLayout(new BoxLayout(panel, 1));
 
-        JButton centerDeck = new JButton("        Empty      ");
+        centerDeck = new JButton();
         Clicklistener click = new Clicklistener();
         centerDeck.addActionListener(click);
         centerDeck.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         centerDeck.setEnabled(false);
-        centerDeck.setBackground(Color.BLACK);
-        Image myPicture = ImageIO.read(new File("playerDeck1.jpg"));
+        Color color = new Color(207, 185, 151);
+        centerDeck.setBackground(color);
+        Image myPicture = ImageIO.read(new File("TrashWarImagesAndSounds\\playerDeck1.jpg"));
         myPicture = getScaledImage(myPicture, 250, 300);
         playerDeck1 = new JButton(new ImageIcon(myPicture));
         playerDeck1.addActionListener(click);
         playerDeck1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        myPicture = ImageIO.read(new File("playerDeck2.jpg"));
+        myPicture = ImageIO.read(new File("TrashWarImagesAndSounds\\playerDeck2.jpg"));
         myPicture = getScaledImage(myPicture, 250, 300);
         playerDeck2 = new JButton(new ImageIcon(myPicture));
         playerDeck2.addActionListener(click);
@@ -80,8 +82,8 @@ public class Game
         panel.setBorder(new EmptyBorder(10, 100, 0, 100));
         panel2.setBorder(new EmptyBorder(50, 100, 0, 100));
         panel2.add(playerDeck1);
-
-        Color color = new Color(207, 185, 151);
+        centerDeck.setContentAreaFilled(false);
+       
         panel.setBackground(color);
         panel2.setBackground(color);
         panel2.add(space);
@@ -114,6 +116,27 @@ public class Game
         return resizedImg;
     }
 
+    public String[] init(String[] arr){
+        arr[0] = "Trash" + " "+ "TrashWarImagesAndSounds\\cardboard.jpg";
+        arr[1] = "Trash" + " " + "TrashWarImagesAndSounds\\cermicpot.jpg";
+        arr[2] = "Trash" + " " + "TrashWarImagesAndSounds\\diaper.jpg";
+        arr[3] = "Trash" + " " + "TrashWarImagesAndSounds\\trash.jpg";
+
+        arr[4] = "Recycle" + " " + "TrashWarImagesAndSounds\\aluminum.jpg";
+        arr[5] = "Recycle" + " " + "TrashWarImagesAndSounds\\bottle.jpg";
+        arr[6] = "Recycle" + " " + "TrashWarImagesAndSounds\\glass.jpg";
+        arr[7] = "Recycle" + " " + "TrashWarImagesAndSounds\\recycle.jpg";
+
+        arr[8] = "Compost" + " " + "TrashWarImagesAndSounds\\branches.jpg";
+        arr[9] = "Compost" + " " + "TrashWarImagesAndSounds\\orangepeel.jpg";
+        arr[10] = "Compost" + " " + "TrashWarImagesAndSounds\\bananapeel.jpg";
+        arr[11] = "Compost" + " " + "TrashWarImagesAndSounds\\compost.jpg";
+
+        return arr;
+        
+
+    }
+
     class Clicklistener
         implements ActionListener
     {
@@ -123,7 +146,49 @@ public class Game
             {
                 try
                 {
-                    System.out.println("button one clicked");
+                    MusicPlayer m = new MusicPlayer();
+                    String filePath = "TrashWarImagesAndSounds\\mixkit-retro-arcade-casino-notification-211.wav";
+                    m.playMusic(filePath);
+                    String[] arr = new String[12];
+                    arr = init(arr);
+                   // System.out.println(arr[0]);
+                    int i = (int)(Math.random()*12);
+
+                    System.out.println(i +  " " + arr[i]);
+                    String[] buffer = arr[i].split(" ");
+                    String path = buffer[1];
+                    Image myPicture = ImageIO.read(new File(path));
+                    myPicture = getScaledImage(myPicture, 250, 300);
+                    centerDeck.setEnabled(true);
+                    centerDeck.setIcon(new ImageIcon(myPicture));
+
+                    // Card[] arr = new Card[12];
+                    // System.out.println("ksjdfh");
+                    // arr = card.init(arr);
+                    // int i = card.index();
+                    // String p = arr[i].path;
+                    // Image myPicture = ImageIO.read(new File(p));
+                    // myPicture = getScaledImage(myPicture, 250, 300);
+                    // centerDeck.setEnabled(true);
+                    // centerDeck.setIcon(new ImageIcon(myPicture));
+                    
+
+
+
+                    //if the button is clicked, I need to place a new button with a random image in the center deck pile
+                    //random images will be:
+                    //trash word/label
+                        //cardboard
+                        //ceramic pot
+                        //diaper
+                    //recycle word/label
+                        // aluminum can
+                        // plastic bottle
+                        // glass jar
+                    //compost word/label
+                        // branches
+                        // orange peels
+                        // banana peels
 
                 }
                 catch (Exception e1)
@@ -137,7 +202,21 @@ public class Game
             {
                 try
                 {
-                    System.out.println("button two clicekd");
+                    MusicPlayer m = new MusicPlayer();
+                    String filePath = "TrashWarImagesAndSounds\\mixkit-retro-arcade-casino-notification-211.wav";
+                    m.playMusic(filePath);
+                    String[] arr = new String[12];
+                    arr = init(arr);
+                   // System.out.println(arr[0]);
+                    int i = (int)(Math.random()*12);
+
+                    System.out.println(i +  " " + arr[i]);
+                    String[] buffer = arr[i].split(" ");
+                    String path = buffer[1];
+                    Image myPicture = ImageIO.read(new File(path));
+                    myPicture = getScaledImage(myPicture, 250, 300);
+                    centerDeck.setEnabled(true);
+                    centerDeck.setIcon(new ImageIcon(myPicture));
 
                 }
                 catch (Exception e1)

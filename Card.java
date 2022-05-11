@@ -12,12 +12,16 @@ import java.util.Random;
 
    @author  Sources -
  */
+
+
 public class Card
 { 
+  private String[] images;
   /**
    * Constructor
    */
   public Card(){
+
   }
 
   /**
