@@ -12,8 +12,11 @@ import java.util.Random;
 
    @author  Sources -
  */
+
+
 public class Card
 { 
+  private String[] images;
   /**
    * a String variable to store the type of card
    */

@@ -77,8 +77,8 @@ public class CenterDeck
     public boolean sandwich()
     {
         if (centerDeckCards.size() >= 2) {
-            return centerDeckCards.get(centerDeckCards.size() - 1).typeOfCard()
-            .equals(centerDeckCards.get(centerDeckCards.size() - 2).typeOfCard());
+            return centerDeckCards.get(centerDeckCards.size() - 1).getType()
+            .equals(centerDeckCards.get(centerDeckCards.size() - 2).getType());
             
         }
         else
@@ -96,21 +96,21 @@ public class CenterDeck
             int trashCount = 0;
             int compostCount = 0;
             int recycleCount = 0;
-            String one = centerDeckCards.get(centerDeckCards.size() - 1).typeOfCard();
+            String one = centerDeckCards.get(centerDeckCards.size() - 1).getType();
             if (one.equals("Trash"))
                 trashCount++;
             else if (one.equals("Compost"))
                 compostCount++;
             else
                 recycleCount++;
-            String two = centerDeckCards.get(centerDeckCards.size() - 2).typeOfCard();
+            String two = centerDeckCards.get(centerDeckCards.size() - 2).getType();
             if (two.equals("Trash"))
                 trashCount++;
             else if (two.equals("Compost"))
                 compostCount++;
             else
                 recycleCount++;
-            String three = centerDeckCards.get(centerDeckCards.size() - 3).typeOfCard();
+            String three = centerDeckCards.get(centerDeckCards.size() - 3).getType();
             if (three.equals("Trash"))
                 trashCount++;
             else if (three.equals("Compost"))
@@ -131,8 +131,8 @@ public class CenterDeck
     public boolean topBottom()
     {
         if (centerDeckCards.size() >= 2)
-            return centerDeckCards.get(0).typeOfCard()
-                .equals(centerDeckCards.get(centerDeckCards.size() - 1).typeOfCard());
+            return centerDeckCards.get(0).getType()
+                .equals(centerDeckCards.get(centerDeckCards.size() - 1).getType());
         else
             return false;
     }

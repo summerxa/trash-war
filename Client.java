@@ -1,4 +1,7 @@
-import java.net.*;
+import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
+import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * A client that connects to the game. Its main purpose is to sync
@@ -19,10 +22,11 @@ public class Client extends PlayerComputer {
     
     /**
      * Constructs a client and connects to a server.
-     * @param address the IP address of the server
+     * @param address the IP address of the server.
+     * @param playerName the name of this player.
      */
-    public Client(String address) {
-        // TODO initialize self
+    public Client(String address, String playerName) {
+        self = new Player(playerName);
         // TODO initialize scores
         connectToServer(address);
     }
@@ -34,11 +38,24 @@ public class Client extends PlayerComputer {
     private void connectToServer(String address) {
         try {
             s = new Socket(address, Server.PORT);
+
+            try {
+                ObjectOutputStream oStream = new ObjectOutputStream(s.getOutputStream());
+                oStream.flush();
+                oStream.writeUTF(self.getName());
+                oStream.close();
+            } catch (Exception e) {
+                System.out.println("Error in Client:");
+                e.printStackTrace();
+                return;
+            }
+
             isPlaying = false;
             gThread = new GameThread(this, false, s);
             gThread.start();
         } catch (Exception ex) {
-            System.out.println("Error connecting to server:" + ex);
+            System.out.println("Error connecting to server:");
+            ex.printStackTrace();
         }
     }
 
@@ -47,6 +64,13 @@ public class Client extends PlayerComputer {
      */
     public void startGame() {
         isPlaying = true;
+        try {
+            ObjectInputStream iStream = new ObjectInputStream(s.getInputStream());
+            players = (ArrayList<Player>) iStream.readObject();
+        } catch (Exception e) {
+            System.out.println("Error in Client: " + e);
+            return;
+        }
     }
 
     /**
@@ -73,8 +97,7 @@ public class Client extends PlayerComputer {
      */
     public void updatePoints(Player player, int newScore) {
         if (isPlaying) {
-            player.addPoints(newScore);
-            scores.newGlobalScores();
+            player.setPoints(newScore);
         }
     }
 
@@ -97,7 +120,7 @@ public class Client extends PlayerComputer {
     public void dealCard(Player player, Card card) {
         if (isPlaying) {
             // TODO notify local class to update center deck
-            // TODO notify GUI window to draw out the card (if not covered already)
+            // TODO notify GUI window to draw the card (if not done already)
         }
     }
 }

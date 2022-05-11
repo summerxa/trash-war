@@ -42,7 +42,7 @@ public class YouWon extends Draw{
         JFrame frame = new JFrame();
         frame.setSize(400, 300);
         frame.setLocation(450, 100);
-        Image myPicture = ImageIO.read(new File("youwin.jpg"));
+        Image myPicture = ImageIO.read(new File("TrashWarImagesAndSounds\\youwin.jpg"));
         myPicture = getScaledImage(myPicture, 400, 300);
         JLabel l = new JLabel(new ImageIcon(myPicture));
         JPanel panel = new JPanel();
