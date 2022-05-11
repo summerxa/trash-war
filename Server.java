@@ -3,16 +3,11 @@
  * and send updates on the game state to the client player.
  * 
  * @author  Anne Xia
- * @version 05/10/2022
+ * @version 05/11/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
 public class Server extends PlayerComputer {
-    /**
-     * The port to use.
-     */
-    public static final int PORT = 12345;
-    
     private ServerThread sThread;
     private GameThread gThread;
     
@@ -92,6 +87,7 @@ public class Server extends PlayerComputer {
     public void updatePoints(Player player, int newScore) {
         if (isPlaying) {
             gThread.changeScore(player, newScore);
+            // TODO refresh scoreboard
         }
     }
     
@@ -127,5 +123,6 @@ public class Server extends PlayerComputer {
     public static void main(String[] args) {
         Server aTest = new Server("Joe");
         aTest.startGame();
+        // TODO debug: add client, start game, send a couple dummy updates
     }
 }
