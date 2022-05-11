@@ -1,5 +1,3 @@
-import java.util.*;
-
 /**
  * The server of the game. Its main purpose is to process incoming updates
  * and send updates on the game state to the client player.
@@ -24,16 +22,16 @@ public class Server extends PlayerComputer {
 
     /**
      * Constructs a server that begins accepting players.
+     * Also creates the host player object.
+     * @param playerName the name of this player.
      */
-    public Server() {
+    public Server(String playerName) {
         isPlaying = false;
-        // TODO initialize the host
-        // TODO initialize scores
-        sThread = new ServerThread();
+        self = new Player(playerName);
+        sThread = new ServerThread(self);
         sThread.start();
     }
 
-    
     /**
      * Starts the game by getting all connected users (including the host)
      * and creating a GameThread for each user.
@@ -47,6 +45,7 @@ public class Server extends PlayerComputer {
             return;
         }
         isPlaying = true;
+        // TODO initialize scores
         gThread = new GameThread(this, true, sThread.getSocket());
         gThread.start();
         gThread.startGame();
@@ -58,8 +57,9 @@ public class Server extends PlayerComputer {
     public void stopGame() {
         isPlaying = false;
         gThread.stopGame();
-        // TODO debug next line, make sure it doesn't kill the thread before it stops the game
         gThread.stopThread();
+        // TODO NOTE: if things go wrong, this line might have...
+        // ...killed the thread before it stopped the game
     }
 
     /**
@@ -79,7 +79,7 @@ public class Server extends PlayerComputer {
         if (isPlaying) {
             // TODO check if slap is valid
             // TODO update points locally
-            // TODO gThread.changeScore()
+            // TODO updatePoints()
         }
     }
 
@@ -90,8 +90,9 @@ public class Server extends PlayerComputer {
      * @param newScore the new score of the player.
      */
     public void updatePoints(Player player, int newScore) {
-        player.setPoints(newScore);
-        gThread.changeScore(player, newScore);
+        if (isPlaying) {
+            gThread.changeScore(player, newScore);
+        }
     }
     
     /**
@@ -124,7 +125,7 @@ public class Server extends PlayerComputer {
      * @param args
      */
     public static void main(String[] args) {
-        Server aTest = new Server();
+        Server aTest = new Server("Joe");
         aTest.startGame();
     }
 }

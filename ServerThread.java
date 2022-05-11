@@ -1,4 +1,6 @@
-import java.util.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.net.*;
 
 /**
@@ -11,25 +13,36 @@ import java.net.*;
  * @author Sources - Meenakshi, Vaishnavi
  */
 public class ServerThread extends Thread {
+    private boolean isRunning;
+    private List<Player> players;
+    
     private ServerSocket ss;
     private Socket s;
-    private boolean isRunning;
-    
-    private List<Player> players;
+    private ObjectInputStream iStream;
+    private ObjectOutputStream oStream;
 
     /**
      * Constructs a ServerThread.
+     * @param host the host player.
      */
-    public ServerThread() {
-        isRunning = true;
+    public ServerThread(Player host) {
         players = new ArrayList<Player>();
+        players.add(host);
+    }
+
+    /**
+     * Starts the thread.
+     */
+    public void start() {
+        isRunning = true;
+        s = null;
         try {
             ss = new ServerSocket(Server.PORT);
             ss.setSoTimeout(2000);
-            // TODO get the host player
         } catch (Exception e) {
             ss = null;
-            System.out.println("Error in ServerThread: " + e);
+            System.out.println("Error in ServerThread:");
+            e.printStackTrace();
         }
     }
 
@@ -39,19 +52,30 @@ public class ServerThread extends Thread {
      */
     public void run() {
         try {
-            while (isRunning) {
+            while (isRunning && s == null) {
                 try {
                     s = ss.accept();
-                    // TODO get the client player
+                    try {
+                        oStream = new ObjectOutputStream(s.getOutputStream());
+                        oStream.flush();
+                        iStream = new ObjectInputStream(s.getInputStream());
+                        players.add(new Player(iStream.readUTF()));
+                    } catch (Exception e) {
+                        System.out.println("Error in ServerThread:");
+                        e.printStackTrace();
+                        stopThread();
+                    }
                 } catch (SocketTimeoutException te) {
                     continue;
                 } catch (Exception e) {
-                    System.out.println("Error in ServerThread: " + e);
+                    System.out.println("Error in ServerThread:");
+                    e.printStackTrace();
                     stopThread();
                 }
             }
         } catch (Exception e) {
-            System.out.println("Error in ServerThread: " + e);
+            System.out.println("Error in ServerThread:");
+            e.printStackTrace();
             stopThread();
         }
     }
@@ -63,9 +87,14 @@ public class ServerThread extends Thread {
     public void stopThread() {
         isRunning = false;
         try {
+            oStream.writeObject(players);
+            oStream.flush();
+            oStream.close();
+            iStream.close();
             ss.close();
         } catch (Exception e) {
-            System.out.println("Error in ServerThread: " + e);
+            System.out.println("Error in ServerThread:");
+            e.printStackTrace();
         }
     }
 
