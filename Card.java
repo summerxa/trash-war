@@ -17,7 +17,7 @@ public class Card
   /**
    * a String variable to store the type of card
    */
-  String type;
+  private String type;
 
   /**
    * Constructor
