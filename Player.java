@@ -68,5 +68,14 @@ public class Player
     {
         points -= numPoints;
     }
+   
+   /**
+     * Sets the number of points to numPoints
+     * @param numPoints
+     */
+    public void setPoints(int numPoints)
+    {
+        points = numPoints;
+    }
 
 }

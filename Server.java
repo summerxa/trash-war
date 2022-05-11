@@ -1,11 +1,9 @@
-import java.util.*;
-
 /**
- * The server of the game. Its main purpose is to send updates
- * on the game state to the client player.
+ * The server of the game. Its main purpose is to process incoming updates
+ * and send updates on the game state to the client player.
  * 
  * @author  Anne Xia
- * @version 05/08/2022
+ * @version 05/10/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
@@ -16,71 +14,73 @@ public class Server extends PlayerComputer {
     public static final int PORT = 12345;
     
     private ServerThread sThread;
-    private ArrayList<Player> players;
-    private Player host;
-    private GameThread gThread; // we will only have one player for now
+    private GameThread gThread;
+    
+    private boolean isPlaying;
+    private Player self;
     private Score scores;
 
     /**
      * Constructs a server that begins accepting players.
+     * Also creates the host player object.
+     * @param playerName the name of this player.
      */
-    public Server() {
-        // whether this list contains the host or not is tbd
-        players = new ArrayList<Player>();
-        // TODO initialize the host
-        // TODO initialize scores
-        sThread = new ServerThread();
+    public Server(String playerName) {
+        isPlaying = false;
+        self = new Player(playerName);
+        sThread = new ServerThread(self);
         sThread.start();
     }
 
-    
     /**
      * Starts the game by getting all connected users (including the host)
      * and creating a GameThread for each user.
      */
     public void startGame() {
-        players = sThread.stopThread(true);
+        sThread.stopThread();
+        players = sThread.getPlayerList();
         // the last condition is because we expect this to be a 2-player game
-        if (players == null || players.isEmpty() || players.size() != 2) {
+        if (players == null || players.isEmpty() || players.size() > 2) {
             System.out.println("Something went wrong while accessing the players.");
             return;
         }
+        isPlaying = true;
+        // TODO initialize scores
         gThread = new GameThread(this, true, sThread.getSocket());
-        // TODO notify the client
-        // for (Player p : players) {
-        //     if (p == host) {
-        //         continue;
-        //     }
-        //     // start game for player p
-        // }
+        gThread.start();
+        gThread.startGame();
     }
 
     /**
      * Stops the game by stopping each user's thread.
      */
     public void stopGame() {
+        isPlaying = false;
+        gThread.stopGame();
         gThread.stopThread();
-        // for (Player p : players) {
-        //     if (p == host) {
-        //         continue;
-        //     }
-        //     // stop game for player p
-        // }
+        // TODO NOTE: if things go wrong, this line might have...
+        // ...killed the thread before it stopped the game
     }
 
     /**
-     * Simulates this player slapping a card.
+     * Simulates the current player slapping a card.
      */
     public void slapCard() {
-        // TODO
+        if (isPlaying) {
+            slapCard(self);
+        }
     }
 
     /**
-     * Handles a non-host player slapping a card.
+     * Handles any player slapping a card.
      * @param player the player who slapped the card.
      */
     public void slapCard(Player player) {
-        // TODO
+        if (isPlaying) {
+            // TODO check if slap is valid
+            // TODO update points locally
+            // TODO updatePoints()
+        }
     }
 
     /**
@@ -90,24 +90,34 @@ public class Server extends PlayerComputer {
      * @param newScore the new score of the player.
      */
     public void updatePoints(Player player, int newScore) {
-        // TODO
+        if (isPlaying) {
+            gThread.changeScore(player, newScore);
+        }
     }
-
+    
     /**
-     * Simulates a new card being dealt by this player.
-     * Randomly generates a new card from the deck.
+     * Simulates a new random card being dealt by the host.
      */
     public void dealCard() {
-        // TODO
+        if (isPlaying) {
+            Card card = new Card();
+            dealCard(self, card);
+        }
     }
 
     /**
-     * Simulates a new card being dealt by a non-host player.
+     * Simulates a new random card being dealt.
+     * Sends a message to the client that there is a new card.
      * @param player the player who dealt the card.
      * @param card the card being dealt.
      */
     public void dealCard(Player player, Card card) {
-        // TODO
+        if (isPlaying) {
+            if (card == null) {
+                card = new Card();
+            }
+            gThread.dealCard(player, card);
+        }
     }
 
     /**
@@ -115,7 +125,7 @@ public class Server extends PlayerComputer {
      * @param args
      */
     public static void main(String[] args) {
-        Server aTest = new Server();
+        Server aTest = new Server("Joe");
         aTest.startGame();
     }
 }

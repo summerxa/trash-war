@@ -9,7 +9,7 @@ import java.util.Queue;
  * updates local game state accordingly.
  * 
  * @author  Anne Xia
- * @version 05/08/2022
+ * @version 05/10/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
@@ -48,11 +48,18 @@ public class GameThread extends Thread {
             oStream.flush();
             iStream = new ObjectInputStream(s.getInputStream());
         } catch (Exception e) {
-            System.out.println("Error in GameThread: " + e);
+            System.out.println("Error in GameThread:");
+            e.printStackTrace();
             stopThread();
         }
         while (isRunning) {
-            // TODO do stuff
+            if (isServer) { // server sends first
+                sendUpdates();
+                readUpdates();
+            } else {
+                readUpdates();
+                sendUpdates();
+            }
         }
     }
 
@@ -89,16 +96,39 @@ public class GameThread extends Thread {
     public void dealCard(Player player, Card card) {
         updates.add(new StateUpdate(player, card));
     }
+    
+    /**
+     * Starts the game.
+     */
+    public void startGame() {
+        if (!isServer) {
+            return;
+        }
+        updates.add(new StateUpdate(StateUpdate.BGIN_GAME));
+    }
+    
+    /**
+     * Stops the game.
+     */
+    public void stopGame() {
+        if (!isServer) {
+            return;
+        }
+        updates.add(new StateUpdate(StateUpdate.STOP_GAME));
+    }
 
     /**
      * Sends updates on the game state.
      */
     private void sendUpdates() {
+        if (!isRunning) {
+            return;
+        }
         try {
-            // lock?
             oStream.writeObject(updates);
         } catch (Exception e) {
-            System.out.println("Error in GameThread: " + e);
+            System.out.println("Error in GameThread:");
+            e.printStackTrace();
             stopThread();
         }
     }
@@ -106,28 +136,40 @@ public class GameThread extends Thread {
     /**
      * Processes updates on the game state.
      */
-    private void getUpdates() {
+    private void readUpdates() {
+        if (!isRunning) {
+            return;
+        }
         try {
-            // lock?
+            boolean stopTheGame = false;
             Queue<StateUpdate> get = (Queue<StateUpdate>) iStream.readObject();
-            while (!get.isEmpty()) {
+            while (!get.isEmpty() && !stopTheGame) {
                 StateUpdate upd = get.remove();
-                switch (upd.getType()) {
+                int curType = upd.getType();
+                switch (curType) {
                     case StateUpdate.CARD_SLAP:
-                        self.slapCard(upd.getPlayer());
+                        self.slapCard(self.getMatch(upd.getPlayer()));
                         break;
                     case StateUpdate.NEW_SCORE:
-                        self.updatePoints(upd.getPlayer(), upd.getScore());
+                        self.updatePoints(self.getMatch(upd.getPlayer()), upd.getScore());
                         break;
                     case StateUpdate.DEAL_CARD:
-                        self.dealCard(upd.getPlayer(), upd.getCard());
+                        self.dealCard(self.getMatch(upd.getPlayer()), upd.getCard());
+                        break;
+                    case StateUpdate.BGIN_GAME:
+                        self.startGame();
+                        break;
+                    case StateUpdate.STOP_GAME:
+                        stopTheGame = true;
+                        self.stopGame();
                         break;
                     default:
                         System.out.println("GameThread: Incorrect type for a state update");
                 }
             }
         } catch (Exception e) {
-            System.out.println("Error in GameThread: " + e);
+            System.out.println("Error in GameThread:");
+            e.printStackTrace();
             stopThread();
         }
     }
@@ -138,6 +180,12 @@ public class GameThread extends Thread {
      */
     public void stopThread() {
         isRunning = false;
-        // TODO send updates
+        try {
+            iStream.close();
+            oStream.close();
+        } catch (Exception e) {
+            System.out.println("Error in GameThread:");
+            e.printStackTrace();
+        }
     }
 }
