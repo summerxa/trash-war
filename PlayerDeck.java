@@ -10,10 +10,13 @@
 import java.awt.event.*;
 import java.util.Stack;
 
+import javax.tools.DocumentationTool.Location;
+
 public class PlayerDeck implements MouseListener {
 
     private Stack<Card> playersCards;
     CenterDeck d; 
+    int 
     
     /**
      * Constructor of the class
@@ -62,7 +65,7 @@ public class PlayerDeck implements MouseListener {
      * Check if the players clicked inside the bounds of their cards. 
      * @return
      */
-    public boolean isInBounds(int x, int y){
+    public boolean isInBounds(int x, int y, int xCard){
         return true;
     }
 
@@ -72,6 +75,7 @@ public class PlayerDeck implements MouseListener {
      * Uses getX() and getY() methods to get coordinates of the click
      * @param e
      */
+    
     public void mouseClicked(MouseEvent e){
         int x = e.getX();
         int y = e.getY();
