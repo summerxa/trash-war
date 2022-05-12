@@ -8,12 +8,12 @@ import java.net.*;
  * background and accepts the client who requests to join the current game.
  * 
  * @author  Anne Xia
- * @version 05/10/2022
+ * @version 05/11/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
 public class ServerThread extends Thread {
-    private boolean isRunning;
+    private boolean isRunning, isError;
     private List<Player> players;
     
     private ServerSocket ss;
@@ -28,6 +28,7 @@ public class ServerThread extends Thread {
     public ServerThread(Player host) {
         players = new ArrayList<Player>();
         players.add(host);
+        isError = false;
     }
 
     /**
@@ -41,6 +42,7 @@ public class ServerThread extends Thread {
             ss.setSoTimeout(2000);
         } catch (Exception e) {
             ss = null;
+            isError = true;
             System.out.println("Error in ServerThread:");
             e.printStackTrace();
         }
@@ -61,19 +63,22 @@ public class ServerThread extends Thread {
                         iStream = new ObjectInputStream(s.getInputStream());
                         players.add(new Player(iStream.readUTF()));
                     } catch (Exception e) {
+                        isError = true;
                         System.out.println("Error in ServerThread:");
                         e.printStackTrace();
-                        stopThread();
                     }
+                    stopThread();
                 } catch (SocketTimeoutException te) {
                     continue;
                 } catch (Exception e) {
+                    isError = true;
                     System.out.println("Error in ServerThread:");
                     e.printStackTrace();
                     stopThread();
                 }
             }
         } catch (Exception e) {
+            isError = true;
             System.out.println("Error in ServerThread:");
             e.printStackTrace();
             stopThread();
@@ -81,18 +86,23 @@ public class ServerThread extends Thread {
     }
 
     /**
-     * Stops the thread. Users will no longer be able to connect
-     * to the server.
+     * Stops the thread and sends list of all players to client's computer.
+     * Users will no longer be able to connect to the server.
      */
     public void stopThread() {
         isRunning = false;
         try {
-            oStream.writeObject(players);
-            oStream.flush();
+            if (!isError) {
+                oStream.writeObject(players);
+                oStream.flush();
+            }
             oStream.close();
             iStream.close();
-            ss.close();
+            if (ss != null) {
+                ss.close();
+            }
         } catch (Exception e) {
+            isError = true;
             System.out.println("Error in ServerThread:");
             e.printStackTrace();
         }
@@ -104,6 +114,14 @@ public class ServerThread extends Thread {
      */
     public boolean isStopped() {
         return !isRunning;
+    }
+    
+    /**
+     * Returns true if this thread encountered an error, otherwise false.
+     * @return true if this thread encountered an error, otherwise false.
+    */
+    public boolean crashed() {
+        return isError;
     }
 
     /**
