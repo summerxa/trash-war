@@ -1,8 +1,10 @@
+import java.util.Base64;
+
 /**
  * Represents an update to the game state.
  * 
  * @author  Anne Xia
- * @version 05/10/2022
+ * @version 05/12/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
@@ -28,6 +30,15 @@ public class StateUpdate {
      */
     public static final int STOP_GAME = 7890;
 
+    /**
+     * Delimiter string for updates.
+     */
+    public static final String U_DELIM = "~";
+    /**
+     * Delimiter string for fields within updates.
+     */
+    public static final String F_DELIM = ":";
+
     private String player;
     private int type;
     private int score = -1;
@@ -39,7 +50,7 @@ public class StateUpdate {
      */
     public StateUpdate(Player player) {
         type = CARD_SLAP;
-        this.player = player.getName();
+        this.player = encode64(player.getName());
     }
 
     /**
@@ -49,7 +60,7 @@ public class StateUpdate {
      */
     public StateUpdate(Player player, int newScore) {
         type = NEW_SCORE;
-        this.player = player.getName();
+        this.player = encode64(player.getName());
         score = newScore;
     }
 
@@ -60,8 +71,35 @@ public class StateUpdate {
      */
     public StateUpdate(Player player, Card card) {
         type = DEAL_CARD;
-        this.player = player.getName();
+        this.player = encode64(player.getName());
         this.card = card;
+    }
+
+    /**
+     * Encodes a string to base 64. This is used to encode the player
+     * name so that it does not contain any special characters used to
+     * format important information.
+     * @param s string to encode.
+     * @return encoded string.
+     */
+    public static String encode64(String s) {
+        try {
+            return Base64.getEncoder().encodeToString(s.getBytes("utf-8"));
+        } catch (Exception e) {
+            System.out.println("Error in StateUpdate:");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Decodes a string from base 64.
+     * @param s the encoded string.
+     * @return the decoded string.
+     */
+    public static String decode64(String s) {
+        byte[] bytes = Base64.getDecoder().decode(s);
+        return new String(bytes);
     }
     
     /**
@@ -85,7 +123,7 @@ public class StateUpdate {
      * @return the name of the player.
      */
     public String getPlayer() {
-        return player;
+        return decode64(player);
     }
 
     /**
@@ -114,11 +152,13 @@ public class StateUpdate {
     */
     public String toString() {
         if (type == CARD_SLAP) {
-            return type + " CARD_SLAP " + player;
+            return type + F_DELIM + player;
         } else if (type == NEW_SCORE) {
-            return type + " NEW_SCORE " + player + " " + score;
+            return type + F_DELIM + player + F_DELIM + score;
+        } else if (type == DEAL_CARD) {
+            return type + F_DELIM + player + F_DELIM + ((card == null) ? "null" : card.getType());
         } else {
-            return type + " DEAL_CARD " + player + " " + card.getType();
+            return type + "";
         }
     }
 }

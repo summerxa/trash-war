@@ -1,14 +1,15 @@
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.net.*;
 
 /**
  * Once a "host" user chooses to create a server, this thread runs in the
  * background and accepts the client who requests to join the current game.
  * 
  * @author  Anne Xia
- * @version 05/11/2022
+ * @version 05/12/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
@@ -18,8 +19,8 @@ public class ServerThread extends Thread {
     
     private ServerSocket ss;
     private Socket s;
-    private ObjectInputStream iStream;
-    private ObjectOutputStream oStream;
+    private DataInputStream iStream;
+    private DataOutputStream oStream;
 
     /**
      * Constructs a ServerThread.
@@ -54,19 +55,9 @@ public class ServerThread extends Thread {
      */
     public void run() {
         try {
-            while (isRunning && s == null) {
+            while (isRunning) {
                 try {
                     s = ss.accept();
-                    try {
-                        oStream = new ObjectOutputStream(s.getOutputStream());
-                        oStream.flush();
-                        iStream = new ObjectInputStream(s.getInputStream());
-                        players.add(new Player(iStream.readUTF()));
-                    } catch (Exception e) {
-                        isError = true;
-                        System.out.println("Error in ServerThread:");
-                        e.printStackTrace();
-                    }
                     stopThread();
                 } catch (SocketTimeoutException te) {
                     continue;
@@ -92,14 +83,29 @@ public class ServerThread extends Thread {
     public void stopThread() {
         isRunning = false;
         try {
-            if (!isError) {
-                oStream.writeObject(players);
+            try {
+                oStream = new DataOutputStream(s.getOutputStream());
                 oStream.flush();
-            }
-            oStream.close();
-            iStream.close();
-            if (ss != null) {
-                ss.close();
+                iStream = new DataInputStream(s.getInputStream());
+                players.add(new Player(iStream.readUTF())); // get client's player name
+                System.out.println("#### player name: " + players.get(players.size()-1).getName());
+                if (!isError) {
+                    // send list of all players
+                    StringBuilder s = new StringBuilder();
+                    String pref = "";
+                    for (Player p : players) {
+                        s.append(pref);
+                        pref = StateUpdate.U_DELIM;
+                        s.append(StateUpdate.encode64(p.getName()));
+                    }
+                    // Thread.sleep(1000);
+                    System.out.println("#### player list: " + s.toString());
+                    oStream.writeUTF(s.toString());
+                }
+            } catch (Exception e) {
+                isError = true;
+                System.out.println("Error in ServerThread:");
+                e.printStackTrace();
             }
         } catch (Exception e) {
             isError = true;
