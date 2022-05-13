@@ -5,7 +5,7 @@ import java.util.Scanner;
  * and send updates on the game state to the client player.
  * 
  * @author  Anne Xia
- * @version 05/12/2022
+ * @version 05/13/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
@@ -19,7 +19,7 @@ public class Server extends PlayerComputer {
 
     /**
      * Constructs a server that begins accepting players.
-     * Also creates the host player FIXTHIS.
+     * Also creates the host player object.
      * @param playerName the name of this player.
      */
     public Server(String playerName) {
@@ -35,8 +35,6 @@ public class Server extends PlayerComputer {
      * and creating a GameThread for each user.
      */
     public void startGame() {
-        System.out.println("#### Started game");
-        // sThread.stopThread();
         players = sThread.getPlayerList();
         // the last condition is because we expect this to be a 2-player game
         if (players == null || players.isEmpty() || players.size() > 2) {
@@ -46,7 +44,6 @@ public class Server extends PlayerComputer {
             } else {
                 System.out.println("Player list has size " + players.size());
             }
-            // return;
         }
         isPlaying = true;
         // TODO initialize scores
@@ -59,20 +56,14 @@ public class Server extends PlayerComputer {
      * Stops the game by stopping each user's thread.
      */
     public void stopGame() {
-        System.out.println("#### Stopped game");
         isPlaying = false;
         gThread.stopGame();
         try {
-            System.out.println("#### begin join");
             gThread.join(); // wait for game thread to notify client
-            System.out.println("#### end join");
         } catch (Exception e) {
             System.out.println("Error in Server:");
             e.printStackTrace();
         }
-        // gThread.stopThread();
-        // TODO NOTE: if things go wrong, this line might have...
-        // ...killed the thread before it stopped the game
     }
 
     /**
@@ -90,7 +81,6 @@ public class Server extends PlayerComputer {
      */
     public void slapCard(Player player) {
         if (isPlaying) {
-            System.out.println("#### card slap " + player.getName());
             // TODO check if slap is valid
             // TODO update points locally
             // TODO updatePoints()
@@ -106,7 +96,6 @@ public class Server extends PlayerComputer {
     public void updatePoints(Player player, int newScore) {
         if (isPlaying) {
             gThread.changeScore(player, newScore);
-            System.out.println("#### update points " + player.getName() + " " + newScore);
             // TODO refresh scoreboard
         }
     }
@@ -137,7 +126,7 @@ public class Server extends PlayerComputer {
     }
 
     /**
-     * For debugging purposes only
+     * For debugging purposes only. Simulates a short sequence of actions.
      * @param args
      */
     public static void main(String[] args) {
@@ -167,8 +156,6 @@ public class Server extends PlayerComputer {
         System.out.println("#### Enter to stop game");
         scan.nextLine();
         aTest.stopGame();
-
-        // TODO debug: add client, start game, send a couple dummy updates
 
         scan.close();
     }
