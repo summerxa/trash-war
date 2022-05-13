@@ -108,7 +108,7 @@ public class Client extends PlayerComputer {
         if (isPlaying) {
             gThread.dealCard(self, null);
             // actual card will be generated on server, null is a filler "default" value
-            // TODO remove one card from current player's stack
+            // TODO remove one card from current player's stack 
         }
     }
 

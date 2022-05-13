@@ -63,7 +63,7 @@ public class PlayerDeck implements MouseListener {
             playersCards.push(randomlyGenerateCard());
         }
     }
-    
+
     /**
      * Check if the players clicked inside the bounds of their cards. 
      * @return
