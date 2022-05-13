@@ -102,10 +102,12 @@ public class Server extends PlayerComputer {
     
     /**
      * Simulates a new random card being dealt by the host.
+     * Randomly generates a new card.
      */
     public void dealCard() {
         if (isPlaying) {
             Card card = new Card();
+            // TODO remove one card from your deck
             dealCard(self, card);
         }
     }
@@ -121,13 +123,14 @@ public class Server extends PlayerComputer {
             if (card == null) {
                 card = new Card();
             }
+            // TODO draw card on screen
             gThread.dealCard(player, card);
         }
     }
 
     /**
      * For debugging purposes only. Simulates a short sequence of actions.
-     * @param args
+     * @param args command-line arguments (not used)
      */
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
