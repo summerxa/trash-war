@@ -5,7 +5,7 @@ import java.util.List;
  * methods to perform actions and update the game state.
  * 
  * @author  Anne Xia
- * @version 05/10/2022
+ * @version 05/12/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
 */
@@ -64,7 +64,7 @@ public abstract class PlayerComputer {
 
     /**
      * Gets the player with a given name from the current
-     * object's list of players, or null if player not found.
+     * FIXTHIS's list of players, or null if player not found.
      * @param name player name to search for, or null if not found.
      */
     public Player getMatch(String name) {
@@ -77,5 +77,22 @@ public abstract class PlayerComputer {
             }
         }
         return null;
+    }
+
+    /**
+     * Returns a list of all players.
+     * @return a list of all players.
+     */
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    /**
+     * For client class only, sets the local players list
+     * to the given list.
+     * @param players a list of players.
+     */
+    public void setPlayers(List<Player> players) {
+        // do nothing
     }
 }

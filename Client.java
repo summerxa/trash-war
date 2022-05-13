@@ -1,14 +1,15 @@
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
+import java.io.DataOutputStream;
+import java.io.DataInputStream;
 import java.net.Socket;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * A client that connects to the game. Its main purpose is to sync
  * the local game state with the version on the server.
  * 
  * @author  Anne Xia
- * @version 05/10/2022
+ * @version 05/12/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
@@ -16,6 +17,9 @@ public class Client extends PlayerComputer {
     private Socket s;
     private GameThread gThread;
     
+    private DataInputStream iStream;
+    private DataOutputStream oStream;
+
     private boolean isPlaying;
     private Player self;
     private Score scores;
@@ -38,12 +42,13 @@ public class Client extends PlayerComputer {
     private void connectToServer(String address) {
         try {
             s = new Socket(address, PlayerComputer.PORT);
+            System.out.print("#### connected, (socket == null) evaluates to " + (s == null));
+            System.out.println(" and is socket closed? " + s.isClosed());
 
             try {
-                ObjectOutputStream oStream = new ObjectOutputStream(s.getOutputStream());
-                oStream.flush();
+                oStream = new DataOutputStream(s.getOutputStream());
                 oStream.writeUTF(self.getName()); // sends player name to server
-                oStream.close();
+                iStream = new DataInputStream(s.getInputStream());
             } catch (Exception e) {
                 System.out.println("Error in Client:");
                 e.printStackTrace();
@@ -64,19 +69,26 @@ public class Client extends PlayerComputer {
      */
     public void startGame() {
         isPlaying = true;
-        try {
-            ObjectInputStream iStream = new ObjectInputStream(s.getInputStream());
-            players = (ArrayList<Player>) iStream.readObject(); // gets list of players from server
-        } catch (Exception e) {
-            System.out.println("Error in Client: " + e);
-            return;
-        }
+        System.out.println("#### Started game");
+        // try {
+        //     // get list of players from server
+        //     String[] allPlayers = iStream.readUTF().split(StateUpdate.U_DELIM);
+        //     players = new ArrayList<Player>();
+        //     for (String s : allPlayers) {
+        //         players.add(new Player(s));
+        //     }
+        // } catch (Exception e) {
+        //     System.out.println("Error in Client:");
+        //     e.printStackTrace();
+        //     return;
+        // }
     }
 
     /**
      * Stops the game by stopping the current user's thread.
      */
     public void stopGame() {
+        System.out.println("#### Stopped game");
         isPlaying = false;
         gThread.stopThread();
     }
@@ -86,6 +98,7 @@ public class Client extends PlayerComputer {
      */
     public void slapCard() {
         if (isPlaying) {
+            System.out.println("#### card slap");
             gThread.slapCard(self);
         }
     }
@@ -98,6 +111,7 @@ public class Client extends PlayerComputer {
     public void updatePoints(Player player, int newScore) {
         if (isPlaying) {
             player.setPoints(newScore);
+            System.out.println("#### update points " + player.getName() + " " + newScore);
             // TODO refresh scoreboard
         }
     }
@@ -123,5 +137,46 @@ public class Client extends PlayerComputer {
             // TODO notify local class to update center deck
             // TODO notify GUI window to draw the card (if not done already)
         }
+    }
+
+    /**
+     * Sets the local players list to the given list.
+     * @param players a list of players.
+     */
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
+    /**
+     * For debugging purposes only
+     * @param args
+     */
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        Client aTest = new Client("localhost", "CoolClient");
+
+        System.out.println("#### Created client, enter to see players");
+        scan.nextLine();
+
+        System.out.println("#### Players: ");
+        for (Player p : aTest.getPlayers()) {
+            System.out.println(p.getName() + " - " + p.getPoints());
+        }
+
+        System.out.println("#### Enter to see CoolClient's point value");
+        scan.nextLine();
+        System.out.println(aTest.getMatch("CoolClient").getPoints());
+
+        System.out.println("#### Enter to see sErVeR's point value");
+        scan.nextLine();
+        System.out.println(aTest.getMatch("sErVeR").getPoints());
+
+        System.out.println("#### Enter to slap a card");
+        scan.nextLine();
+        aTest.slapCard();
+
+        // TODO debug: add client, start game, send a couple dummy updates
+
+        scan.close();
     }
 }
