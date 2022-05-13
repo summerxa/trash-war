@@ -22,6 +22,7 @@ public class Card
    */
   private String type;
 
+
   /**
    * Constructor
    */
@@ -29,6 +30,11 @@ public class Card
     String[] typ = {"Compost", "Recycle", "Trash"};
     Random rand = new Random();
     type = typ[rand.nextInt(3)];
+  }
+
+  public Card(String type)
+  {
+    this.type = type; 
   }
 
   /**
