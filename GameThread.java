@@ -12,7 +12,7 @@ import java.util.Queue;
  * updates local game state accordingly.
  * 
  * @author  Anne Xia
- * @version 05/12/2022
+ * @version 05/13/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
@@ -75,8 +75,6 @@ public class GameThread extends Thread {
                 readUpdates();
                 try {
                     Thread.sleep(DELAY);
-                } catch (InterruptedException e) {
-                    // do nothing
                 } catch (Exception e) {
                     System.out.println("Error in GameThread:");
                     e.printStackTrace();
@@ -85,8 +83,6 @@ public class GameThread extends Thread {
                 readUpdates();
                 try {
                     Thread.sleep(DELAY);
-                } catch (InterruptedException e) {
-                    // do nothing
                 } catch (Exception e) {
                     System.out.println("Error in GameThread:");
                     e.printStackTrace();
@@ -94,9 +90,7 @@ public class GameThread extends Thread {
                 sendUpdates();
             }
         }
-        System.out.println("#### Loop exited");
         sendUpdates();
-        System.out.println("#### Updates sent");
         
         try {
             iStream.close();
@@ -159,16 +153,8 @@ public class GameThread extends Thread {
         if (!isServer) {
             return;
         }
-        System.out.println("#### end 1");
         addUpdate(new StateUpdate(StateUpdate.STOP_GAME));
-        // try {
-        //     Thread.sleep(DELAY);
-        // } catch (Exception e) {
-        //     System.out.println("Error in GameThread:");
-        //     e.printStackTrace();
-        // }
         stopThread();
-        System.out.println("#### end 2");
     }
 
     /**
@@ -185,9 +171,6 @@ public class GameThread extends Thread {
      * Sends updates on the game state.
      */
     private void sendUpdates() {
-        // if (!isRunning) {
-        //     return;
-        // }
         try {
             StringBuilder s = new StringBuilder();
             String pref = "";
@@ -199,9 +182,6 @@ public class GameThread extends Thread {
                     pref = StateUpdate.U_DELIM;
                     s.append(su.toString());
                 }
-            }
-            if (!s.isEmpty()) {
-                System.out.println("#### Send: " + s.toString());
             }
             oStream.writeUTF(s.toString());
         } catch (SocketException e) {
@@ -217,24 +197,6 @@ public class GameThread extends Thread {
      * Processes updates on the game state.
      */
     private void readUpdates() {
-        // if (!isRunning) {
-        //     return;
-        // }
-        // if (clientFirst) {
-        //     /*
-        //     Why this if statement exists:
-        //     The first update the client gameThread will read
-        //     is not an update at all. The server just sent out a
-        //     list of all the players - this is NOT a game update and
-        //     should not be processed by this function. If this is
-        //     a client, don't read any input and break out. Processing
-        //     of the player list will be done in the Client class.
-        //     */
-        //     clientFirst = false;
-        //     if (!isServer) {
-        //         return;
-        //     }
-        // }
         try {
             boolean stopTheGame = false;
             String readIn = iStream.readUTF();
@@ -243,10 +205,9 @@ public class GameThread extends Thread {
             }
             String[] allStrings = readIn.split(StateUpdate.U_DELIM);
             for (String s : allStrings) {
-                if (stopTheGame) { // a stop game state has been reached, stop immediately
-                    break;
+                if (stopTheGame) {
+                    break; // a stop game state has been reached, stop immediately
                 }
-                System.out.println("#### Read: " + s);
                 String[] upd = s.split(StateUpdate.F_DELIM);
                 int curType = Integer.parseInt(upd[0]);
                 String name = null;
@@ -261,7 +222,11 @@ public class GameThread extends Thread {
                         self.updatePoints(self.getMatch(name), Integer.parseInt(upd[2]));
                         break;
                     case StateUpdate.DEAL_CARD:
-                        // self.dealCard(self.getMatch(name), new Card(upd[2]));
+                        Card card = null;
+                        if (!upd[2].equals(StateUpdate.NULLCARD)) {
+                            card = new Card(upd[2]);
+                        }
+                        // self.dealCard(self.getMatch(name), card);
                         // TODO card constructor with string
                         break;
                     case StateUpdate.BGIN_GAME:
@@ -276,7 +241,7 @@ public class GameThread extends Thread {
                 }
             }
         } catch (EOFException e) {
-            return; // no updates to read...
+            return; // no updates to read
         } catch (SocketException e) {
             return; // game has ended
         } catch (Exception e) {
@@ -292,13 +257,5 @@ public class GameThread extends Thread {
      */
     public void stopThread() {
         isRunning = false;
-        // try {
-        //     System.out.println("#### thread begin join");
-        //     iStream.close();
-        //     oStream.close();
-        // } catch (Exception e) {
-        //     System.out.println("Error in GameThread:");
-        //     e.printStackTrace();
-        // }
     }
 }
