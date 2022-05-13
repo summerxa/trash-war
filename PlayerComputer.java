@@ -54,7 +54,7 @@ public abstract class PlayerComputer {
     public abstract void dealCard();
     
     /**
-     * Overloaded version of dealCard for Server class.
+     * Overloaded version of dealCard to display a card on GUI window.
      * @param player the player who dealt the card.
      * @param card the card being dealt.
      */
@@ -64,7 +64,7 @@ public abstract class PlayerComputer {
 
     /**
      * Gets the player with a given name from the current
-     * FIXTHIS's list of players, or null if player not found.
+     * object's list of players, or null if player not found.
      * @param name player name to search for, or null if not found.
      */
     public Player getMatch(String name) {
