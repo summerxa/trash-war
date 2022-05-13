@@ -38,6 +38,10 @@ public class StateUpdate {
      * Delimiter string for fields within updates.
      */
     public static final String F_DELIM = ":";
+    /**
+     * A null card's string representation.
+     */
+    public static final String NULLCARD = "null";
 
     private String player;
     private int type;
@@ -74,6 +78,14 @@ public class StateUpdate {
         this.player = encode64(player.getName());
         this.card = card;
     }
+    
+    /**
+     * Constructs a game start / end update.
+     * @param type either StateUpdate.BGIN_GAME or StateUpdate.STOP_GAME.
+     */
+    public StateUpdate(int type) {
+        this.type = type;
+    }
 
     /**
      * Encodes a string to base 64. This is used to encode the player
@@ -100,14 +112,6 @@ public class StateUpdate {
     public static String decode64(String s) {
         byte[] bytes = Base64.getDecoder().decode(s);
         return new String(bytes);
-    }
-    
-    /**
-     * Constructs a game start / end update.
-     * @param type either StateUpdate.BGIN_GAME or StateUpdate.STOP_GAME.
-     */
-    public StateUpdate(int type) {
-        this.type = type;
     }
 
     /**
@@ -156,7 +160,12 @@ public class StateUpdate {
         } else if (type == NEW_SCORE) {
             return type + F_DELIM + player + F_DELIM + score;
         } else if (type == DEAL_CARD) {
-            return type + F_DELIM + player + F_DELIM + ((card == null) ? "null" : card.getType());
+            // if card is null, calling getType() will cause an error, so just use a filler string
+            String cardString = NULLCARD;
+            if (card != null) {
+                cardString = card.getType();
+            }
+            return type + F_DELIM + player + F_DELIM + cardString;
         } else {
             return type + "";
         }
