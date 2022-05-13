@@ -16,10 +16,18 @@ import java.util.Random;
 
 public class Card
 { 
-  private String[] images;
+ /*  private String[] compost = {"TrashWarImagesAndSounds\\bananapeel.jpg", "TrashWarImagesAndSounds\\branches.jpg", 
+ "TrashWarImagesAndSounds\\orangepeel.jpg", "TrashWarImagesAndSounds\\compost.jpg"};
+
+  private String[] trash = {"TrashWarImagesAndSounds\\trash.jpg", "TrashWarImagesAndSounds\\chips.jpg", 
+  "TrashWarImagesAndSounds\\cermicpot.jpg",  "TrashWarImagesAndSounds\\diaper.jpg"};
+
+  private String[] recycle = {  "TrashWarImagesAndSounds\\recycle.jpg", "TrashWarImagesAndSounds\\aluminum.jpg", 
+  "TrashWarImagesAndSounds\\bottle.jpg", "TrashWarImagesAndSounds\\cardboard.jpg", "TrashWarImagesAndSounds\\glass.jpg"}; */
   /**
    * a String variable to store the type of card
    */
+  
   private String type;
 
 
