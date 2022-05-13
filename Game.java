@@ -54,7 +54,7 @@ public class Game
 
         JLabel space = new JLabel(
             "                                                                                                            ");
-        Image img = ImageIO.read(new File("TrashWarImagesAndSounds\\playerDeck1.jpg"));
+        Image img = ImageIO.read(new File("TrashWarImagesAndSounds" + File.separator + "playerDeck1.jpg"));
         img = getScaledImage(img, 1000, 500);
         panel = new JPanel();
 
@@ -68,12 +68,12 @@ public class Game
         centerDeck.setEnabled(false);
         Color color = new Color(207, 185, 151);
         centerDeck.setBackground(color);
-        Image myPicture = ImageIO.read(new File("TrashWarImagesAndSounds\\playerDeck1.jpg"));
+        Image myPicture = ImageIO.read(new File("TrashWarImagesAndSounds" + File.separator + "playerDeck1.jpg"));
         myPicture = getScaledImage(myPicture, 250, 300);
         playerDeck1 = new JButton(new ImageIcon(myPicture));
         playerDeck1.addActionListener(click);
         playerDeck1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        myPicture = ImageIO.read(new File("TrashWarImagesAndSounds\\playerDeck2.jpg"));
+        myPicture = ImageIO.read(new File("TrashWarImagesAndSounds" + File.separator + "playerDeck2.jpg"));
         myPicture = getScaledImage(myPicture, 250, 300);
         playerDeck2 = new JButton(new ImageIcon(myPicture));
         playerDeck2.addActionListener(click);
@@ -117,20 +117,20 @@ public class Game
     }
 
     public String[] init(String[] arr){
-        arr[0] = "Trash" + " "+ "TrashWarImagesAndSounds\\cardboard.jpg";
-        arr[1] = "Trash" + " " + "TrashWarImagesAndSounds\\cermicpot.jpg";
-        arr[2] = "Trash" + " " + "TrashWarImagesAndSounds\\diaper.jpg";
-        arr[3] = "Trash" + " " + "TrashWarImagesAndSounds\\trash.jpg";
+        arr[0] = "Trash" + " "+ "TrashWarImagesAndSounds" + File.separator + "cardboard.jpg";
+        arr[1] = "Trash" + " " + "TrashWarImagesAndSounds" + File.separator + "cermicpot.jpg";
+        arr[2] = "Trash" + " " + "TrashWarImagesAndSounds" + File.separator + "diaper.jpg";
+        arr[3] = "Trash" + " " + "TrashWarImagesAndSounds" + File.separator + "trash.jpg";
 
-        arr[4] = "Recycle" + " " + "TrashWarImagesAndSounds\\aluminum.jpg";
-        arr[5] = "Recycle" + " " + "TrashWarImagesAndSounds\\bottle.jpg";
-        arr[6] = "Recycle" + " " + "TrashWarImagesAndSounds\\glass.jpg";
-        arr[7] = "Recycle" + " " + "TrashWarImagesAndSounds\\recycle.jpg";
+        arr[4] = "Recycle" + " " + "TrashWarImagesAndSounds" + File.separator + "aluminum.jpg";
+        arr[5] = "Recycle" + " " + "TrashWarImagesAndSounds" + File.separator + "bottle.jpg";
+        arr[6] = "Recycle" + " " + "TrashWarImagesAndSounds" + File.separator + "glass.jpg";
+        arr[7] = "Recycle" + " " + "TrashWarImagesAndSounds" + File.separator + "recycle.jpg";
 
-        arr[8] = "Compost" + " " + "TrashWarImagesAndSounds\\branches.jpg";
-        arr[9] = "Compost" + " " + "TrashWarImagesAndSounds\\orangepeel.jpg";
-        arr[10] = "Compost" + " " + "TrashWarImagesAndSounds\\bananapeel.jpg";
-        arr[11] = "Compost" + " " + "TrashWarImagesAndSounds\\compost.jpg";
+        arr[8] = "Compost" + " " + "TrashWarImagesAndSounds" + File.separator + "branches.jpg";
+        arr[9] = "Compost" + " " + "TrashWarImagesAndSounds" + File.separator + "orangepeel.jpg";
+        arr[10] = "Compost" + " " + "TrashWarImagesAndSounds" + File.separator + "bananapeel.jpg";
+        arr[11] = "Compost" + " " + "TrashWarImagesAndSounds" + File.separator + "compost.jpg";
 
         return arr;
         
@@ -147,7 +147,7 @@ public class Game
                 try
                 {
                     MusicPlayer m = new MusicPlayer();
-                    String filePath = "TrashWarImagesAndSounds\\mixkit-retro-arcade-casino-notification-211.wav";
+                    String filePath = "TrashWarImagesAndSounds" + File.separator + "mixkit-retro-arcade-casino-notification-211.wav";
                     m.playMusic(filePath);
                     String[] arr = new String[12];
                     arr = init(arr);
@@ -203,7 +203,7 @@ public class Game
                 try
                 {
                     MusicPlayer m = new MusicPlayer();
-                    String filePath = "TrashWarImagesAndSounds\\mixkit-retro-arcade-casino-notification-211.wav";
+                    String filePath = "TrashWarImagesAndSounds" + File.separator + "mixkit-retro-arcade-casino-notification-211.wav";
                     m.playMusic(filePath);
                     String[] arr = new String[12];
                     arr = init(arr);
