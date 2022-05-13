@@ -9,7 +9,7 @@ import java.util.List;
  * background and accepts the client who requests to join the current game.
  * 
  * @author  Anne Xia
- * @version 05/12/2022
+ * @version 05/13/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
@@ -40,7 +40,7 @@ public class ServerThread extends Thread {
         s = null;
         try {
             ss = new ServerSocket(Server.PORT);
-            ss.setSoTimeout(2000);
+            ss.setSoTimeout(2000); // refreshes every 2 seconds to see if thread was stopped
         } catch (Exception e) {
             ss = null;
             isError = true;
@@ -58,9 +58,9 @@ public class ServerThread extends Thread {
             while (isRunning) {
                 try {
                     s = ss.accept();
-                    stopThread();
+                    stopThread(); // once player has joined, we can stop waiting
                 } catch (SocketTimeoutException te) {
-                    continue;
+                    continue; // 2 seconds have passed, check to see if isRunning is true
                 } catch (Exception e) {
                     isError = true;
                     System.out.println("Error in ServerThread:");
@@ -88,7 +88,6 @@ public class ServerThread extends Thread {
                 oStream.flush();
                 iStream = new DataInputStream(s.getInputStream());
                 players.add(new Player(iStream.readUTF())); // get client's player name
-                System.out.println("#### player name: " + players.get(players.size()-1).getName());
                 if (!isError) {
                     // send list of all players
                     StringBuilder s = new StringBuilder();
@@ -98,9 +97,7 @@ public class ServerThread extends Thread {
                         pref = StateUpdate.U_DELIM;
                         s.append(StateUpdate.encode64(p.getName()));
                     }
-                    // Thread.sleep(1000);
-                    System.out.println("#### player list: " + s.toString());
-                    oStream.writeUTF(s.toString());
+                    oStream.writeUTF(s.toString()); // send full list of players to client
                 }
             } catch (Exception e) {
                 isError = true;
@@ -126,7 +123,7 @@ public class ServerThread extends Thread {
      * Returns true if this thread encountered an error, otherwise false.
      * @return true if this thread encountered an error, otherwise false.
     */
-    public boolean crashed() {
+    public boolean hasError() {
         return isError;
     }
 
