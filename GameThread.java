@@ -22,7 +22,8 @@ public class GameThread extends Thread {
      */
     public static final int DELAY = 500;
 
-    private boolean isServer, isRunning, clientFirst;
+    private boolean isServer;
+    private volatile boolean isRunning; // thread-safe
     private PlayerComputer self;
     private Queue<StateUpdate> updates;
 
@@ -43,7 +44,6 @@ public class GameThread extends Thread {
 
         updates = new LinkedList<StateUpdate>();
         isRunning = true;
-        clientFirst = true;
     }
 
     /**
@@ -226,8 +226,7 @@ public class GameThread extends Thread {
                         if (!upd[2].equals(StateUpdate.NULLCARD)) {
                             card = new Card(upd[2]);
                         }
-                        // self.dealCard(self.getMatch(name), card);
-                        // TODO card constructor with string
+                        self.dealCard(self.getMatch(name), card);
                         break;
                     case StateUpdate.BGIN_GAME:
                         self.startGame();
