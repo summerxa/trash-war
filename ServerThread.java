@@ -14,7 +14,7 @@ import java.util.List;
  * @author Sources - Meenakshi, Vaishnavi
  */
 public class ServerThread extends Thread {
-    private boolean isRunning, isError;
+    private volatile boolean isRunning; // thread-safe
     private List<Player> players;
     
     private ServerSocket ss;
@@ -29,7 +29,6 @@ public class ServerThread extends Thread {
     public ServerThread(Player host) {
         players = new ArrayList<Player>();
         players.add(host);
-        isError = false;
     }
 
     /**
@@ -43,7 +42,6 @@ public class ServerThread extends Thread {
             ss.setSoTimeout(2000); // refreshes every 2 seconds to see if thread was stopped
         } catch (Exception e) {
             ss = null;
-            isError = true;
             System.out.println("Error in ServerThread:");
             e.printStackTrace();
         }
@@ -62,14 +60,12 @@ public class ServerThread extends Thread {
                 } catch (SocketTimeoutException te) {
                     continue; // 2 seconds have passed, check to see if isRunning is true
                 } catch (Exception e) {
-                    isError = true;
                     System.out.println("Error in ServerThread:");
                     e.printStackTrace();
                     stopThread();
                 }
             }
         } catch (Exception e) {
-            isError = true;
             System.out.println("Error in ServerThread:");
             e.printStackTrace();
             stopThread();
@@ -88,7 +84,7 @@ public class ServerThread extends Thread {
                 oStream.flush();
                 iStream = new DataInputStream(s.getInputStream());
                 players.add(new Player(iStream.readUTF())); // get client's player name
-                if (!isError) {
+                if (players != null) {
                     // send list of all players
                     StringBuilder s = new StringBuilder();
                     String pref = "";
@@ -100,12 +96,10 @@ public class ServerThread extends Thread {
                     oStream.writeUTF(s.toString()); // send full list of players to client
                 }
             } catch (Exception e) {
-                isError = true;
                 System.out.println("Error in ServerThread:");
                 e.printStackTrace();
             }
         } catch (Exception e) {
-            isError = true;
             System.out.println("Error in ServerThread:");
             e.printStackTrace();
         }
@@ -117,14 +111,6 @@ public class ServerThread extends Thread {
      */
     public boolean isStopped() {
         return !isRunning;
-    }
-    
-    /**
-     * Returns true if this thread encountered an error, otherwise false.
-     * @return true if this thread encountered an error, otherwise false.
-    */
-    public boolean hasError() {
-        return isError;
     }
 
     /**
