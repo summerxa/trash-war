@@ -118,7 +118,7 @@ public class Client extends PlayerComputer {
      * a card.
      */
     public void dealCard(Player player, Card card) {
-        if (isPlaying) {
+        if (isPlaying) { 
             // TODO notify local class to update center deck
             // TODO notify GUI window to draw the card (if not done already)
         }
