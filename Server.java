@@ -118,6 +118,7 @@ public class Server extends PlayerComputer {
      * @param player the player who dealt the card.
      * @param card the card being dealt.
      */
+    // TODO (dont remove this) make GUI stuff threadsafe
     public void dealCard(Player player, Card card) {
         if (isPlaying) {
             if (card == null) {

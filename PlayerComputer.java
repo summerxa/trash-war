@@ -1,3 +1,5 @@
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
 /**
@@ -5,7 +7,7 @@ import java.util.List;
  * methods to perform actions and update the game state.
  * 
  * @author  Anne Xia
- * @version 05/12/2022
+ * @version 05/15/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
 */
@@ -60,6 +62,27 @@ public abstract class PlayerComputer {
      */
     public void dealCard(Player player, Card card) {
         // do nothing
+    }
+
+    /**
+     * Returns the IP address for the current computer.
+     * @return the IP address for the current computer.
+     * @throws UnknownHostException
+     */
+    public InetAddress getAddress() throws UnknownHostException {
+        return InetAddress.getLocalHost();
+    }
+
+    /**
+     * Returns the IP address for the current computer as a string.
+     * @return the IP address for the current computer as a string.
+     */
+    public String getAddressString() {
+        try {
+            return getAddress().getHostAddress();
+        } catch (Exception e) {
+            return "Error getting host address";
+        }
     }
 
     /**
