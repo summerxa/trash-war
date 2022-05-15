@@ -117,8 +117,9 @@ public class Client extends PlayerComputer {
      * only by GameThread, use the no-args version for actually dealing
      * a card.
      */
+    // TODO (dont remove this) make GUI stuff threadsafe
     public void dealCard(Player player, Card card) {
-        if (isPlaying) {
+        if (isPlaying) { 
             // TODO notify local class to update center deck
             // TODO notify GUI window to draw the card (if not done already)
         }
