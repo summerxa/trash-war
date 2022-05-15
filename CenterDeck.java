@@ -14,7 +14,7 @@ public class CenterDeck
 
     /**
      * Collection of all cards in the center deck TBD: What collection we are
-     * going to use; temporarily ArrayList
+     * going to use; temporarily LinkedList (most likely will stick with LinkedList)
      */
     private LinkedList<String> centerDeckCards;
 

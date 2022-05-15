@@ -1,25 +1,26 @@
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.net.*;
 
 /**
  * Once a "host" user chooses to create a server, this thread runs in the
  * background and accepts the client who requests to join the current game.
  * 
  * @author  Anne Xia
- * @version 05/10/2022
+ * @version 05/13/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
 public class ServerThread extends Thread {
-    private boolean isRunning;
+    private volatile boolean isRunning; // thread-safe
     private List<Player> players;
     
     private ServerSocket ss;
     private Socket s;
-    private ObjectInputStream iStream;
-    private ObjectOutputStream oStream;
+    private DataInputStream iStream;
+    private DataOutputStream oStream;
 
     /**
      * Constructs a ServerThread.
@@ -38,7 +39,7 @@ public class ServerThread extends Thread {
         s = null;
         try {
             ss = new ServerSocket(Server.PORT);
-            ss.setSoTimeout(2000);
+            ss.setSoTimeout(2000); // refreshes every 2 seconds to see if thread was stopped
         } catch (Exception e) {
             ss = null;
             System.out.println("Error in ServerThread:");
@@ -52,21 +53,12 @@ public class ServerThread extends Thread {
      */
     public void run() {
         try {
-            while (isRunning && s == null) {
+            while (isRunning) {
                 try {
                     s = ss.accept();
-                    try {
-                        oStream = new ObjectOutputStream(s.getOutputStream());
-                        oStream.flush();
-                        iStream = new ObjectInputStream(s.getInputStream());
-                        players.add(new Player(iStream.readUTF()));
-                    } catch (Exception e) {
-                        System.out.println("Error in ServerThread:");
-                        e.printStackTrace();
-                        stopThread();
-                    }
+                    stopThread(); // once player has joined, we can stop waiting
                 } catch (SocketTimeoutException te) {
-                    continue;
+                    continue; // 2 seconds have passed, check to see if isRunning is true
                 } catch (Exception e) {
                     System.out.println("Error in ServerThread:");
                     e.printStackTrace();
@@ -81,17 +73,32 @@ public class ServerThread extends Thread {
     }
 
     /**
-     * Stops the thread. Users will no longer be able to connect
-     * to the server.
+     * Stops the thread and sends list of all players to client's computer.
+     * Users will no longer be able to connect to the server.
      */
     public void stopThread() {
         isRunning = false;
         try {
-            oStream.writeObject(players);
-            oStream.flush();
-            oStream.close();
-            iStream.close();
-            ss.close();
+            try {
+                oStream = new DataOutputStream(s.getOutputStream());
+                oStream.flush();
+                iStream = new DataInputStream(s.getInputStream());
+                players.add(new Player(iStream.readUTF())); // get client's player name
+                if (players != null) {
+                    // send list of all players
+                    StringBuilder s = new StringBuilder();
+                    String pref = "";
+                    for (Player p : players) {
+                        s.append(pref);
+                        pref = StateUpdate.U_DELIM;
+                        s.append(StateUpdate.encode64(p.getName()));
+                    }
+                    oStream.writeUTF(s.toString()); // send full list of players to client
+                }
+            } catch (Exception e) {
+                System.out.println("Error in ServerThread:");
+                e.printStackTrace();
+            }
         } catch (Exception e) {
             System.out.println("Error in ServerThread:");
             e.printStackTrace();

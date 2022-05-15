@@ -61,7 +61,8 @@ public class Home extends Draw{
         space2.setForeground(Color.BLUE);
         JPanel panel2 = new JPanel();
         panel2.setBackground(Color.WHITE);
-       Image myPicture = ImageIO.read(new File("TrashWarImagesAndSounds\\re.png.jpg"));
+       Image myPicture = ImageIO.read(new File(getClass().getResource("TrashWarImagesAndSounds" + File.separator + "re.png.jpg").toURI()));
+
        // Image myPicture = ImageIO.read(new File("TrashWarImagesAndSounds\\orangepeel.jpg"));
         myPicture = getScaledImage(myPicture, 250, 250);
         JLabel l = new JLabel(new ImageIcon(myPicture));

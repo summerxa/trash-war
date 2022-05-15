@@ -16,23 +16,42 @@ import java.util.Random;
 
 public class Card
 { 
-  private String[] images;
+ /*  private String[] compost = {"TrashWarImagesAndSounds\\bananapeel.jpg", "TrashWarImagesAndSounds\\branches.jpg", 
+ "TrashWarImagesAndSounds\\orangepeel.jpg", "TrashWarImagesAndSounds\\compost.jpg"};
+
+  private String[] trash = {"TrashWarImagesAndSounds\\trash.jpg", "TrashWarImagesAndSounds\\chips.jpg", 
+  "TrashWarImagesAndSounds\\cermicpot.jpg",  "TrashWarImagesAndSounds\\diaper.jpg"};
+
+  private String[] recycle = {  "TrashWarImagesAndSounds\\recycle.jpg", "TrashWarImagesAndSounds\\aluminum.jpg", 
+  "TrashWarImagesAndSounds\\bottle.jpg", "TrashWarImagesAndSounds\\cardboard.jpg", "TrashWarImagesAndSounds\\glass.jpg"}; */
+  /**
+   * a String variable to store the type of card
+   */
+  
+  private String type;
+
+
   /**
    * Constructor
    */
   public Card(){
+    String[] typ = {"Compost", "Recycle", "Trash"};
+    Random rand = new Random();
+    type = typ[rand.nextInt(3)];
+  }
 
+  public Card(String type)
+  {
+    this.type = type; 
   }
 
   /**
    * Return the type of the card (Compost, Recycle, or Trash)
    * @return String
    */
-  public String typeOfCard(){
-    
-    String[] type = {"Compost", "Recycle", "Trash"};
-    Random rand = new Random();
-    return type[rand.nextInt(3)];
+  public String getType(){
+    return type; 
+   
   }
     
 }

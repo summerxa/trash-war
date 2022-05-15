@@ -10,19 +10,32 @@
 import java.awt.event.*;
 import java.util.Stack;
 
+
 public class PlayerDeck implements MouseListener {
 
     private Stack<Card> playersCards;
     CenterDeck d; 
+    int xCoor;
+    int yCoor;
+    int width; 
+    int length;
     
     /**
-     * Constructor of the class
-     * @param d
+     * 
+     * @param d CenterDeck
+     * @param x top left corner of playerdeck card x-coord
+     * @param y top left corner of playerdeck card y-coord
+     * @param width width of playerdeck card
+     * @param length length of playerdeck card
      */
-    public PlayerDeck(CenterDeck d){
+    public PlayerDeck(CenterDeck d, int x, int y, int width, int length){
 
         playersCards = new Stack<Card>();
         this.d = d;
+        this.xCoor = x;
+        this.yCoor = y;
+        this.width = width;
+        this.length = length;
     }
 
     public Stack<Card> getplayersCards(){
@@ -51,19 +64,17 @@ public class PlayerDeck implements MouseListener {
     }
 
     /**
-     * Check if a card of the players deck is clicked
-     * @return boolean
-     */
-    public boolean isClicked(){
-        return true;
-    }
-
-    /**
      * Check if the players clicked inside the bounds of their cards. 
      * @return
      */
     public boolean isInBounds(int x, int y){
-        return true;
+        if (((x <= xCoor + width) && (x >= xCoor)) && ((y <= yCoor + length) && (y >= yCoor)))
+        {
+            return true;
+        }
+
+        return false;
+        
     }
 
     /**
@@ -72,6 +83,7 @@ public class PlayerDeck implements MouseListener {
      * Uses getX() and getY() methods to get coordinates of the click
      * @param e
      */
+    
     public void mouseClicked(MouseEvent e){
         int x = e.getX();
         int y = e.getY();
