@@ -16,7 +16,7 @@ public class CenterDeck
      * Collection of all cards in the center deck TBD: What collection we are
      * going to use; temporarily ArrayList
      */
-    private LinkedList<Card> centerDeckCards;
+    private LinkedList<String> centerDeckCards;
 
     /**
      * Constructor
@@ -24,7 +24,7 @@ public class CenterDeck
     public CenterDeck()
     {
         
-        centerDeckCards = new LinkedList<Card>();
+        centerDeckCards = new LinkedList<String>();
     }
 
 
@@ -33,7 +33,7 @@ public class CenterDeck
      * 
      * @param card
      */
-    public void addCard(Card card)
+    public void addCard(String card)
     {
         centerDeckCards.add(card);
     }
@@ -43,7 +43,7 @@ public class CenterDeck
      * 
      * @param card
      */
-    public void addBottom(Card card)
+    public void addBottom(String card)
     {
         centerDeckCards.add(0, card);
     }
@@ -77,8 +77,8 @@ public class CenterDeck
     public boolean sandwich()
     {
         if (centerDeckCards.size() >= 2) {
-            return centerDeckCards.get(centerDeckCards.size() - 1).getType()
-            .equals(centerDeckCards.get(centerDeckCards.size() - 2).getType());
+            return centerDeckCards.get(centerDeckCards.size() - 1)
+            .equals(centerDeckCards.get(centerDeckCards.size() - 2));
             
         }
         else
@@ -96,21 +96,21 @@ public class CenterDeck
             int trashCount = 0;
             int compostCount = 0;
             int recycleCount = 0;
-            String one = centerDeckCards.get(centerDeckCards.size() - 1).getType();
+            String one = centerDeckCards.get(centerDeckCards.size() - 1);
             if (one.equals("Trash"))
                 trashCount++;
             else if (one.equals("Compost"))
                 compostCount++;
             else
                 recycleCount++;
-            String two = centerDeckCards.get(centerDeckCards.size() - 2).getType();
+            String two = centerDeckCards.get(centerDeckCards.size() - 2);
             if (two.equals("Trash"))
                 trashCount++;
             else if (two.equals("Compost"))
                 compostCount++;
             else
                 recycleCount++;
-            String three = centerDeckCards.get(centerDeckCards.size() - 3).getType();
+            String three = centerDeckCards.get(centerDeckCards.size() - 3);
             if (three.equals("Trash"))
                 trashCount++;
             else if (three.equals("Compost"))
@@ -131,8 +131,8 @@ public class CenterDeck
     public boolean topBottom()
     {
         if (centerDeckCards.size() >= 2)
-            return centerDeckCards.get(0).getType()
-                .equals(centerDeckCards.get(centerDeckCards.size() - 1).getType());
+            return centerDeckCards.get(0)
+                .equals(centerDeckCards.get(centerDeckCards.size() - 1));
         else
             return false;
     }
