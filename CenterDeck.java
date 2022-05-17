@@ -16,7 +16,7 @@ public class CenterDeck
      * Collection of all cards in the center deck TBD: What collection we are
      * going to use; temporarily LinkedList (most likely will stick with LinkedList)
      */
-    private LinkedList<String> centerDeckCards;
+    private LinkedList<Card> centerDeckCards;
 
     /**
      * Constructor
@@ -24,7 +24,7 @@ public class CenterDeck
     public CenterDeck()
     {
         
-        centerDeckCards = new LinkedList<String>();
+        centerDeckCards = new LinkedList<Card>();
     }
 
 
@@ -33,17 +33,27 @@ public class CenterDeck
      * 
      * @param card
      */
-    public void addCard(String card)
+    public void addCard(Card card)
     {
         centerDeckCards.add(card);
     }
 
     /**
+     * 
+     * @param type adds a card with given type
+     */
+    public void addCard(String type)
+    {
+        Card c = new Card(type);
+        centerDeckCards.add(c);
+    }
+    
+    /**
      * Adds a new card to the bottom of centerDeck
      * 
      * @param card
      */
-    public void addBottom(String card)
+    public void addBottom(Card card)
     {
         centerDeckCards.add(0, card);
     }
@@ -96,21 +106,21 @@ public class CenterDeck
             int trashCount = 0;
             int compostCount = 0;
             int recycleCount = 0;
-            String one = centerDeckCards.get(centerDeckCards.size() - 1);
+            String one = centerDeckCards.get(centerDeckCards.size() - 1).getType();
             if (one.equals("Trash"))
                 trashCount++;
             else if (one.equals("Compost"))
                 compostCount++;
             else
                 recycleCount++;
-            String two = centerDeckCards.get(centerDeckCards.size() - 2);
+            String two = centerDeckCards.get(centerDeckCards.size() - 2).getType();
             if (two.equals("Trash"))
                 trashCount++;
             else if (two.equals("Compost"))
                 compostCount++;
             else
                 recycleCount++;
-            String three = centerDeckCards.get(centerDeckCards.size() - 3);
+            String three = centerDeckCards.get(centerDeckCards.size() - 3).getType();
             if (three.equals("Trash"))
                 trashCount++;
             else if (three.equals("Compost"))

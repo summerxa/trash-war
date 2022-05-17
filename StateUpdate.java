@@ -158,7 +158,7 @@ public class StateUpdate {
             case CARD_SLAP:
                 return type + F_DELIM + player;
             case NEW_SCORE:
-                return type + F_DELIM + player + F_DELIM + score
+                return type + F_DELIM + player + F_DELIM + score;
             case DEAL_CARD:
                 // if card is null, calling getType() will cause NullPointerException,
                 // so just use a filler string
