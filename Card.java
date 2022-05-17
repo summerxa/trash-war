@@ -16,20 +16,24 @@ import java.util.Random;
 
 public class Card
 { 
- /*  private String[] compost = {"TrashWarImagesAndSounds\\bananapeel.jpg", "TrashWarImagesAndSounds\\branches.jpg", 
- "TrashWarImagesAndSounds\\orangepeel.jpg", "TrashWarImagesAndSounds\\compost.jpg"};
+   private String[] compost = {"TrashWarImagesAndSounds/bananapeel.jpg", "TrashWarImagesAndSounds/branches.jpg", 
+ "TrashWarImagesAndSounds/orangepeel.jpg", "TrashWarImagesAndSounds/compost.jpg"};
 
-  private String[] trash = {"TrashWarImagesAndSounds\\trash.jpg", "TrashWarImagesAndSounds\\chips.jpg", 
-  "TrashWarImagesAndSounds\\cermicpot.jpg",  "TrashWarImagesAndSounds\\diaper.jpg"};
+  private String[] trash = {"TrashWarImagesAndSounds/trash.jpg", "TrashWarImagesAndSounds/cardboard.jpg", 
+  "TrashWarImagesAndSounds/cermicpot.jpg",  "TrashWarImagesAndSounds/diaper.jpg"};
 
-  private String[] recycle = {  "TrashWarImagesAndSounds\\recycle.jpg", "TrashWarImagesAndSounds\\aluminum.jpg", 
-  "TrashWarImagesAndSounds\\bottle.jpg", "TrashWarImagesAndSounds\\cardboard.jpg", "TrashWarImagesAndSounds\\glass.jpg"}; */
+  private String[] recycle = {  "TrashWarImagesAndSounds/recycle.jpg", "TrashWarImagesAndSounds/aluminum.jpg", 
+  "TrashWarImagesAndSounds/bottle.jpg", "TrashWarImagesAndSounds/glass.jpg"}; 
   /**
    * a String variable to store the type of card
    */
   
   private String type;
 
+  /**
+   * a String variable to store the filepath of the image on card
+   */
+  private String filePath; 
 
   /**
    * Constructor
@@ -38,11 +42,39 @@ public class Card
     String[] typ = {"Compost", "Recycle", "Trash"};
     Random rand = new Random();
     type = typ[rand.nextInt(3)];
+    if (type.equals("Compost"))
+    {
+      filePath = compost[rand.nextInt(4)];
+    }
+    else if (type.equals("Recycle"))
+    {
+      filePath = recycle[rand.nextInt(4)];
+    }
+    else if (type.equals("Trash"))
+    {
+      filePath = trash[rand.nextInt(4)];
+    }
   }
+
+  /**
+   * 
+   * @param type the type of Card
+   */
 
   public Card(String type)
   {
     this.type = type; 
+  }
+
+  /**
+   * 
+   * @param type the type of Card
+   * @param fileP the filePath name
+   */
+  public Card(String type, String fileP)
+  {
+    this.type = type; 
+    filePath = fileP;
   }
 
   /**
@@ -52,6 +84,11 @@ public class Card
   public String getType(){
     return type; 
    
+  }
+  
+  public String getFilePath()
+  {
+    return filePath;
   }
     
 }
