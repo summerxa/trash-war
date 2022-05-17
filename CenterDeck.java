@@ -87,8 +87,8 @@ public class CenterDeck
     public boolean sandwich()
     {
         if (centerDeckCards.size() >= 2) {
-            return centerDeckCards.get(centerDeckCards.size() - 1)
-            .equals(centerDeckCards.get(centerDeckCards.size() - 2));
+            return centerDeckCards.get(centerDeckCards.size() - 1).getType()
+            .equals(centerDeckCards.get(centerDeckCards.size() - 2).getType());
             
         }
         else
@@ -141,8 +141,8 @@ public class CenterDeck
     public boolean topBottom()
     {
         if (centerDeckCards.size() >= 2)
-            return centerDeckCards.get(0)
-                .equals(centerDeckCards.get(centerDeckCards.size() - 1));
+            return centerDeckCards.get(0).getType()
+                .equals(centerDeckCards.get(centerDeckCards.size() - 1).getType());
         else
             return false;
     }
