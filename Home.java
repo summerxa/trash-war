@@ -25,8 +25,8 @@ import javax.imageio.ImageIO;
  */
 public class Home extends Draw{
 
-    public static JButton hostButton;
     public static JButton playerButton;
+    public static JButton hostsButton;
     public JFrame frame;
     public JLabel labell;
     public JTextField text;
@@ -78,15 +78,15 @@ public class Home extends Draw{
         
         Clicklistener click = new Clicklistener();
 
-        hostButton = new JButton("   Play Game     ");
-        hostButton.addActionListener(click);
-        playerButton = new JButton("Host a Game");
+        playerButton = new JButton("   Play Game     ");
         playerButton.addActionListener(click);
+        hostsButton = new JButton("Host a Game");
+        hostsButton.addActionListener(click);
         b.addActionListener(click);
         labell = new JLabel("                            Give player your IP Address");
         text = new JTextField("");
-        hostButton.setPreferredSize(new Dimension(300, 50));
         playerButton.setPreferredSize(new Dimension(300, 50));
+        hostsButton.setPreferredSize(new Dimension(300, 50));
 
         JPanel panel = new JPanel();
         JPanel newp = new JPanel();
@@ -99,9 +99,9 @@ public class Home extends Draw{
         panel2.add(panel);
         panel2.add(space3);
         panel2.add(space6);
-        panel2.add(hostButton);
-        panel2.add(space5);
         panel2.add(playerButton);
+        panel2.add(space5);
+        panel2.add(hostsButton);
         newp.setLayout(new GridLayout());
         newp.add(lab);
         lab.setBorder(new EmptyBorder(5,5,5,5));
@@ -140,13 +140,15 @@ public class Home extends Draw{
    
     class Clicklistener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == hostButton) {
+            if (e.getSource() == playerButton) {
                 try {
                    
                     labell.setVisible(false);
                     b.setVisible(true);
                    lab.setVisible(true);
                    text.setVisible(true);
+
+                   
 
                 
                 // b.setVisible(false);
@@ -163,13 +165,13 @@ public class Home extends Draw{
                 }
             }
 
-            if (e.getSource() == playerButton) {
+            if (e.getSource() == hostsButton) {
                 try {
                     // b.setVisible(false);
                     // lab.setVisible(false);
                     // text.setVisible(false);
                     // labell.setVisible(true);
-                    new Game();
+                    new Game(new Server());
                     
                  
                 } catch (Exception e1) {
@@ -181,7 +183,7 @@ public class Home extends Draw{
             if(e.getSource() == b){
                 try {
                     String value = textfield.getText();
-                    new Game();
+                    new Game(new Client(value));
                  
                 } catch (Exception e1) {
                     e1.printStackTrace();

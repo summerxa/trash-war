@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.List;
@@ -18,6 +19,7 @@ public abstract class PlayerComputer {
     public static final int PORT = 12345;
 
     protected List<Player> players;
+    protected Game gameWindow;
 
     /**
      * Starts the game.
@@ -61,9 +63,10 @@ public abstract class PlayerComputer {
      * Overloaded version of dealCard to display a card on GUI window.
      * @param player the player who dealt the card.
      * @param card the card being dealt.
+     * @throws IOException
      */
     // TODO replace dealcard in gamethread
-    public void drawCard(Player player, Card card) {
+    public void drawCard(Player player, Card card) throws IOException {
         // do nothing
     }
 
@@ -99,5 +102,9 @@ public abstract class PlayerComputer {
      */
     public void setPlayers(List<Player> players) {
         // do nothing
+    }
+
+    public void setGUI(Game theGame) {
+        gameWindow = theGame;
     }
 }

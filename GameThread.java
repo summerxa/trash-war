@@ -166,7 +166,7 @@ public class GameThread extends Thread {
             updates.add(su);
         }
     }
-
+// TODO change isServer to instanceof Server
     /**
      * Sends updates on the game state.
      */
@@ -226,7 +226,7 @@ public class GameThread extends Thread {
                         if (!upd[2].equals(StateUpdate.NULLCARD)) {
                             card = new Card(upd[2]);
                         }
-                        self.dealCard(self.getMatch(name), card);
+                        self.drawCard(self.getMatch(name), card);
                         break;
                     case StateUpdate.BGIN_GAME:
                         self.startGame();

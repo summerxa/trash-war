@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -28,6 +29,10 @@ public class Server extends PlayerComputer {
         sThread = new ServerThread(self);
         sThread.start();
         sThread.run();
+    }
+
+    public Server() {
+        this("Player 2");
     }
 
     /**
@@ -130,7 +135,15 @@ public class Server extends PlayerComputer {
             // TODO draw card on screen
             gThread.dealCard(player, card);
             //called game classes drawcard method(super.drawcard)
-            Game.draw(card);
+            try
+            {
+                gameWindow.draw(card);
+            }
+            catch (IOException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
     }
 

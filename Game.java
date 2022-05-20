@@ -25,18 +25,22 @@ public class Game
     public JPanel  panel;
     CenterDeck     cd   = new CenterDeck();
     JButton        slap = new JButton("Slap!");
+    private PlayerComputer pc;
 
-    public static void main(String[] args)
+    // public static void main(String[] args)
+    //     throws Exception
+    // {
+
+    //     new Game();
+    // }
+
+
+    public Game(PlayerComputer playercomp)
         throws Exception
     {
-
-        new Game();
-    }
-
-
-    public Game()
-        throws Exception
-    {
+        pc = playercomp;
+        pc.setGUI(this);
+        System.out.println(pc.getPlayers());
         MusicPlayer m = new MusicPlayer();
         String filePath = "TrashWarImagesAndSounds\\bensound-moose.wav";
         m.playMusic(filePath);
@@ -177,7 +181,7 @@ public class Game
                     String filePath = "TrashWarImagesAndSounds" + File.separator
                         + "mixkit-retro-arcade-casino-notification-211.wav";
                     m.playMusic(filePath);
-                    Client.dealCard();
+                    if(pc instanceof Client) pc.dealCard();
 
 
                 }
@@ -228,7 +232,7 @@ public class Game
                     MusicPlayer m = new MusicPlayer();
                     String filePath = "TrashWarImagesAndSounds" + File.separator
                         + "mixkit-retro-arcade-casino-notification-211.wav";
-                        Server.dealCard();
+                        if(pc instanceof Server) pc.dealCard();
                     // m.playMusic(filePath);
                     // String[] arr = new String[12];
                     // arr = init(arr);

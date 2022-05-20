@@ -1,4 +1,5 @@
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.DataInputStream;
 import java.net.Socket;
 import java.util.List;
@@ -34,6 +35,10 @@ public class Client extends PlayerComputer {
         self = new Player(playerName);
         // TODO initialize scores
         connectToServer(address);
+    }
+
+    public Client(String address) {
+        this(address, "Player 1");
     }
 
     /**
@@ -120,9 +125,9 @@ public class Client extends PlayerComputer {
      * a card.
      */
     // TODO (dont remove this) make GUI stuff threadsafe
-    public void dealCard(Player player, Card card) {
+    public void drawCard(Player player, Card card) throws IOException {
         if (isPlaying) { 
-            Game.draw(card); // How do we fix this?
+            gameWindow.draw(card); // How do we fix this?
             // TODO notify local class to update center deck
             // TODO notify GUI window to draw the card (if not done already)
             //call game classes draw card method, whith card as parameter
