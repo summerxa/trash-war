@@ -31,11 +31,11 @@ public class StateUpdate {
     public static final int STOP_GAME = 7890;
 
     /**
-     * Delimiter string for updates.
+     * Delimiter for updates.
      */
     public static final String U_DELIM = "~";
     /**
-     * Delimiter string for fields within updates.
+     * Delimiter for fields within updates.
      */
     public static final String F_DELIM = ":";
     /**
@@ -89,8 +89,7 @@ public class StateUpdate {
 
     /**
      * Encodes a string to base 64. This is used to encode the player
-     * name so that it does not contain any special characters used to
-     * format important information.
+     * name so that it does not contain any delimiter characters.
      * @param s string to encode.
      * @return encoded string.
      */
@@ -151,23 +150,25 @@ public class StateUpdate {
     }
 
     /**
-    * String representation of this update.
-    * @return String representation of this update.
+    * Returns a string representation of this update.
+    * @return a string representation of this update.
     */
     public String toString() {
-        if (type == CARD_SLAP) {
-            return type + F_DELIM + player;
-        } else if (type == NEW_SCORE) {
-            return type + F_DELIM + player + F_DELIM + score;
-        } else if (type == DEAL_CARD) {
-            // if card is null, calling getType() will cause an error, so just use a filler string
-            String cardString = NULLCARD;
-            if (card != null) {
-                cardString = card.getType();
-            }
-            return type + F_DELIM + player + F_DELIM + cardString;
-        } else {
-            return type + "";
+        switch (type) {
+            case CARD_SLAP:
+                return type + F_DELIM + player;
+            case NEW_SCORE:
+                return type + F_DELIM + player + F_DELIM + score;
+            case DEAL_CARD:
+                // if card is null, calling getType() will cause NullPointerException,
+                // so just use a filler string
+                String cardString = NULLCARD;
+                if (card != null) {
+                    cardString = card.getType();
+                }
+                return type + F_DELIM + player + F_DELIM + cardString;
+            default:
+                return type + "";
         }
     }
 }
