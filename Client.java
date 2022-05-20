@@ -29,6 +29,7 @@ public class Client extends PlayerComputer {
      * @param address the IP address of the server.
      * @param playerName the name of this player.
      */
+    // TODO throw
     public Client(String address, String playerName) {
         self = new Player(playerName);
         // TODO initialize scores
@@ -39,6 +40,7 @@ public class Client extends PlayerComputer {
      * Connects to a given server.
      * @param address the IP address of the server
      */
+    // TODO throw exceptiobs
     private void connectToServer(String address) {
         try {
             s = new Socket(address, PlayerComputer.PORT);
@@ -120,8 +122,10 @@ public class Client extends PlayerComputer {
     // TODO (dont remove this) make GUI stuff threadsafe
     public void dealCard(Player player, Card card) {
         if (isPlaying) { 
+            Game.draw(card); // How do we fix this?
             // TODO notify local class to update center deck
             // TODO notify GUI window to draw the card (if not done already)
+            //call game classes draw card method, whith card as parameter
         }
     }
 

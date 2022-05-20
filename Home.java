@@ -33,6 +33,7 @@ public class Home extends Draw{
     public JLabel lab = new JLabel(  "                           Hosts IP Address:");
     public JLabel space9 = new JLabel("");
     public JButton b = new JButton("Start");
+    private JTextField textfield = new JTextField();
 
     public static void main(String[] args) throws Exception {
         new Home();
@@ -146,6 +147,12 @@ public class Home extends Draw{
                     b.setVisible(true);
                    lab.setVisible(true);
                    text.setVisible(true);
+
+                
+                // b.setVisible(false);
+                // lab.setVisible(false);
+                // text.setVisible(false);
+                // labell.setVisible(true);
                     
                     
                     
@@ -158,10 +165,12 @@ public class Home extends Draw{
 
             if (e.getSource() == playerButton) {
                 try {
-                    b.setVisible(false);
-                    lab.setVisible(false);
-                    text.setVisible(false);
-                    labell.setVisible(true);
+                    // b.setVisible(false);
+                    // lab.setVisible(false);
+                    // text.setVisible(false);
+                    // labell.setVisible(true);
+                    new Game();
+                    
                  
                 } catch (Exception e1) {
                     // TODO Auto-generated catch block
@@ -171,10 +180,12 @@ public class Home extends Draw{
 
             if(e.getSource() == b){
                 try {
+                    String value = textfield.getText();
                     new Game();
                  
                 } catch (Exception e1) {
                     e1.printStackTrace();
+                    
                 }
             }
         }

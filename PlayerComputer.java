@@ -47,6 +47,8 @@ public abstract class PlayerComputer {
      * @param player the player whose score to update.
      * @param newScore the new score of the player.
      */
+    // TODO + empty deck, - burn and do nothing
+    // TODO insterad of score value do change in score
     public abstract void updatePoints(Player player, int newScore);
     
     /**
@@ -60,29 +62,9 @@ public abstract class PlayerComputer {
      * @param player the player who dealt the card.
      * @param card the card being dealt.
      */
-    public void dealCard(Player player, Card card) {
+    // TODO replace dealcard in gamethread
+    public void drawCard(Player player, Card card) {
         // do nothing
-    }
-
-    /**
-     * Returns the IP address for the current computer.
-     * @return the IP address for the current computer.
-     * @throws UnknownHostException
-     */
-    public InetAddress getAddress() throws UnknownHostException {
-        return InetAddress.getLocalHost();
-    }
-
-    /**
-     * Returns the IP address for the current computer as a string.
-     * @return the IP address for the current computer as a string.
-     */
-    public String getAddressString() {
-        try {
-            return getAddress().getHostAddress();
-        } catch (Exception e) {
-            return "Error getting host address";
-        }
     }
 
     /**

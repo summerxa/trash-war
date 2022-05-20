@@ -112,6 +112,9 @@ public class Server extends PlayerComputer {
         }
     }
 
+
+// TODO start and stop game internaly
+
     /**
      * Simulates a new random card being dealt.
      * Sends a message to the client that there is a new card.
@@ -126,6 +129,8 @@ public class Server extends PlayerComputer {
             }
             // TODO draw card on screen
             gThread.dealCard(player, card);
+            //called game classes drawcard method(super.drawcard)
+            Game.draw(card);
         }
     }
 

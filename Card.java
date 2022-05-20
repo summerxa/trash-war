@@ -29,6 +29,7 @@ public class Card
    */
   
   private String type;
+  private String filePath;
 
 
   /**
@@ -40,9 +41,10 @@ public class Card
     type = typ[rand.nextInt(3)];
   }
 
-  public Card(String type)
+  public Card(String type, String filePath)
   {
     this.type = type; 
+    this.filePath = filePath;
   }
 
   /**
@@ -52,6 +54,13 @@ public class Card
   public String getType(){
     return type; 
    
+
+
   }
-    
+
+  public String getFilePath(){
+    return filePath;
+
+  }
+
 }

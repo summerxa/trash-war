@@ -59,8 +59,9 @@ public class Game
         JLabel space = new JLabel("                                                   ");
 
         JLabel space2 = new JLabel("                                                   ");
-      
-        Image img = ImageIO.read(new File("TrashWarImagesAndSounds" + File.separator + "playerDeck1.jpg"));
+
+        Image img =
+            ImageIO.read(new File("TrashWarImagesAndSounds" + File.separator + "playerDeck1.jpg"));
         img = getScaledImage(img, 1000, 500);
         panel = new JPanel();
 
@@ -75,12 +76,14 @@ public class Game
         centerDeck.setEnabled(false);
         Color color = new Color(207, 185, 151);
         centerDeck.setBackground(color);
-        Image myPicture = ImageIO.read(new File("TrashWarImagesAndSounds" + File.separator + "playerDeck1.jpg"));
+        Image myPicture =
+            ImageIO.read(new File("TrashWarImagesAndSounds" + File.separator + "playerDeck1.jpg"));
         myPicture = getScaledImage(myPicture, 250, 300);
         playerDeck1 = new JButton(new ImageIcon(myPicture));
         playerDeck1.addActionListener(click);
         playerDeck1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        myPicture = ImageIO.read(new File("TrashWarImagesAndSounds" + File.separator + "playerDeck2.jpg"));
+        myPicture =
+            ImageIO.read(new File("TrashWarImagesAndSounds" + File.separator + "playerDeck2.jpg"));
         myPicture = getScaledImage(myPicture, 250, 300);
         playerDeck2 = new JButton(new ImageIcon(myPicture));
         playerDeck2.addActionListener(click);
@@ -127,8 +130,9 @@ public class Game
     }
 
 
-    public String[] init(String[] arr){
-        arr[0] = "Trash" + " "+ "TrashWarImagesAndSounds" + File.separator + "cardboard.jpg";
+    public String[] init(String[] arr)
+    {
+        arr[0] = "Trash" + " " + "TrashWarImagesAndSounds" + File.separator + "cardboard.jpg";
         arr[1] = "Trash" + " " + "TrashWarImagesAndSounds" + File.separator + "cermicpot.jpg";
         arr[2] = "Trash" + " " + "TrashWarImagesAndSounds" + File.separator + "diaper.jpg";
         arr[3] = "Trash" + " " + "TrashWarImagesAndSounds" + File.separator + "trash.jpg";
@@ -147,6 +151,18 @@ public class Game
 
     }
 
+
+    public void draw(Card card) throws IOException
+    {
+        String filePath = card.getFilePath();
+        Image myPicture = ImageIO.read(new File(filePath));
+        myPicture = getScaledImage(myPicture, 250, 300);
+        centerDeck.setEnabled(true);
+        centerDeck.setIcon(new ImageIcon(myPicture));
+        cd.addCard(card.getType());
+
+    }
+
     class Clicklistener
         implements ActionListener
     {
@@ -156,49 +172,13 @@ public class Game
             {
                 try
                 {
+
                     MusicPlayer m = new MusicPlayer();
-                    String filePath = "TrashWarImagesAndSounds" + File.separator + "mixkit-retro-arcade-casino-notification-211.wav";
+                    String filePath = "TrashWarImagesAndSounds" + File.separator
+                        + "mixkit-retro-arcade-casino-notification-211.wav";
                     m.playMusic(filePath);
-                    String[] arr = new String[12];
-                    arr = init(arr);
-                    // System.out.println(arr[0]);
-                    int i = (int)(Math.random() * 12);
+                    Client.dealCard();
 
-                    System.out.println(i + " " + arr[i]);
-                    String[] buffer = arr[i].split(" ");
-                    String path = buffer[1];
-                    String type = buffer[0];
-                    Image myPicture = ImageIO.read(new File(path));
-                    myPicture = getScaledImage(myPicture, 250, 300);
-                    centerDeck.setEnabled(true);
-                    centerDeck.setIcon(new ImageIcon(myPicture));
-                    cd.addCard(type);
-
-                    // Card[] arr = new Card[12];
-                    // System.out.println("ksjdfh");
-                    // arr = card.init(arr);
-                    // int i = card.index();
-                    // String p = arr[i].path;
-                    // Image myPicture = ImageIO.read(new File(p));
-                    // myPicture = getScaledImage(myPicture, 250, 300);
-                    // centerDeck.setEnabled(true);
-                    // centerDeck.setIcon(new ImageIcon(myPicture));
-
-                    // if the button is clicked, I need to place a new button
-                    // with a random image in the center deck pile
-                    // random images will be:
-                    // trash word/label
-                    // cardboard
-                    // ceramic pot
-                    // diaper
-                    // recycle word/label
-                    // aluminum can
-                    // plastic bottle
-                    // glass jar
-                    // compost word/label
-                    // branches
-                    // orange peels
-                    // banana peels
 
                 }
                 catch (Exception e1)
@@ -217,21 +197,17 @@ public class Game
                         if (cd.sandwich() || cd.threeInARow() || cd.topBottom())
                         {
                             Congrats c = new Congrats();
-                            new java.util.Timer().schedule( 
-                                new java.util.TimerTask() {
-                                    @Override
-                                    public void run() {
-                                        c.dispose();
-                                    }
-                                }, 
-                                700 
-                        );
-                          
-                            
+                            new java.util.Timer().schedule(new java.util.TimerTask() {
+                                @Override
+                                public void run()
+                                {
+                                    c.dispose();
+                                }
+                            }, 700);
+
                         }
                         else
                         {
-                            
 
                         }
                     }
@@ -242,6 +218,7 @@ public class Game
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
+                // caall slapcardmethod
             }
 
             if (e.getSource() == playerDeck2)
@@ -249,23 +226,25 @@ public class Game
                 try
                 {
                     MusicPlayer m = new MusicPlayer();
-                    String filePath = "TrashWarImagesAndSounds" + File.separator + "mixkit-retro-arcade-casino-notification-211.wav";
-                    m.playMusic(filePath);
-                    String[] arr = new String[12];
-                    arr = init(arr);
-                    // System.out.println(arr[0]);
-                    int i = (int)(Math.random() * 12);
+                    String filePath = "TrashWarImagesAndSounds" + File.separator
+                        + "mixkit-retro-arcade-casino-notification-211.wav";
+                        Server.dealCard();
+                    // m.playMusic(filePath);
+                    // String[] arr = new String[12];
+                    // arr = init(arr);
+                    // // System.out.println(arr[0]);
+                    // int i = (int)(Math.random() * 12);
 
-                    System.out.println(i + " " + arr[i]);
-                    String[] buffer = arr[i].split(" ");
-                    String type = buffer[0];
-                    String path = buffer[1];
-                    Image myPicture = ImageIO.read(new File(path));
-                    myPicture = getScaledImage(myPicture, 250, 300);
-                    centerDeck.setEnabled(true);
-                    centerDeck.setIcon(new ImageIcon(myPicture));
+                    // System.out.println(i + " " + arr[i]);
+                    // String[] buffer = arr[i].split(" ");
+                    // String type = buffer[0];
+                    // String path = buffer[1];
+                    // Image myPicture = ImageIO.read(new File(path));
+                    // myPicture = getScaledImage(myPicture, 250, 300);
+                    // centerDeck.setEnabled(true);
+                    // centerDeck.setIcon(new ImageIcon(myPicture));
 
-                    cd.addCard(type);
+                    // cd.addCard(type);
 
                 }
                 catch (Exception e1)
