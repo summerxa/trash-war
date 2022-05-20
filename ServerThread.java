@@ -45,6 +45,7 @@ public class ServerThread extends Thread {
             System.out.println("Error in ServerThread:");
             e.printStackTrace();
         }
+        super.start();
     }
 
     /**

@@ -28,7 +28,6 @@ public class Server extends PlayerComputer {
         self = new Player(playerName);
         sThread = new ServerThread(self);
         sThread.start();
-        sThread.run();
     }
 
     public Server() {
