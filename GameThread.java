@@ -118,13 +118,13 @@ public class GameThread extends Thread {
      * For servers only, sends a message to the client that a player's
      * score has changed.
      * @param player the player whose score changed.
-     * @param newScore the new score of the player.
+     * @param diff the change in score of the player.
      */
-    public void changeScore(Player player, int newScore) {
+    public void updatePoints(Player player, int diff) {
         if (!isServer) {
             return;
         }
-        addUpdate(new StateUpdate(player, newScore));
+        addUpdate(new StateUpdate(player, diff));
     }
 
     /**

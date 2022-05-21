@@ -47,11 +47,11 @@ public abstract class PlayerComputer {
     /**
      * Updates the score of a given player.
      * @param player the player whose score to update.
-     * @param newScore the new score of the player.
+     * @param diff how much the score changed by,
+     *             positive for add points and negative for subtract.
      */
-    // TODO + empty deck, - burn and do nothing
-    // TODO insterad of score value do change in score
-    public abstract void updatePoints(Player player, int newScore);
+    // TODO pos = empty out deck, neg = burn and do nothing
+    public abstract void updatePoints(Player player, int diff);
     
     /**
      * Simulates a new card being dealt.
@@ -65,8 +65,7 @@ public abstract class PlayerComputer {
      * @param card the card being dealt.
      * @throws IOException
      */
-    // TODO replace dealcard in gamethread
-    public void drawCard(Player player, Card card) throws IOException {
+    public void drawCard (Player player, Card card) throws IOException {
         // do nothing
     }
 
@@ -104,6 +103,10 @@ public abstract class PlayerComputer {
         // do nothing
     }
 
+    /**
+     * Sets the local game window to the given one.
+     * @param theGame a Game object.
+     */
     public void setGUI(Game theGame) {
         gameWindow = theGame;
     }
