@@ -42,7 +42,7 @@ public class Game
         System.out.println("#### is server? " + (pc instanceof Server));
         System.out.println(pc.getPlayers());
         MusicPlayer m = new MusicPlayer();
-        String filePath = "TrashWarImagesAndSounds\\bensound-moose.wav";
+        String filePath = "TrashWarImagesAndSounds/bensound-moose.wav";
         m.playMusic(filePath);
         design();
     }
