@@ -37,7 +37,6 @@ public class Server extends PlayerComputer {
      * and creating a GameThread for each user.
      */
     public void startGame() {
-        super.startGame();
         players = sThread.getPlayerList();
         // the last condition is because we expect this to be a 2-player game
         if (players == null || players.isEmpty() || players.size() > 2) {
@@ -52,6 +51,7 @@ public class Server extends PlayerComputer {
         gThread = new GameThread(this, true, sThread.getSocket());
         gThread.start();
         gThread.startGame();
+        super.startGame();
     }
 
     /**

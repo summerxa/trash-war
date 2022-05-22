@@ -165,7 +165,9 @@ public class GameThread extends Thread {
             updates.add(su);
         }
     }
-// TODO change isServer to instanceof Server
+    
+    // TODO change isServer to instanceof Server
+
     /**
      * Sends updates on the game state.
      */

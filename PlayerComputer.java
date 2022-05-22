@@ -1,6 +1,8 @@
 import java.io.IOException;
 import java.util.List;
 
+import javax.swing.SwingUtilities;
+
 /**
  * Abstract parent class for the Server and Client. Provides
  * methods to perform actions and update the game state.
@@ -25,6 +27,29 @@ public abstract class PlayerComputer {
      */
     public void startGame() {
         isPlaying = true;
+        launchGame();
+    }
+
+    /**
+     * Creates the game window.
+     */
+    private void launchGame() {
+        if (!SwingUtilities.isEventDispatchThread()) {
+            // if this method was called by a non-main thread, move it to main
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    launchGame();
+                }
+            });
+            return;
+        }
+        try {
+            gameWindow = new Game(this);
+        } catch (Exception e) {
+            System.out.println("Error while launching game window:");
+            e.printStackTrace();
+        }
     }
     
     /**
@@ -121,13 +146,5 @@ public abstract class PlayerComputer {
      */
     public void setPlayers(List<Player> players) {
         // do nothing
-    }
-
-    /**
-     * Sets the local game window to the given one.
-     * @param theGame a Game object.
-     */
-    public void setGUI(Game theGame) {
-        gameWindow = theGame;
     }
 }
