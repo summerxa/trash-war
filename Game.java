@@ -41,7 +41,7 @@ public class Game
         pc = playercomp;
         System.out.println(pc.getPlayers());
         MusicPlayer m = new MusicPlayer();
-        String filePath = "TrashWarImagesAndSounds\\bensound-moose.wav";
+        String filePath = "TrashWarImagesAndSounds/bensound-moose.wav";
         m.playMusic(filePath);
         design();
     }
