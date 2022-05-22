@@ -35,6 +35,7 @@ public class Home extends Draw{
     public JButton b = new JButton("Start");
     private JTextField textfield = new JTextField();
 
+
     public static void main(String[] args) throws Exception {
         new Home();
     }
@@ -107,7 +108,7 @@ public class Home extends Draw{
         lab.setBorder(new EmptyBorder(5,5,5,5));
         newp.add(text);
       pa.add(b);
-      b.setVisible(true);
+      b.setVisible(false);
         newp.add(labell);
         newp.add(space9);
        newp.setBackground(Color.WHITE);
@@ -142,6 +143,7 @@ public class Home extends Draw{
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == playerButton) {
                 try {
+                    
                    
                     labell.setVisible(false);
                     b.setVisible(true);
@@ -167,11 +169,12 @@ public class Home extends Draw{
 
             if (e.getSource() == hostsButton) {
                 try {
-                    // b.setVisible(false);
-                    // lab.setVisible(false);
-                    // text.setVisible(false);
-                    // labell.setVisible(true);
-                    new Game(new Server());
+                    labell.setVisible(false);
+                    b.setVisible(true);
+                   lab.setVisible(false);
+                   text.setVisible(false);
+
+                    
                     
                  
                 } catch (Exception e1) {
@@ -182,9 +185,16 @@ public class Home extends Draw{
 
             if(e.getSource() == b){
                 try {
-                    String value = textfield.getText();
+                    if(textfield.isVisible()){
+                        String value = textfield.getText();
                     
-                    new Game(new Client(value));
+                        new Game(new Client(value));
+
+                    }
+                    else{
+                        new Game(new Server());
+                    }
+                   
                  
                 } catch (Exception e1) {
                     e1.printStackTrace();
