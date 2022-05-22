@@ -129,11 +129,10 @@ public class GameThread extends Thread {
 
     /**
      * For either server or client, deals a card and notifies the other player.
-     * @param player the player who dealt a card.
      * @param card the card.
      */
-    public void dealCard(Player player, Card card) {
-        addUpdate(new StateUpdate(player, card));
+    public void dealCard(Card card) {
+        addUpdate(new StateUpdate(card));
     }
     
     /**
@@ -226,7 +225,7 @@ public class GameThread extends Thread {
                         if (!upd[2].equals(StateUpdate.NULLCARD)) {
                             card = new Card(upd[2]);
                         }
-                        self.drawCard(self.getMatch(name), card);
+                        self.drawCard(card);
                         break;
                     case StateUpdate.BGIN_GAME:
                         self.startGame();

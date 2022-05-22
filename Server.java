@@ -14,7 +14,6 @@ public class Server extends PlayerComputer {
     private ServerThread sThread;
     private GameThread gThread;
     
-    private boolean isPlaying;
     private Player self;
     private Score scores;
 
@@ -24,7 +23,6 @@ public class Server extends PlayerComputer {
      * @param playerName the name of this player.
      */
     public Server(String playerName) {
-        isPlaying = false;
         self = new Player(playerName);
         sThread = new ServerThread(self);
         sThread.start();
@@ -39,6 +37,7 @@ public class Server extends PlayerComputer {
      * and creating a GameThread for each user.
      */
     public void startGame() {
+        super.startGame();
         players = sThread.getPlayerList();
         // the last condition is because we expect this to be a 2-player game
         if (players == null || players.isEmpty() || players.size() > 2) {
@@ -49,7 +48,6 @@ public class Server extends PlayerComputer {
                 System.out.println("Player list has size " + players.size());
             }
         }
-        isPlaying = true;
         // TODO initialize scores
         gThread = new GameThread(this, true, sThread.getSocket());
         gThread.start();
@@ -60,7 +58,7 @@ public class Server extends PlayerComputer {
      * Stops the game by stopping each user's thread.
      */
     public void stopGame() {
-        isPlaying = false;
+        super.stopGame();
         gThread.stopGame();
         try {
             gThread.join(); // wait for game thread to notify client
@@ -99,6 +97,7 @@ public class Server extends PlayerComputer {
      */
     public void updatePoints(Player player, int diff) {
         if (isPlaying) {
+            super.updatePoints(player, diff);
             gThread.updatePoints(player, diff);
             // TODO refresh scoreboard
             // TODO stop game internally if point threshold met
@@ -112,8 +111,8 @@ public class Server extends PlayerComputer {
     public void dealCard() {
         if (isPlaying) {
             Card card = new Card();
-            // TODO remove one card from your deck
-            drawCard(self, card);
+            // TODO player now has one less card (if using a finite # of cards vs infinite)
+            drawCard(card);
         }
     }
 
@@ -124,16 +123,15 @@ public class Server extends PlayerComputer {
      * @param card the card being dealt.
      */
     // TODO (dont remove this) make GUI stuff threadsafe
-    public void drawCard(Player player, Card card) {
+    public void drawCard(Card card) {
         if (isPlaying) {
             if (card == null) {
                 card = new Card();
             }
-            // TODO draw card on screen
-            gThread.dealCard(player, card);
+            gThread.dealCard(card);
             //called game classes drawcard method(super.drawcard)
             try {
-                gameWindow.draw(card);
+                super.drawCard(card);
             } catch (IOException e) {
                 System.out.println("Exception in Server:");
                 e.printStackTrace();

@@ -22,7 +22,6 @@ public class Client extends PlayerComputer {
     private DataInputStream iStream;
     private DataOutputStream oStream;
 
-    private boolean isPlaying;
     private Player self;
     private Score scores;
     
@@ -63,7 +62,6 @@ public class Client extends PlayerComputer {
             oStream.writeUTF(self.getName()); // sends player name to server
             iStream = new DataInputStream(s.getInputStream());
 
-            isPlaying = false;
             gThread = new GameThread(this, false, s);
             gThread.start();
         } catch (Exception ex) {
@@ -73,17 +71,10 @@ public class Client extends PlayerComputer {
     }
 
     /**
-     * Starts the game.
-     */
-    public void startGame() {
-        isPlaying = true;
-    }
-
-    /**
      * Stops the game by stopping the current user's thread.
      */
     public void stopGame() {
-        isPlaying = false;
+        super.stopGame();
         gThread.stopThread();
     }
     
@@ -92,7 +83,6 @@ public class Client extends PlayerComputer {
      */
     public void slapCard() {
         if (isPlaying) {
-            System.out.println("#### card slap");
             gThread.slapCard(self);
         }
     }
@@ -104,7 +94,7 @@ public class Client extends PlayerComputer {
      */
     public void updatePoints(Player player, int diff) {
         if (isPlaying) {
-            player.addPoints(diff);
+            super.updatePoints(player, diff);
             // TODO refresh scoreboard
         }
     }
@@ -116,9 +106,9 @@ public class Client extends PlayerComputer {
      */
     public void dealCard() {
         if (isPlaying) {
-            gThread.dealCard(self, null);
+            gThread.dealCard(null);
             // actual card will be generated on server, null is a filler "default" value
-            // TODO remove one card from current player's stack 
+            // TODO player now has one less card (if using a finite # of cards vs. infinite)
         }
     }
 
@@ -126,9 +116,10 @@ public class Client extends PlayerComputer {
      * Displays the random card generated. This method should be called
      * only by GameThread, use the no-args version for actually dealing
      * a card.
+     * @param card the card to draw.
      */
     // TODO (dont remove this) make GUI stuff threadsafe
-    public void drawCard(Player player, Card card) throws IOException {
+    public void drawCard(Card card) throws IOException {
         if (isPlaying) { 
             gameWindow.draw(card); // How do we fix this?
             // TODO notify local class to update center deck
