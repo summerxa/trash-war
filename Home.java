@@ -189,8 +189,8 @@ public class Home extends Draw{
 
             if(e.getSource() == b){
                 try {
-                    if(text.isVisible()){
-                        String value = text.getText();
+                    if(textfield.isVisible()){
+                        String value = textfield.getText();
                     
                         // new Game(new Client(value));
                         pc = new Client(value);
