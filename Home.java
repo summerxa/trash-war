@@ -107,7 +107,7 @@ public class Home extends Draw{
         lab.setBorder(new EmptyBorder(5,5,5,5));
         newp.add(text);
       pa.add(b);
-      b.setVisible(false);
+      b.setVisible(true);
         newp.add(labell);
         newp.add(space9);
        newp.setBackground(Color.WHITE);
@@ -183,6 +183,7 @@ public class Home extends Draw{
             if(e.getSource() == b){
                 try {
                     String value = textfield.getText();
+                    
                     new Game(new Client(value));
                  
                 } catch (Exception e1) {
