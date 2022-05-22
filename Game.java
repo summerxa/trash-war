@@ -39,7 +39,6 @@ public class Game
         throws Exception
     {
         pc = playercomp;
-        pc.setGUI(this);
         System.out.println(pc.getPlayers());
         MusicPlayer m = new MusicPlayer();
         String filePath = "TrashWarImagesAndSounds\\bensound-moose.wav";

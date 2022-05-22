@@ -1,7 +1,7 @@
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.List;
+
+import javax.swing.SwingUtilities;
 
 /**
  * Abstract parent class for the Server and Client. Provides
@@ -20,16 +20,44 @@ public abstract class PlayerComputer {
 
     protected List<Player> players;
     protected Game gameWindow;
+    protected boolean isPlaying = false;
 
     /**
      * Starts the game.
      */
-    public abstract void startGame();
+    public void startGame() {
+        isPlaying = true;
+        launchGame();
+    }
+
+    /**
+     * Creates the game window.
+     */
+    private void launchGame() {
+        if (!SwingUtilities.isEventDispatchThread()) {
+            // if this method was called by a non-main thread, move it to main
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    launchGame();
+                }
+            });
+            return;
+        }
+        try {
+            gameWindow = new Game(this);
+        } catch (Exception e) {
+            System.out.println("Error while launching game window:");
+            e.printStackTrace();
+        }
+    }
     
     /**
      * Stops the game.
      */
-    public abstract void stopGame();
+    public void stopGame() {
+        isPlaying = false;
+    }
     
     /**
      * Simulates a player slapping a card.
@@ -51,7 +79,23 @@ public abstract class PlayerComputer {
      *             positive for add points and negative for subtract.
      */
     // TODO pos = empty out deck, neg = burn and do nothing
-    public abstract void updatePoints(Player player, int diff);
+    public void updatePoints(Player player, int diff) {
+        if (isPlaying) {
+            player.addPoints(diff);
+            if (diff > 0) {
+                clearDeck();
+            }
+        }
+    }
+
+    /**
+     * Empties out the center deck.
+     */
+    private void clearDeck() {
+        if (isPlaying) {
+            // TODO access centerDeck and empty it out
+        }
+    }
     
     /**
      * Simulates a new card being dealt.
@@ -60,13 +104,14 @@ public abstract class PlayerComputer {
     public abstract void dealCard();
     
     /**
-     * Overloaded version of dealCard to display a card on GUI window.
-     * @param player the player who dealt the card.
-     * @param card the card being dealt.
+     * Displays a card on the GUI game window.
+     * @param card the card to draw.
      * @throws IOException
      */
-    public void drawCard (Player player, Card card) throws IOException {
-        // do nothing
+    public void drawCard(Card card) throws IOException {
+        if (isPlaying) {
+            // TODO draw the card
+        }
     }
 
     /**
@@ -101,13 +146,5 @@ public abstract class PlayerComputer {
      */
     public void setPlayers(List<Player> players) {
         // do nothing
-    }
-
-    /**
-     * Sets the local game window to the given one.
-     * @param theGame a Game object.
-     */
-    public void setGUI(Game theGame) {
-        gameWindow = theGame;
     }
 }

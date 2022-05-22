@@ -43,7 +43,7 @@ public class StateUpdate {
      */
     public static final String NULLCARD = "null";
 
-    private String player;
+    private String player = null;
     private int type;
     private int diff = -1;
     private Card card = null;
@@ -73,9 +73,8 @@ public class StateUpdate {
      * @param player the player who dealt the card.
      * @param card the card.
      */
-    public StateUpdate(Player player, Card card) {
+    public StateUpdate(Card card) {
         type = DEAL_CARD;
-        this.player = encode64(player.getName());
         this.card = card;
     }
     
@@ -150,9 +149,10 @@ public class StateUpdate {
     }
 
     /**
-    * Returns a string representation of this update.
-    * @return a string representation of this update.
-    */
+     * Returns a string representation of this update. Player name
+     * will be encoded.
+     * @return a string representation of this update.
+     */
     public String toString() {
         switch (type) {
             case CARD_SLAP:
