@@ -29,7 +29,7 @@ public class Home extends Draw{
     public static JButton hostsButton;
     public JFrame frame;
     public JLabel labell;
-    public JTextField text;
+  //  public JTextField text;
     public JLabel lab = new JLabel(  "                           Hosts IP Address:");
     public JLabel space9 = new JLabel("");
     public JButton b = new JButton("Start");
@@ -85,7 +85,7 @@ public class Home extends Draw{
         hostsButton.addActionListener(click);
         b.addActionListener(click);
         labell = new JLabel("                            Give player your IP Address");
-        text = new JTextField("");
+        textfield = new JTextField("");
         playerButton.setPreferredSize(new Dimension(300, 50));
         hostsButton.setPreferredSize(new Dimension(300, 50));
 
@@ -106,7 +106,7 @@ public class Home extends Draw{
         newp.setLayout(new GridLayout());
         newp.add(lab);
         lab.setBorder(new EmptyBorder(5,5,5,5));
-        newp.add(text);
+        newp.add(textfield);
       pa.add(b);
       b.setVisible(false);
         newp.add(labell);
@@ -122,7 +122,7 @@ public class Home extends Draw{
         
         frame.add(panel2);
         frame.setVisible(true);
-        text.setVisible(false);
+        textfield.setVisible(false);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
@@ -148,7 +148,7 @@ public class Home extends Draw{
                     labell.setVisible(false);
                     b.setVisible(true);
                    lab.setVisible(true);
-                   text.setVisible(true);
+                   textfield.setVisible(true);
 
                    
 
@@ -172,7 +172,7 @@ public class Home extends Draw{
                     labell.setVisible(false);
                     b.setVisible(true);
                    lab.setVisible(false);
-                   text.setVisible(false);
+                   textfield.setVisible(false);
 
                     
                     
