@@ -29,12 +29,7 @@ public class ServerThread extends Thread {
     public ServerThread(Player host) {
         players = new ArrayList<Player>();
         players.add(host);
-    }
 
-    /**
-     * Starts the thread.
-     */
-    public void start() {
         isRunning = true;
         s = null;
         try {
@@ -45,7 +40,6 @@ public class ServerThread extends Thread {
             System.out.println("Error in ServerThread:");
             e.printStackTrace();
         }
-        super.start();
     }
 
     /**

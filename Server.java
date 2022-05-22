@@ -95,12 +95,13 @@ public class Server extends PlayerComputer {
      * Sends a message to the client that a player's
      * score has changed.
      * @param player the player whose score changed.
-     * @param newScore the new score of the player.
+     * @param diff the change in score of the player.
      */
-    public void updatePoints(Player player, int newScore) {
+    public void updatePoints(Player player, int diff) {
         if (isPlaying) {
-            gThread.changeScore(player, newScore);
+            gThread.updatePoints(player, diff);
             // TODO refresh scoreboard
+            // TODO stop game internally if point threshold met
         }
     }
     
@@ -112,12 +113,9 @@ public class Server extends PlayerComputer {
         if (isPlaying) {
             Card card = new Card();
             // TODO remove one card from your deck
-            dealCard(self, card);
+            drawCard(self, card);
         }
     }
-
-
-// TODO start and stop game internaly
 
     /**
      * Simulates a new random card being dealt.
@@ -126,7 +124,7 @@ public class Server extends PlayerComputer {
      * @param card the card being dealt.
      */
     // TODO (dont remove this) make GUI stuff threadsafe
-    public void dealCard(Player player, Card card) {
+    public void drawCard(Player player, Card card) {
         if (isPlaying) {
             if (card == null) {
                 card = new Card();
@@ -134,13 +132,10 @@ public class Server extends PlayerComputer {
             // TODO draw card on screen
             gThread.dealCard(player, card);
             //called game classes drawcard method(super.drawcard)
-            try
-            {
+            try {
                 gameWindow.draw(card);
-            }
-            catch (IOException e)
-            {
-                // TODO Auto-generated catch block
+            } catch (IOException e) {
+                System.out.println("Exception in Server:");
                 e.printStackTrace();
             }
         }

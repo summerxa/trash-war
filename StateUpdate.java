@@ -45,7 +45,7 @@ public class StateUpdate {
 
     private String player;
     private int type;
-    private int score = -1;
+    private int diff = -1;
     private Card card = null;
 
     /**
@@ -60,18 +60,18 @@ public class StateUpdate {
     /**
      * Constructs a score change update.
      * @param player the player whose score changed.
-     * @param newScore the player's new score.
+     * @param diff the player's change in score.
      */
-    public StateUpdate(Player player, int newScore) {
+    public StateUpdate(Player player, int diff) {
         type = NEW_SCORE;
         this.player = encode64(player.getName());
-        score = newScore;
+        this.diff = diff;
     }
 
     /**
      * Constructs a deal card update.
      * @param player the player who dealt the card.
-     * @param newScore the card.
+     * @param card the card.
      */
     public StateUpdate(Player player, Card card) {
         type = DEAL_CARD;
@@ -130,13 +130,13 @@ public class StateUpdate {
     }
 
     /**
-     * If this update is a score change, gets the new score
+     * If this update is a score change, gets the change in score
      * of the player. If not, returns -1.
-     * @return the new score of the player, or -1 if this is
+     * @return the change in score of the player, or -1 if this is
      *         not a score change update.
      */
-    public int getScore() {
-        return score;
+    public int getScoreDiff() {
+        return diff;
     }
 
     /**
@@ -158,7 +158,7 @@ public class StateUpdate {
             case CARD_SLAP:
                 return type + F_DELIM + player;
             case NEW_SCORE:
-                return type + F_DELIM + player + F_DELIM + score;
+                return type + F_DELIM + player + F_DELIM + diff;
             case DEAL_CARD:
                 // if card is null, calling getType() will cause NullPointerException,
                 // so just use a filler string

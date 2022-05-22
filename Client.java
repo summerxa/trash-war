@@ -2,6 +2,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.DataInputStream;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -29,36 +30,38 @@ public class Client extends PlayerComputer {
      * Constructs a client and connects to a server.
      * @param address the IP address of the server.
      * @param playerName the name of this player.
+     * @throws IOException
+     * @throws UnknownHostException
      */
-    // TODO throw
-    public Client(String address, String playerName) {
+    public Client(String address, String playerName) throws UnknownHostException, IOException {
         self = new Player(playerName);
         // TODO initialize scores
         connectToServer(address);
     }
 
-    public Client(String address) {
+    /**
+     * Constructs a client and connects to a server. Player is given a default name.
+     * @param address the IP address of the server.
+     * @throws UnknownHostException
+     * @throws IOException
+     */
+    public Client(String address) throws UnknownHostException, IOException {
         this(address, "Player 1");
     }
 
     /**
      * Connects to a given server.
      * @param address the IP address of the server
+     * @throws IOException
+     * @throws UnknownHostException
      */
-    // TODO throw exceptiobs
-    private void connectToServer(String address) {
+    private void connectToServer(String address) throws UnknownHostException, IOException {
+        s = new Socket(address, PlayerComputer.PORT);
+        
         try {
-            s = new Socket(address, PlayerComputer.PORT);
-
-            try {
-                oStream = new DataOutputStream(s.getOutputStream());
-                oStream.writeUTF(self.getName()); // sends player name to server
-                iStream = new DataInputStream(s.getInputStream());
-            } catch (Exception e) {
-                System.out.println("Error in Client:");
-                e.printStackTrace();
-                return;
-            }
+            oStream = new DataOutputStream(s.getOutputStream());
+            oStream.writeUTF(self.getName()); // sends player name to server
+            iStream = new DataInputStream(s.getInputStream());
 
             isPlaying = false;
             gThread = new GameThread(this, false, s);
@@ -97,11 +100,11 @@ public class Client extends PlayerComputer {
     /**
      * Updates the score of a given player.
      * @param player a player.
-     * @param newScore the new score.
+     * @param diff the change in score.
      */
-    public void updatePoints(Player player, int newScore) {
+    public void updatePoints(Player player, int diff) {
         if (isPlaying) {
-            player.setPoints(newScore);
+            player.addPoints(diff);
             // TODO refresh scoreboard
         }
     }
@@ -148,7 +151,15 @@ public class Client extends PlayerComputer {
      */
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        Client aTest = new Client("localhost", "CoolClient");
+
+        Client aTest;
+        try {
+            aTest = new Client("localhost", "CoolClient");
+        } catch (Exception e) {
+            e.printStackTrace();
+            scan.close();
+            return;
+        }
 
         System.out.println("#### Created client, enter to see players");
         scan.nextLine();
