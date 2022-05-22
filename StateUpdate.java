@@ -166,7 +166,11 @@ public class StateUpdate {
                 if (card != null) {
                     cardString = card.getType();
                 }
-                return type + F_DELIM + player + F_DELIM + cardString;
+                String ret = type + F_DELIM + player + F_DELIM + cardString;
+                if (card != null) {
+                    ret += F_DELIM + card.getFilePath();
+                }
+                return ret;
             default:
                 return type + "";
         }

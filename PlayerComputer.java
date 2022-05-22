@@ -106,11 +106,25 @@ public abstract class PlayerComputer {
     /**
      * Displays a card on the GUI game window.
      * @param card the card to draw.
-     * @throws IOException
      */
-    public void drawCard(Card card) throws IOException {
+    public void drawCard(Card card) {
+        if (!SwingUtilities.isEventDispatchThread()) {
+            // if this method was called by a non-main thread, move it to main
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    drawCard(card);
+                }
+            });
+            return;
+        }
         if (isPlaying) {
-            // TODO draw the card
+            try {
+                gameWindow.draw(card);
+            } catch (Exception e) {
+                System.out.println("Error drawing card:");
+                e.printStackTrace();
+            }
         }
     }
 

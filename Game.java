@@ -39,6 +39,7 @@ public class Game
         throws Exception
     {
         pc = playercomp;
+        System.out.println("#### is server? " + (pc instanceof Server));
         System.out.println(pc.getPlayers());
         MusicPlayer m = new MusicPlayer();
         String filePath = "TrashWarImagesAndSounds\\bensound-moose.wav";
@@ -175,6 +176,7 @@ public class Game
             {
                 try
                 {
+                    System.out.println("#### server? " + (pc instanceof Server));
 
                     MusicPlayer m = new MusicPlayer();
                     String filePath = "TrashWarImagesAndSounds" + File.separator
@@ -231,7 +233,8 @@ public class Game
                     MusicPlayer m = new MusicPlayer();
                     String filePath = "TrashWarImagesAndSounds" + File.separator
                         + "mixkit-retro-arcade-casino-notification-211.wav";
-                        if(pc instanceof Server) pc.dealCard();
+                    m.playMusic(filePath);
+                    if(pc instanceof Server) pc.dealCard();
                     // m.playMusic(filePath);
                     // String[] arr = new String[12];
                     // arr = init(arr);

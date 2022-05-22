@@ -119,9 +119,15 @@ public class Client extends PlayerComputer {
      * @param card the card to draw.
      */
     // TODO (dont remove this) make GUI stuff threadsafe
-    public void drawCard(Card card) throws IOException {
+    public void drawCard(Card card) {
+        System.out.println("#### is card null? " + (card == null));
         if (isPlaying) { 
-            gameWindow.draw(card); // How do we fix this?
+            try {
+                super.drawCard(card);
+            } catch (Exception e) {
+                System.out.println("Exception in Server:");
+                e.printStackTrace();
+            }
             // TODO notify local class to update center deck
             // TODO notify GUI window to draw the card (if not done already)
             //call game classes draw card method, whith card as parameter

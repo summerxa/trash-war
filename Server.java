@@ -130,13 +130,15 @@ public class Server extends PlayerComputer {
     public void drawCard(Card card) {
         if (isPlaying) {
             if (card == null) {
+                System.out.println("#### null card");
                 card = new Card();
+                System.out.println("#### new card: " + card.getType() + " " + card.getFilePath());
             }
             gThread.dealCard(card);
             //called game classes drawcard method(super.drawcard)
             try {
                 super.drawCard(card);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 System.out.println("Exception in Server:");
                 e.printStackTrace();
             }

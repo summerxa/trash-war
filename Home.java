@@ -35,6 +35,8 @@ public class Home extends Draw{
     public JButton b = new JButton("Start");
     private JTextField textfield = new JTextField();
 
+    private PlayerComputer pc; // temporarily stores the server/client object while waiting to start game
+
 
     public static void main(String[] args) throws Exception {
         new Home();
@@ -174,6 +176,8 @@ public class Home extends Draw{
                    lab.setVisible(false);
                    text.setVisible(false);
 
+                   pc = new Server();
+
                     
                     
                  
@@ -185,14 +189,15 @@ public class Home extends Draw{
 
             if(e.getSource() == b){
                 try {
-                    if(textfield.isVisible()){
-                        String value = textfield.getText();
+                    if(text.isVisible()){
+                        String value = text.getText();
                     
-                        new Game(new Client(value));
-
+                        // new Game(new Client(value));
+                        pc = new Client(value);
                     }
                     else{
-                        new Game(new Server());
+                        // new Game(new Server());
+                        pc.startGame();
                     }
                    
                  

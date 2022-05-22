@@ -217,8 +217,10 @@ public class GameThread extends Thread {
                     case StateUpdate.DEAL_CARD:
                         Card card = null;
                         if (!upd[2].equals(StateUpdate.NULLCARD)) {
-                            card = new Card(upd[2]);
+                            card = new Card(upd[2], upd[3]);
+                            System.out.println("#### " + upd[2] + " " + upd[3]);
                         }
+                        System.out.println("#### is null card? " + (card == null));
                         self.drawCard(card);
                         break;
                     case StateUpdate.BGIN_GAME:
