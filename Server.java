@@ -6,7 +6,7 @@ import java.util.Scanner;
  * and send updates on the game state to the client player.
  * 
  * @author  Anne Xia
- * @version 05/13/2022
+ * @version 05/22/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
@@ -28,6 +28,10 @@ public class Server extends PlayerComputer {
         sThread.start();
     }
 
+    /**
+     * No-args constructor for server. Sets the player name
+     * to a default name.
+     */
     public Server() {
         this("Player 2");
     }
@@ -48,7 +52,7 @@ public class Server extends PlayerComputer {
             }
         }
         // TODO initialize scores
-        gThread = new GameThread(this, true, sThread.getSocket());
+        gThread = new GameThread(this, sThread.getSocket());
         gThread.start();
         gThread.startGame();
         super.startGame();

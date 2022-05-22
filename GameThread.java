@@ -12,7 +12,7 @@ import java.util.Queue;
  * updates local game state accordingly.
  * 
  * @author  Anne Xia
- * @version 05/13/2022
+ * @version 05/22/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
@@ -22,7 +22,6 @@ public class GameThread extends Thread {
      */
     public static final int DELAY = 500;
 
-    private boolean isServer;
     private volatile boolean isRunning; // thread-safe
     private PlayerComputer self;
     private Queue<StateUpdate> updates;
@@ -33,12 +32,11 @@ public class GameThread extends Thread {
 
     /**
      * Constructs a GameThread.
-     * @param pc either a Server or a Client FIXTHIS.
+     * @param pc either a Server or a Client object.
      * @param isAServer true if this thread is for a host, otherwise false.
      * @param socket a client socket.
      */
-    public GameThread(PlayerComputer pc, boolean isAServer, Socket socket) {
-        isServer = isAServer;
+    public GameThread(PlayerComputer pc, Socket socket) {
         self = pc;
         s = socket;
 
@@ -55,7 +53,7 @@ public class GameThread extends Thread {
         try {
             oStream = new DataOutputStream(s.getOutputStream());
             iStream = new DataInputStream(s.getInputStream());
-            if (!isServer) {
+            if (self instanceof Client) {
                 // get list of players from server
                 String[] allPlayers = iStream.readUTF().split(StateUpdate.U_DELIM);
                 ArrayList<Player> players = new ArrayList<Player>();
@@ -70,7 +68,7 @@ public class GameThread extends Thread {
             stopThread();
         }
         while (isRunning) {
-            if (isServer) { // server sends first
+            if (self instanceof Server) { // server sends first
                 sendUpdates();
                 readUpdates();
                 try {
@@ -108,10 +106,9 @@ public class GameThread extends Thread {
      * @param player the player who slapped a card.
      */
     public void slapCard(Player player) {
-        if (isServer) {
-            return;
+        if (self instanceof Client) {
+            addUpdate(new StateUpdate(player));
         }
-        addUpdate(new StateUpdate(player));
     }
 
     /**
@@ -121,10 +118,9 @@ public class GameThread extends Thread {
      * @param diff the change in score of the player.
      */
     public void updatePoints(Player player, int diff) {
-        if (!isServer) {
-            return;
+        if (self instanceof Server) {
+            addUpdate(new StateUpdate(player, diff));
         }
-        addUpdate(new StateUpdate(player, diff));
     }
 
     /**
@@ -139,21 +135,19 @@ public class GameThread extends Thread {
      * Starts the game.
      */
     public void startGame() {
-        if (!isServer) {
-            return;
+        if (self instanceof Server) {
+            addUpdate(new StateUpdate(StateUpdate.BGIN_GAME));
         }
-        addUpdate(new StateUpdate(StateUpdate.BGIN_GAME));
     }
     
     /**
      * Stops the game.
      */
     public void stopGame() {
-        if (!isServer) {
-            return;
+        if (self instanceof Server) {
+            addUpdate(new StateUpdate(StateUpdate.STOP_GAME));
+            stopThread();
         }
-        addUpdate(new StateUpdate(StateUpdate.STOP_GAME));
-        stopThread();
     }
 
     /**
@@ -165,8 +159,6 @@ public class GameThread extends Thread {
             updates.add(su);
         }
     }
-    
-    // TODO change isServer to instanceof Server
 
     /**
      * Sends updates on the game state.

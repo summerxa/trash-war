@@ -11,7 +11,7 @@ import java.util.Scanner;
  * the local game state with the version on the server.
  * 
  * @author  Anne Xia
- * @version 05/13/2022
+ * @version 05/22/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
@@ -62,7 +62,7 @@ public class Client extends PlayerComputer {
             oStream.writeUTF(self.getName()); // sends player name to server
             iStream = new DataInputStream(s.getInputStream());
 
-            gThread = new GameThread(this, false, s);
+            gThread = new GameThread(this, s);
             gThread.start();
         } catch (Exception ex) {
             System.out.println("Error connecting to server:");
