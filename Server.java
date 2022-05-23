@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -18,7 +17,6 @@ public class Server extends PlayerComputer {
 
     /**
      * Constructs a server that begins accepting players.
-     * Also creates the host player object.
      * @param playerName the name of this player.
      */
     public Server(String playerName) {
@@ -36,8 +34,8 @@ public class Server extends PlayerComputer {
     }
 
     /**
-     * Starts the game by getting all connected users (including the host)
-     * and creating a GameThread for each user.
+     * Starts the game by notifying all connected users and creating a GameThread
+     * for the host player.
      */
     public void startGame() {
         players = sThread.getPlayerList();
@@ -147,6 +145,7 @@ public class Server extends PlayerComputer {
      * For debugging purposes only. Simulates a short sequence of actions.
      * @param args command-line arguments (not used)
      */
+    // TODO delete this later
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 

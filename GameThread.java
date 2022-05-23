@@ -67,6 +67,7 @@ public class GameThread extends Thread {
             e.printStackTrace();
             stopThread();
         }
+        // sending excessive data is costly, so we wait DELAY milliseconds between sends
         while (isRunning) {
             if (self instanceof Server) { // server sends first
                 sendUpdates();

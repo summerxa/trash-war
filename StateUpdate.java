@@ -88,8 +88,8 @@ public class StateUpdate {
 
     /**
      * Encodes a string to base 64. This is used to encode the player
-     * name so that it does not contain any delimiter characters.
-     * @param s string to encode.
+     * name so that it does not contain any delimiter characters or whitespace.
+     * @param s a string.
      * @return encoded string.
      */
     public static String encode64(String s) {
@@ -108,6 +108,9 @@ public class StateUpdate {
      * @return the decoded string.
      */
     public static String decode64(String s) {
+        if (s == null) {
+            return s;
+        }
         byte[] bytes = Base64.getDecoder().decode(s);
         return new String(bytes);
     }
@@ -121,8 +124,9 @@ public class StateUpdate {
     }
 
     /**
-     * Gets the name of the player.
-     * @return the name of the player.
+     * Gets the name of the player, or null if this update
+     * does not involve a player.
+     * @return the name of the player or null.
      */
     public String getPlayer() {
         return decode64(player);
