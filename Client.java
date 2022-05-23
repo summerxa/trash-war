@@ -22,7 +22,6 @@ public class Client extends PlayerComputer {
     private DataInputStream iStream;
     private DataOutputStream oStream;
 
-    private Player self;
     private Score scores;
     
     /**
@@ -108,7 +107,6 @@ public class Client extends PlayerComputer {
         if (isPlaying) {
             gThread.dealCard(null);
             // actual card will be generated on server, null is a filler "default" value
-            // TODO player now has one less card (if using a finite # of cards vs. infinite)
         }
     }
 
@@ -118,7 +116,6 @@ public class Client extends PlayerComputer {
      * a card.
      * @param card the card to draw.
      */
-    // TODO (dont remove this) make GUI stuff threadsafe
     public void drawCard(Card card) {
         System.out.println("#### is card null? " + (card == null));
         if (isPlaying) { 
@@ -129,7 +126,6 @@ public class Client extends PlayerComputer {
                 e.printStackTrace();
             }
             // TODO notify local class to update center deck
-            // TODO notify GUI window to draw the card (if not done already)
             //call game classes draw card method, whith card as parameter
         }
     }

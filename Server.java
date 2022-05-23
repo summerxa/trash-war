@@ -14,7 +14,6 @@ public class Server extends PlayerComputer {
     private ServerThread sThread;
     private GameThread gThread;
     
-    private Player self;
     private Score scores;
 
     /**
@@ -87,8 +86,7 @@ public class Server extends PlayerComputer {
      */
     public void slapCard(Player player) {
         if (isPlaying) {
-            // TODO check if slap is valid
-            // TODO update points locally
+            // TODO check if slap is valid - need a way to access the centerdeck either thru private field or the Game window
             // TODO updatePoints()
         }
     }
@@ -104,7 +102,12 @@ public class Server extends PlayerComputer {
             super.updatePoints(player, diff);
             gThread.updatePoints(player, diff);
             // TODO refresh scoreboard
-            // TODO stop game internally if point threshold met
+            if (diff >= PlayerComputer.WIN_POINTS) {
+                stopGame();
+                /* Since the server is handling both server and client point changes,
+                   if the client reaches 50 points before the server does,
+                   the game will still stop correctly. */
+            }
         }
     }
     
@@ -115,7 +118,6 @@ public class Server extends PlayerComputer {
     public void dealCard() {
         if (isPlaying) {
             Card card = new Card();
-            // TODO player now has one less card (if using a finite # of cards vs infinite)
             drawCard(card);
         }
     }
@@ -126,16 +128,12 @@ public class Server extends PlayerComputer {
      * @param player the player who dealt the card.
      * @param card the card being dealt.
      */
-    // TODO (dont remove this) make GUI stuff threadsafe
     public void drawCard(Card card) {
         if (isPlaying) {
             if (card == null) {
-                System.out.println("#### null card");
                 card = new Card();
-                System.out.println("#### new card: " + card.getType() + " " + card.getFilePath());
             }
             gThread.dealCard(card);
-            //called game classes drawcard method(super.drawcard)
             try {
                 super.drawCard(card);
             } catch (Exception e) {
