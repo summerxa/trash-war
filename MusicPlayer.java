@@ -14,6 +14,11 @@ public class MusicPlayer
     // }
 
 
+    /**
+     * Plays the music
+     * @param musicFile the musics file
+     * @throws Exception
+     */
     public void playMusic(String musicFile)throws Exception{
         try{
             File musicPath = new File(musicFile);

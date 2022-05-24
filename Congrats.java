@@ -30,12 +30,19 @@ public class Congrats extends Draw{
         new Congrats();
     }
 
+    /**
+     * calls design
+     * @throws Exception 
+     */
     public Congrats() throws Exception {
         design();
         
 
     }
 
+    /**
+     * disposes of the frame
+     */
     public void dispose() {
         frame.dispose();
     }
@@ -60,6 +67,13 @@ public class Congrats extends Draw{
 
     }
 
+    /**
+     * gets the scaled image
+     * @param srcImg the source image
+     * @param w the width
+     * @param h the height
+     * @return the resized image
+     */
     private static Image getScaledImage(Image srcImg, int w, int h) {
         BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = resizedImg.createGraphics();

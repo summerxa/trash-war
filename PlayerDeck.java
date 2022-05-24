@@ -13,7 +13,6 @@ import java.util.Stack;
 
 public class PlayerDeck implements MouseListener {
 
-   // private Stack<Card> playersCards;
     CenterDeck d; 
     int xCoor;
     int yCoor;
@@ -30,7 +29,6 @@ public class PlayerDeck implements MouseListener {
      */
     public PlayerDeck(CenterDeck d, int x, int y, int width, int length){
 
-       // playersCards = new Stack<Card>();
         this.d = d;
         this.xCoor = x;
         this.yCoor = y;
@@ -38,9 +36,6 @@ public class PlayerDeck implements MouseListener {
         this.length = length;
     }
 
-   // public Stack<Card> getplayersCards(){
-    //    return playersCards;
-   // }
 
     /**
      * This method generates and returns a randomly generate card
@@ -51,17 +46,6 @@ public class PlayerDeck implements MouseListener {
         return c;
     }
 
-    /**
-     * Populates the player's deck with randomly generated cards
-     * @param numCards
-     */
-    //public void populate(int numCards)
-   // {
-   //     for (int i = 0; i < numCards; i++)
-  //      {
-   //         playersCards.push(randomlyGenerateCard());
-   //     }
-  //  }
 
     /**
      * Check if the players clicked inside the bounds of their cards. 

@@ -15,12 +15,18 @@ public class Score {
      */
     private int currentScore;
 
+    /**
+     * The Constructor that sets the globalScores 
+     */
     public Score(){
         globalScores = new int[10];
         currentScore = 0; // have to change this
 
     }
 
+    /**
+     * Sets the new global scores
+     */
     public void newGlobalScores(){
 
         int i = 0;
@@ -41,11 +47,19 @@ public class Score {
         }
     }
 
+    /**
+     * sets the current score
+     * @param score
+     */
     public void setCurrent(int score)
     {
         currentScore = score;
     }
 
+    /**
+     * 
+     * @returns the list of global scores
+     */
     public int[] getGlobalScores()
     {
         return globalScores;

@@ -10,20 +10,30 @@ import java.util.Random;
    @author  Vaishnavi Kunapuli
    @version 04/27/2022
 
-   @author  Sources -
+   @author  Sources - Anne
  */
 
 
 public class Card
 { 
+  /**
+   * a string array to store compost pictures
+   */
    private String[] compost = {"TrashWarImagesAndSounds/bananapeel.jpg", "TrashWarImagesAndSounds/branches.jpg", 
  "TrashWarImagesAndSounds/orangepeel.jpg", "TrashWarImagesAndSounds/compost.jpg"};
 
+ /**
+  *  a string array to store trash pictures
+  */
   private String[] trash = {"TrashWarImagesAndSounds/trash.jpg", "TrashWarImagesAndSounds/cardboard.jpg", 
   "TrashWarImagesAndSounds/cermicpot.jpg",  "TrashWarImagesAndSounds/diaper.jpg"};
 
+  /**
+   *  a string array to store recycle pictures
+   */
   private String[] recycle = {  "TrashWarImagesAndSounds/recycle.jpg", "TrashWarImagesAndSounds/aluminum.jpg", 
   "TrashWarImagesAndSounds/bottle.jpg", "TrashWarImagesAndSounds/glass.jpg"}; 
+
   /**
    * a String variable to store the type of card
    */
@@ -58,7 +68,7 @@ public class Card
 
 
   /**
-   * 
+   * Initializes filePath
    * @param type the type of Card
    */
 
@@ -102,6 +112,10 @@ public class Card
 
   }
 
+  /**
+   * Returns the filePath
+   * @return the filepaths
+   */
   public String getFilePath(){
     return filePath;
 
