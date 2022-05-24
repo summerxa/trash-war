@@ -155,14 +155,14 @@ public class Game
     }
 
 
-    public void newYouLost()
+    public void newYouLost(int score)
         throws Exception
     {
         new YouLost();
     }
 
 
-    public void newYouWon()
+    public void newYouWon(int score)
         throws Exception
     {
         new YouWon();

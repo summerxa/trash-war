@@ -23,13 +23,26 @@ import javax.imageio.ImageIO;
  * @author Sources - Meenakshi, Anne
  */
 
-public class YouLost extends Draw{
+public class GameOver extends Draw{
+
+
+    private int score;
+    private boolean isWin;
+    public String filePath;
 
     public static void main(String[] args) throws Exception{
-        new YouLost();
+      new GameOver(true, 8);
     }
 
-    public YouLost() throws Exception {
+    public GameOver(boolean isWin, int score) throws Exception {
+        this.score = score;
+        this.isWin = isWin;
+        if(isWin) {
+            filePath = "TrashWarImagesAndSounds" + File.separator + "youwin.jpg"; 
+        }
+        else{
+            filePath = "TrashWarImagesAndSounds" + File.separator + "youlost.jpg";
+        }
         design();
 
     }
@@ -42,11 +55,14 @@ public class YouLost extends Draw{
         JFrame frame = new JFrame();
         frame.setSize(400, 300);
         frame.setLocation(450, 100);
-        Image myPicture = ImageIO.read(new File("TrashWarImagesAndSounds\\youlost.jpg"));
-        myPicture = getScaledImage(myPicture, 400, 300);
+        Image myPicture = ImageIO.read(new File(filePath));
+        myPicture = getScaledImage(myPicture, 300, 300);
         JLabel l = new JLabel(new ImageIcon(myPicture));
         JPanel panel = new JPanel();
+        JButton button = new JButton("Next");
+        
         panel.add(l);
+        panel.add(button);
         frame.add(panel);
         frame.setVisible(true);
 
