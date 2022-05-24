@@ -154,6 +154,18 @@ public class Game
 
     }
 
+    public void newYouLost() throws Exception{
+        new YouLost();
+    }
+
+    public void newYouWon() throws Exception{
+        new YouWon();
+    }
+
+    // public void newCongrats() throws Exception{
+    //     new Congrats();
+    // }
+
 
     public void draw(Card card) throws IOException
     {
