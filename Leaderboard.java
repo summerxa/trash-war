@@ -16,6 +16,7 @@ public class Leaderboard extends Draw{
     * Design for the Leaderboard Screen
     */
     public void design(){
+        
 
 
     }

@@ -19,21 +19,20 @@ import java.io.IOException;
 public class Game
 {
 
-    public JButton playerDeck1;
-    public JButton playerDeck2;
-    public JButton centerDeck;
-    public JPanel  panel;
-    CenterDeck     cd   = new CenterDeck();
-    JButton        slap = new JButton("Slap!");
+    public JButton         playerDeck1;
+    public JButton         playerDeck2;
+    public JButton         centerDeck;
+    public JPanel          panel;
+    CenterDeck             cd   = new CenterDeck();
+    JButton                slap = new JButton("Slap!");
     private PlayerComputer pc;
 
     // public static void main(String[] args)
-    //     throws Exception
+    // throws Exception
     // {
 
-    //     new Game();
+    // new Game();
     // }
-
 
     public Game(PlayerComputer playercomp)
         throws Exception
@@ -155,20 +154,45 @@ public class Game
 
     }
 
-    public void newYouLost() throws Exception{
+
+    public void newYouLost()
+        throws Exception
+    {
         new YouLost();
     }
 
-    public void newYouWon() throws Exception{
+
+    public void newYouWon()
+        throws Exception
+    {
         new YouWon();
     }
 
+
+    public void showCongratsWithPause() throws Exception
+    {
+
+        Congrats c = new Congrats();
+        new java.util.Timer().schedule(new java.util.TimerTask() {
+            @Override
+            public void run()
+            {
+                c.dispose();
+            }
+        }, 700);
+
+    }
+
+    public CenterDeck getCenterDeck(){
+        return cd;
+    }
+
     // public void newCongrats() throws Exception{
-    //     new Congrats();
+    // new Congrats();
     // }
 
-
-    public void draw(Card card) throws IOException
+    public void draw(Card card)
+        throws IOException
     {
         String filePath = card.getFilePath();
         Image myPicture = ImageIO.read(new File(filePath));
@@ -194,8 +218,8 @@ public class Game
                     String filePath = "TrashWarImagesAndSounds" + File.separator
                         + "mixkit-retro-arcade-casino-notification-211.wav";
                     m.playMusic(filePath);
-                    if(pc instanceof Client) pc.dealCard();
-
+                    if (pc instanceof Client)
+                        pc.dealCard();
 
                 }
                 catch (Exception e1)
@@ -211,22 +235,7 @@ public class Game
                 {
                     if (!cd.isEmpty())
                     {
-                        if (cd.sandwich() || cd.threeInARow() || cd.topBottom())
-                        {
-                            Congrats c = new Congrats();
-                            new java.util.Timer().schedule(new java.util.TimerTask() {
-                                @Override
-                                public void run()
-                                {
-                                    c.dispose();
-                                }
-                            }, 700);
-
-                        }
-                        else
-                        {
-
-                        }
+                        pc.slapCard();
                     }
 
                 }
@@ -246,7 +255,8 @@ public class Game
                     String filePath = "TrashWarImagesAndSounds" + File.separator
                         + "mixkit-retro-arcade-casino-notification-211.wav";
                     m.playMusic(filePath);
-                    if(pc instanceof Server) pc.dealCard();
+                    if (pc instanceof Server)
+                        pc.dealCard();
                     // m.playMusic(filePath);
                     // String[] arr = new String[12];
                     // arr = init(arr);
