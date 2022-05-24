@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -14,12 +13,10 @@ public class Server extends PlayerComputer {
     private ServerThread sThread;
     private GameThread gThread;
     
-    private Player self;
     private Score scores;
 
     /**
      * Constructs a server that begins accepting players.
-     * Also creates the host player object.
      * @param playerName the name of this player.
      */
     public Server(String playerName) {
@@ -37,8 +34,8 @@ public class Server extends PlayerComputer {
     }
 
     /**
-     * Starts the game by getting all connected users (including the host)
-     * and creating a GameThread for each user.
+     * Starts the game by notifying all connected users and creating a GameThread
+     * for the host player.
      */
     public void startGame() {
         players = sThread.getPlayerList();
@@ -87,8 +84,7 @@ public class Server extends PlayerComputer {
      */
     public void slapCard(Player player) {
         if (isPlaying) {
-            // TODO check if slap is valid
-            // TODO update points locally
+            // TODO check if slap is valid - need a way to access the centerdeck either thru private field or the Game window
             // TODO updatePoints()
         }
     }
@@ -104,7 +100,12 @@ public class Server extends PlayerComputer {
             super.updatePoints(player, diff);
             gThread.updatePoints(player, diff);
             // TODO refresh scoreboard
-            // TODO stop game internally if point threshold met
+            if (diff >= PlayerComputer.WIN_POINTS) {
+                stopGame();
+                /* Since the server is handling both server and client point changes,
+                   if the client reaches 50 points before the server does,
+                   the game will still stop correctly. */
+            }
         }
     }
     
@@ -115,7 +116,6 @@ public class Server extends PlayerComputer {
     public void dealCard() {
         if (isPlaying) {
             Card card = new Card();
-            // TODO player now has one less card (if using a finite # of cards vs infinite)
             drawCard(card);
         }
     }
@@ -126,17 +126,15 @@ public class Server extends PlayerComputer {
      * @param player the player who dealt the card.
      * @param card the card being dealt.
      */
-    // TODO (dont remove this) make GUI stuff threadsafe
     public void drawCard(Card card) {
         if (isPlaying) {
             if (card == null) {
                 card = new Card();
             }
             gThread.dealCard(card);
-            //called game classes drawcard method(super.drawcard)
             try {
                 super.drawCard(card);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 System.out.println("Exception in Server:");
                 e.printStackTrace();
             }
@@ -147,6 +145,7 @@ public class Server extends PlayerComputer {
      * For debugging purposes only. Simulates a short sequence of actions.
      * @param args command-line arguments (not used)
      */
+    // TODO delete this later
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 

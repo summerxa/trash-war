@@ -9,7 +9,7 @@ import java.util.List;
  * background and accepts the client who requests to join the current game.
  * 
  * @author  Anne Xia
- * @version 05/13/2022
+ * @version 05/23/2022
  * 
  * @author Sources - Meenakshi, Vaishnavi
  */
@@ -78,9 +78,9 @@ public class ServerThread extends Thread {
                 oStream = new DataOutputStream(s.getOutputStream());
                 oStream.flush();
                 iStream = new DataInputStream(s.getInputStream());
-                players.add(new Player(iStream.readUTF())); // get client's player name
+                players.add(new Player(StateUpdate.decode64(iStream.readUTF()))); // get client's player name
                 if (players != null) {
-                    // send list of all players
+                    // convert list of all players to a single string
                     StringBuilder s = new StringBuilder();
                     String pref = "";
                     for (Player p : players) {
@@ -109,7 +109,7 @@ public class ServerThread extends Thread {
     }
 
     /**
-     * Gets the client socket.
+     * Returns the client socket.
      * @return the client socket.
      */
     public Socket getSocket() {
@@ -117,7 +117,7 @@ public class ServerThread extends Thread {
     }
     
     /**
-     * Gets the list of players.
+     * Returns the list of players.
      * @return the list of players.
      */
     public List<Player> getPlayerList() {

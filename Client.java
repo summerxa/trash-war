@@ -19,10 +19,8 @@ public class Client extends PlayerComputer {
     private Socket s;
     private GameThread gThread;
     
-    private DataInputStream iStream;
     private DataOutputStream oStream;
 
-    private Player self;
     private Score scores;
     
     /**
@@ -49,7 +47,8 @@ public class Client extends PlayerComputer {
     }
 
     /**
-     * Connects to a given server.
+     * Connects to a given server. Once connected, creates a GameThread and waits
+     * for the signal from the server to start the game.
      * @param address the IP address of the server
      * @throws IOException
      * @throws UnknownHostException
@@ -59,8 +58,9 @@ public class Client extends PlayerComputer {
         
         try {
             oStream = new DataOutputStream(s.getOutputStream());
-            oStream.writeUTF(self.getName()); // sends player name to server
-            iStream = new DataInputStream(s.getInputStream());
+            oStream.writeUTF(StateUpdate.encode64(self.getName())); // sends player name to server
+            /* We need to encode because DataInputStream stops reading at whitespace
+               and a single player name may contain spaces. */
 
             gThread = new GameThread(this, s);
             gThread.start();
@@ -107,29 +107,27 @@ public class Client extends PlayerComputer {
     public void dealCard() {
         if (isPlaying) {
             gThread.dealCard(null);
-            // actual card will be generated on server, null is a filler "default" value
-            // TODO player now has one less card (if using a finite # of cards vs. infinite)
+            // Actual card will be generated on server, null is a "default" filler value.
         }
     }
 
     /**
-     * Displays the random card generated. This method should be called
-     * only by GameThread, use the no-args version for actually dealing
-     * a card.
+     * Displays a card on the game window.
      * @param card the card to draw.
      */
-    // TODO (dont remove this) make GUI stuff threadsafe
-    public void drawCard(Card card) throws IOException {
+    public void drawCard(Card card) {
         if (isPlaying) { 
-            gameWindow.draw(card); // How do we fix this?
-            // TODO notify local class to update center deck
-            // TODO notify GUI window to draw the card (if not done already)
-            //call game classes draw card method, whith card as parameter
+            try {
+                super.drawCard(card);
+            } catch (Exception e) {
+                System.out.println("Exception in Client:");
+                e.printStackTrace();
+            }
         }
     }
 
     /**
-     * Sets the local players list to the given list.
+     * Sets the local player list to the given list.
      * @param players a list of players.
      */
     public void setPlayers(List<Player> players) {
@@ -140,6 +138,7 @@ public class Client extends PlayerComputer {
      * For debugging purposes only. Simulates a short sequence of actions.
      * @param args
      */
+    // TODO delete this later
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 

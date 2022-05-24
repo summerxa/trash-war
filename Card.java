@@ -64,7 +64,20 @@ public class Card
 
   public Card(String type)
   {
-    this.type = type; 
+    Random rand = new Random();
+    
+    if (type.equals("Compost"))
+    {
+      filePath = compost[rand.nextInt(4)];
+    }
+    else if (type.equals("Recycle"))
+    {
+      filePath = recycle[rand.nextInt(4)];
+    }
+    else if (type.equals("Trash"))
+    {
+      filePath = trash[rand.nextInt(4)];
+    }
   }
 
   /**

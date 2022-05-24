@@ -17,9 +17,14 @@ public abstract class PlayerComputer {
      * The port to use.
      */
     public static final int PORT = 12345;
+    /**
+     * Number of points you need to win the game.
+     */
+    public static final int WIN_POINTS = 50;
 
-    protected List<Player> players;
     protected Game gameWindow;
+    protected Player self;
+    protected List<Player> players;
     protected boolean isPlaying = false;
 
     /**
@@ -57,6 +62,7 @@ public abstract class PlayerComputer {
      */
     public void stopGame() {
         isPlaying = false;
+        // TODO if you have more than point threshold, you win
     }
     
     /**
@@ -78,12 +84,12 @@ public abstract class PlayerComputer {
      * @param diff how much the score changed by,
      *             positive for add points and negative for subtract.
      */
-    // TODO pos = empty out deck, neg = burn and do nothing
     public void updatePoints(Player player, int diff) {
         if (isPlaying) {
             player.addPoints(diff);
             if (diff > 0) {
                 clearDeck();
+                // TODO display congrats
             }
         }
     }
@@ -106,11 +112,25 @@ public abstract class PlayerComputer {
     /**
      * Displays a card on the GUI game window.
      * @param card the card to draw.
-     * @throws IOException
      */
-    public void drawCard(Card card) throws IOException {
+    public void drawCard(Card card) {
+        if (!SwingUtilities.isEventDispatchThread()) {
+            // if this method was called by a non-main thread, move it to main
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    drawCard(card);
+                }
+            });
+            return;
+        }
         if (isPlaying) {
-            // TODO draw the card
+            try {
+                gameWindow.draw(card);
+            } catch (Exception e) {
+                System.out.println("Error drawing card:");
+                e.printStackTrace();
+            }
         }
     }
 
