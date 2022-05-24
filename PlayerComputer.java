@@ -152,6 +152,14 @@ public abstract class PlayerComputer {
     }
 
     /**
+     * Returns this person's player object.
+     * @return this person's player object.
+     */
+    public Player getSelf() {
+        return self;
+    }
+    
+    /**
      * Returns a list of all players.
      * @return a list of all players.
      */
