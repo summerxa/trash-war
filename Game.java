@@ -155,17 +155,17 @@ public class Game
     }
 
 
-    // public void newYouLost(int score)
-    //     throws Exception
-    // {
-    //     new YouLost();
-    // }
+    public void newYouLost(int score)
+        throws Exception
+    {
+        new GameOver(false, score);
+    }
 
 
     public void newYouWon(int score)
         throws Exception
     {
-        new YouWon();
+        new GameOver(true, score);
     }
 
 
