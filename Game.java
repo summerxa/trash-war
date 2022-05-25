@@ -38,8 +38,6 @@ public class Game
         throws Exception
     {
         pc = playercomp;
-        System.out.println("#### is server? " + (pc instanceof Server));
-        System.out.println(pc.getPlayers());
         MusicPlayer m = new MusicPlayer();
         String filePath = "TrashWarImagesAndSounds/bensound-moose.wav";
         m.playMusic(filePath);
@@ -199,7 +197,7 @@ public class Game
         myPicture = getScaledImage(myPicture, 250, 300);
         centerDeck.setEnabled(true);
         centerDeck.setIcon(new ImageIcon(myPicture));
-        cd.addCard(card.getType());
+        cd.addCard(card);
 
     }
 
@@ -212,8 +210,6 @@ public class Game
             {
                 try
                 {
-                    System.out.println("#### server? " + (pc instanceof Server));
-
                     MusicPlayer m = new MusicPlayer();
                     String filePath = "TrashWarImagesAndSounds" + File.separator
                         + "mixkit-retro-arcade-casino-notification-211.wav";

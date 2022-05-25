@@ -20,7 +20,7 @@ public class GameThread extends Thread {
     /**
      * Delay between update sends, in milliseconds.
      */
-    public static final int DELAY = 500;
+    public static final int DELAY = 250;
 
     private volatile boolean isRunning; // thread-safe
     private PlayerComputer self;
@@ -219,9 +219,7 @@ public class GameThread extends Thread {
                         Card card = null;
                         if (!upd[2].equals(StateUpdate.NULLCARD)) {
                             card = new Card(upd[2], upd[3]);
-                            System.out.println("#### " + upd[2] + " " + upd[3]);
                         }
-                        System.out.println("#### is null card? " + (card == null));
                         self.drawCard(card);
                         break;
                     case StateUpdate.BGIN_GAME:

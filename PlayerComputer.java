@@ -20,7 +20,7 @@ public abstract class PlayerComputer {
     /**
      * Number of points you need to win the game.
      */
-    public static final int WIN_POINTS = 5;
+    public static final int WIN_POINTS = 5; // TODO revert before submitting code
 
     protected Game gameWindow;
     protected Player self;
@@ -98,6 +98,15 @@ public abstract class PlayerComputer {
     }
 
     /**
+     * Empties out the center deck.
+     */
+    private void clearDeck() {
+        if (isPlaying) {
+            gameWindow.getCenterDeck().emptyDeck();
+        }
+    }
+
+    /**
      * Notifies game window to display a popup once the player
      * slaps the center deck at the right time.
      */
@@ -144,15 +153,6 @@ public abstract class PlayerComputer {
         } catch (Exception e) {
             System.out.println("Error displaying win/lose screen:");
             e.printStackTrace();
-        }
-    }
-
-    /**
-     * Empties out the center deck.
-     */
-    private void clearDeck() {
-        if (isPlaying) {
-            gameWindow.getCenterDeck().emptyDeck();
         }
     }
     
