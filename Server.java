@@ -20,8 +20,8 @@ public class Server extends PlayerComputer {
      * @param playerName the name of this player.
      */
     public Server(String playerName) {
-        self = new Player(playerName);
-        sThread = new ServerThread(self);
+        name = playerName;
+        sThread = new ServerThread(new Player(name));
         sThread.start();
     }
 
@@ -74,7 +74,7 @@ public class Server extends PlayerComputer {
      */
     public void slapCard() {
         if (isPlaying) {
-            slapCard(self);
+            slapCard(name);
         }
     }
 
@@ -82,7 +82,7 @@ public class Server extends PlayerComputer {
      * Handles any player slapping a card.
      * @param player the player who slapped the card.
      */
-    public void slapCard(Player player) {
+    public void slapCard(String player) {
         if (isPlaying) {
             CenterDeck cd = gameWindow.getCenterDeck();
             if (!cd.isEmpty()) {
@@ -101,12 +101,12 @@ public class Server extends PlayerComputer {
      * @param player the player whose score changed.
      * @param diff the change in score of the player.
      */
-    public void updatePoints(Player player, int diff) {
+    public void updatePoints(String player, int diff) {
         if (isPlaying) {
             super.updatePoints(player, diff);
             gThread.updatePoints(player, diff);
             // TODO refresh scoreboard
-            if (player.getPoints() >= WIN_POINTS) {
+            if (getMatch(player).getPoints() >= WIN_POINTS) {
                 stopGame();
                 /* Since the server is handling both server and client point changes,
                    if the client reaches 50 points before the server does,
@@ -170,11 +170,11 @@ public class Server extends PlayerComputer {
 
         System.out.println("#### Make CoolClient have 5 points, enter to continue");
         scan.nextLine();
-        aTest.updatePoints(aTest.getMatch("CoolClient"), 5);
+        aTest.updatePoints("CoolClient", 5);
 
         System.out.println("#### Make sErVeR have 123 points, enter to continue");
         scan.nextLine();
-        aTest.updatePoints(aTest.getMatch("sErVeR"), 123);
+        aTest.updatePoints("sErVeR", 123);
 
         System.out.println("#### Enter to stop game");
         scan.nextLine();

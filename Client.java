@@ -31,7 +31,7 @@ public class Client extends PlayerComputer {
      * @throws UnknownHostException
      */
     public Client(String address, String playerName) throws UnknownHostException, IOException {
-        self = new Player(playerName);
+        name = playerName;
         // TODO initialize scores
         connectToServer(address);
     }
@@ -58,7 +58,7 @@ public class Client extends PlayerComputer {
         
         try {
             oStream = new DataOutputStream(s.getOutputStream());
-            oStream.writeUTF(StateUpdate.encode64(self.getName())); // sends player name to server
+            oStream.writeUTF(StateUpdate.encode64(name)); // sends player name to server
             /* We need to encode because DataInputStream stops reading at whitespace
                and a single player name may contain spaces. */
 
@@ -83,7 +83,7 @@ public class Client extends PlayerComputer {
      */
     public void slapCard() {
         if (isPlaying) {
-            gThread.slapCard(self);
+            gThread.slapCard(name);
         }
     }
 
@@ -92,7 +92,7 @@ public class Client extends PlayerComputer {
      * @param player a player.
      * @param diff the change in score.
      */
-    public void updatePoints(Player player, int diff) {
+    public void updatePoints(String player, int diff) {
         if (isPlaying) {
             super.updatePoints(player, diff);
             // TODO refresh scoreboard
