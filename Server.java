@@ -106,7 +106,7 @@ public class Server extends PlayerComputer {
             super.updatePoints(player, diff);
             gThread.updatePoints(player, diff);
             // TODO refresh scoreboard
-            if (diff >= WIN_POINTS) {
+            if (player.getPoints() >= WIN_POINTS) {
                 stopGame();
                 /* Since the server is handling both server and client point changes,
                    if the client reaches 50 points before the server does,
