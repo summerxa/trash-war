@@ -74,8 +74,8 @@ public class Client extends PlayerComputer {
      * Stops the game by stopping the current user's thread.
      */
     public void stopGame() {
-        super.stopGame();
         gThread.stopThread();
+        super.stopGame();
     }
     
     /**

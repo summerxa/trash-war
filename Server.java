@@ -59,7 +59,6 @@ public class Server extends PlayerComputer {
      * Stops the game by stopping each user's thread.
      */
     public void stopGame() {
-        super.stopGame();
         gThread.stopGame();
         try {
             gThread.join(); // wait for game thread to notify client
@@ -67,6 +66,7 @@ public class Server extends PlayerComputer {
             System.out.println("Error in Server:");
             e.printStackTrace();
         }
+        super.stopGame();
     }
 
     /**
@@ -84,8 +84,14 @@ public class Server extends PlayerComputer {
      */
     public void slapCard(Player player) {
         if (isPlaying) {
-            // TODO check if slap is valid - need a way to access the centerdeck either thru private field or the Game window
-            // TODO updatePoints()
+            CenterDeck cd = gameWindow.getCenterDeck();
+            if (!cd.isEmpty()) {
+                if (cd.topBottom() || cd.threeInARow() || cd.sandwich()) {
+                    updatePoints(player, cd.totalCards()); // correct, add points
+                } else {
+                    updatePoints(player, -5); // wrong, subtract points
+                }
+            }
         }
     }
 
@@ -100,7 +106,7 @@ public class Server extends PlayerComputer {
             super.updatePoints(player, diff);
             gThread.updatePoints(player, diff);
             // TODO refresh scoreboard
-            if (diff >= PlayerComputer.WIN_POINTS) {
+            if (diff >= WIN_POINTS) {
                 stopGame();
                 /* Since the server is handling both server and client point changes,
                    if the client reaches 50 points before the server does,

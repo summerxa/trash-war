@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.List;
 
 import javax.swing.SwingUtilities;
@@ -6,6 +5,7 @@ import javax.swing.SwingUtilities;
 /**
  * Abstract parent class for the Server and Client. Provides
  * methods to perform actions and update the game state.
+ * Has methods to modify the GUI game window.
  * 
  * @author  Anne Xia
  * @version 05/22/2022
@@ -36,11 +36,11 @@ public abstract class PlayerComputer {
     }
 
     /**
-     * Creates the game window.
+     * Launches the game window.
      */
     private void launchGame() {
         if (!SwingUtilities.isEventDispatchThread()) {
-            // if this method was called by a non-main thread, move it to main
+            // move this method call to main thread
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
@@ -62,7 +62,7 @@ public abstract class PlayerComputer {
      */
     public void stopGame() {
         isPlaying = false;
-        // TODO if you have more than point threshold, you win
+        showWinLose();
     }
     
     /**
@@ -89,8 +89,61 @@ public abstract class PlayerComputer {
             player.addPoints(diff);
             if (diff > 0) {
                 clearDeck();
-                // TODO display congrats
+                if (player.getPoints() < WIN_POINTS) {
+                    congratulate();
+                    // If the game stops, we will show a win/lose popup instead of congrats
+                }
             }
+        }
+    }
+
+    /**
+     * Notifies game window to display a popup once the player
+     * slaps the center deck at the right time.
+     */
+    private void congratulate() {
+        if (!SwingUtilities.isEventDispatchThread()) {
+            // move this method call to main thread
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    congratulate();
+                }
+            });
+            return;
+        }
+        try {
+            gameWindow.showCongratsWithPause();
+        } catch (Exception e) {
+            System.out.println("Error while displaying congratulations window:");
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Displays either a win/lose popup depending on the player's score.
+     */
+    private void showWinLose() {
+        if (!SwingUtilities.isEventDispatchThread()) {
+            // move this method call to main thread
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    showWinLose();
+                }
+            });
+            return;
+        }
+        try {
+            int score = self.getPoints();
+            if (self.getPoints() >= WIN_POINTS) {
+                gameWindow.newYouWon(score);
+            } else {
+                gameWindow.newYouLost(score);
+            }
+        } catch (Exception e) {
+            System.out.println("Error displaying win/lose screen:");
+            e.printStackTrace();
         }
     }
 
@@ -99,7 +152,7 @@ public abstract class PlayerComputer {
      */
     private void clearDeck() {
         if (isPlaying) {
-            // TODO access centerDeck and empty it out
+            gameWindow.getCenterDeck().emptyDeck();
         }
     }
     
