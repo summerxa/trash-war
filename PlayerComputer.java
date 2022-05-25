@@ -104,6 +104,8 @@ public abstract class PlayerComputer {
     private void clearDeck() {
         if (isPlaying) {
             gameWindow.getCenterDeck().emptyDeck();
+            gameWindow.changeVisibilityOfCenterDeck(false);
+            // Make centerdeck invisible (empty)
         }
     }
 
