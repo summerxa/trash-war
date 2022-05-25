@@ -67,6 +67,7 @@ public class Server extends PlayerComputer {
             System.out.println("Error in Server:");
             e.printStackTrace();
         }
+        // TODO win/lose popup
     }
 
     /**

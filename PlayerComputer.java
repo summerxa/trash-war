@@ -36,11 +36,11 @@ public abstract class PlayerComputer {
     }
 
     /**
-     * Creates the game window.
+     * Launches the game window.
      */
     private void launchGame() {
         if (!SwingUtilities.isEventDispatchThread()) {
-            // if this method was called by a non-main thread, move it to main
+            // move this method call to main thread
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
@@ -89,8 +89,34 @@ public abstract class PlayerComputer {
             player.addPoints(diff);
             if (diff > 0) {
                 clearDeck();
-                // TODO display congrats
+                if (player.getPoints() < WIN_POINTS) {
+                    congratulate();
+                    // If the game stops, we will show a win/lose popup instead of congrats
+                }
             }
+        }
+    }
+
+    /**
+     * Notifies game window to display a popup once the player
+     * slaps the center deck at the right time.
+     */
+    private void congratulate() {
+        if (!SwingUtilities.isEventDispatchThread()) {
+            // move this method call to main thread
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    launchGame();
+                }
+            });
+            return;
+        }
+        try {
+            gameWindow.showCongratsWithPause();
+        } catch (Exception e) {
+            System.out.println("Error while displaying congratulations window:");
+            e.printStackTrace();
         }
     }
 
@@ -99,7 +125,7 @@ public abstract class PlayerComputer {
      */
     private void clearDeck() {
         if (isPlaying) {
-            // TODO access centerDeck and empty it out
+            gameWindow.getCenterDeck().emptyDeck();
         }
     }
     

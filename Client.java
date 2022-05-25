@@ -76,6 +76,7 @@ public class Client extends PlayerComputer {
     public void stopGame() {
         super.stopGame();
         gThread.stopThread();
+        // TODO win/lose popup
     }
     
     /**
