@@ -22,9 +22,21 @@ public abstract class PlayerComputer {
      */
     public static final int WIN_POINTS = 5; // TODO revert before submitting code
 
+    /**
+     * The GUI game window.
+     */
     protected Game gameWindow;
+    /**
+     * Name of this player.
+     */
     protected String name;
+    /**
+     * List of all players.
+     */
     protected List<Player> players;
+    /**
+     * Boolean value determining whether the game is currently running.
+     */
     protected boolean isPlaying = false;
 
     /**
@@ -36,7 +48,7 @@ public abstract class PlayerComputer {
     }
 
     /**
-     * Launches the game window.
+     * Launches the game window by initializing a new Game object.
      */
     private void launchGame() {
         if (!SwingUtilities.isEventDispatchThread()) {

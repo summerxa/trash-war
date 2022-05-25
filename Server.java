@@ -146,40 +146,4 @@ public class Server extends PlayerComputer {
             }
         }
     }
-
-    /**
-     * For debugging purposes only. Simulates a short sequence of actions.
-     * @param args command-line arguments (not used)
-     */
-    // TODO delete this later
-    public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-
-        System.out.println("#### Created server, waiting for client to join...");
-        Server aTest = new Server("sErVeR");
-
-        System.out.println("#### Enter to start game");
-        scan.nextLine();
-        System.out.println("#### Starting...");
-        aTest.startGame();
-
-        System.out.println("#### Players: ");
-        for (Player p : aTest.getPlayers()) {
-            System.out.println(p.getName() + " - " + p.getPoints());
-        }
-
-        System.out.println("#### Make CoolClient have 5 points, enter to continue");
-        scan.nextLine();
-        aTest.updatePoints("CoolClient", 5);
-
-        System.out.println("#### Make sErVeR have 123 points, enter to continue");
-        scan.nextLine();
-        aTest.updatePoints("sErVeR", 123);
-
-        System.out.println("#### Enter to stop game");
-        scan.nextLine();
-        aTest.stopGame();
-
-        scan.close();
-    }
 }

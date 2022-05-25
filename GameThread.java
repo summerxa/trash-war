@@ -253,12 +253,4 @@ public class GameThread extends Thread {
         sendUpdates();
         interrupt();
     }
-
-    /**
-     * test TODO delete
-     * @return
-     */
-    public boolean isStopped() {
-        return !isRunning;
-    }
 }
