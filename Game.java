@@ -185,6 +185,11 @@ public class Game
         return cd;
     }
 
+    public void changeVisibilityOfCenterDeck(boolean state)  {
+       centerDeck.setVisible(state);
+
+    }
+
     // public void newCongrats() throws Exception{
     // new Congrats();
     // }
@@ -192,11 +197,13 @@ public class Game
     public void draw(Card card)
         throws IOException
     {
+        
         String filePath = card.getFilePath();
         Image myPicture = ImageIO.read(new File(filePath));
         myPicture = getScaledImage(myPicture, 250, 300);
         centerDeck.setEnabled(true);
         centerDeck.setIcon(new ImageIcon(myPicture));
+        changeVisibilityOfCenterDeck(true);
         cd.addCard(card);
 
     }
