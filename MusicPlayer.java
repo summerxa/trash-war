@@ -2,16 +2,11 @@ import java.io.File;
 import javax.sound.sampled.*;
 import javax.swing.*;
 
+/**
+ * Class to help play music
+ */
 public class MusicPlayer
 {
-
-    // public static void main(String[] args)
-    //     throws Exception
-    // {
-    //     MusicPlayer m = new MusicPlayer();
-    //     String filePath = "bensound-moose.wav";
-    //     m.playMusic(filePath);
-    // }
 
 
     /**

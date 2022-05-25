@@ -24,7 +24,6 @@ import javax.imageio.ImageIO;
  * @author Sources - Meenakshi, Anne
  */
 public class Home extends Draw{
-
     public static JButton playerButton;
     public static JButton hostsButton;
     public JFrame frame;
@@ -33,15 +32,24 @@ public class Home extends Draw{
     public JLabel lab = new JLabel(  "                           Hosts IP Address:");
     public JLabel space9 = new JLabel("");
     public JButton b = new JButton("Start");
+    /**
+     * textField that takes the hosts IP Adress
+     */
     private JTextField textfield = new JTextField();
-
-    private PlayerComputer pc; // temporarily stores the server/client object while waiting to start game
+    /**
+     * Player computer object that temporarily stores the server/client obejct while waiting to start game
+     */
+    private PlayerComputer pc; 
 
 
     public static void main(String[] args) throws Exception {
         new Home();
     }
 
+    /**
+     * Constructor for Home Class
+     * @throws Exception
+     */
     public Home() throws Exception{
         design();
 
@@ -130,6 +138,13 @@ public class Home extends Draw{
 
     }
 
+    /**
+     * Method to help re-scale an image
+     * @param srcImg
+     * @param w
+     * @param h
+     * @return
+     */
     private static Image getScaledImage(Image srcImg, int w, int h) {
         BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = resizedImg.createGraphics();
@@ -141,7 +156,13 @@ public class Home extends Draw{
         return resizedImg;
     }
    
+    /**
+     * Class to help detect button clicks
+     */
     class Clicklistener implements ActionListener {
+        /**
+         * method from actionlistener interface used to check if an ActionEvent's source is from the corresponding button
+         */
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == playerButton) {
                 try {

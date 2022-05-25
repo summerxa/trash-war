@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+
 /**
  * Identifies the global scores and current score of the player
  * 
@@ -5,7 +8,9 @@
  * @version 04/29/2022
  * @author Sources - Meenakshi, Anne
  */
-public class Score {
+
+public class Score
+{
     /**
      * Ordered Array of ten players with highest scores from greatest to least
      */
@@ -13,21 +18,43 @@ public class Score {
     /**
      * Score of player who just finished playing the game
      */
-    private int currentScore;
+    private int   currentScore;
 
     /**
-     * The Constructor that sets the globalScores 
+     * The Constructor that sets the globalScores
      */
-    public Score(){
+    public Score(int score)
+    {
         globalScores = new int[10];
-        currentScore = 0; // have to change this
+        currentScore = score;
 
     }
+
+
+    public int[] assignScores(int[] arr)
+        throws Exception
+    {
+        BufferedReader f = new BufferedReader(new FileReader("Global Leaderboard"));
+        String line;
+        int i = 0;
+        while ((line = f.readLine()) != null)
+        {
+            arr[i++] = Integer.parseInt(line);
+        }
+        return arr;
+
+    }
+
+    public int[] returnScores(){
+        return globalScores;
+    }
+
 
     /**
      * Sets the new global scores
      */
-    public void newGlobalScores(){
+    public void newGlobalScores()
+    {
 
         int i = 0;
         int curr = currentScore;
@@ -36,19 +63,21 @@ public class Score {
         {
             i++;
         }
-        
+
         while (i < globalScores.length)
         {
             int temp = globalScores[i];
-            globalScores[i] = curr; 
-            curr = temp; 
+            globalScores[i] = curr;
+            curr = temp;
             i++;
 
         }
     }
 
+
     /**
      * sets the current score
+     * 
      * @param score
      */
     public void setCurrent(int score)
@@ -56,8 +85,8 @@ public class Score {
         currentScore = score;
     }
 
+
     /**
-     * 
      * @returns the list of global scores
      */
     public int[] getGlobalScores()
@@ -65,9 +94,10 @@ public class Score {
         return globalScores;
     }
 
+
     public static void main(String args[])
     {
-        Score sc = new Score();
+        Score sc = new Score(5);
         sc.setCurrent(13);
         sc.newGlobalScores();
 
@@ -78,6 +108,4 @@ public class Score {
         }
     }
 
-
-    
 }

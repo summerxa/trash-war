@@ -117,7 +117,7 @@ public class GameOver
                 try
                 {
 
-                    new Leaderboard();
+                    new Leaderboard(score);
 
                 }
                 catch (Exception e1)

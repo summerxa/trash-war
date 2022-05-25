@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 /**
  * GUI for Leaderboard
  * 
@@ -8,7 +10,14 @@
 
 public class Leaderboard extends Draw{
 
-    public Leaderboard() {
+    private int points;
+
+    public static void main(String[ ]args){
+        new Leaderboard(8);
+    }
+
+    public Leaderboard(int score) {
+        this.points = score;
 
     }
 
@@ -16,6 +25,19 @@ public class Leaderboard extends Draw{
     * Design for the Leaderboard Screen
     */
     public void design(){
+        Score score = new Score(points);
+        int[] arr= score.returnScores();
+
+        JFrame frame = new JFrame();
+        JPanel panel = new JPanel();
+        JLabel label;
+        for(int i = 0; i < arr.length; i++ ){
+            label = new JLabel(Integer.toString(arr[i]));
+            panel.add(label);
+        }
+        frame.add(panel);
+        frame.setVisible(true);
+
         
 
 
