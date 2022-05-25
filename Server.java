@@ -62,6 +62,8 @@ public class Server extends PlayerComputer {
         gThread.stopGame();
         try {
             gThread.join(); // wait for game thread to notify client
+        } catch (InterruptedException e) {
+            // game ended
         } catch (Exception e) {
             System.out.println("Error in Server:");
             e.printStackTrace();

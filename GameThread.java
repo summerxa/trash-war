@@ -74,6 +74,8 @@ public class GameThread extends Thread {
                 readUpdates();
                 try {
                     Thread.sleep(DELAY);
+                } catch (InterruptedException e) {
+                    // game ended
                 } catch (Exception e) {
                     System.out.println("Error in GameThread:");
                     e.printStackTrace();
@@ -82,6 +84,8 @@ public class GameThread extends Thread {
                 readUpdates();
                 try {
                     Thread.sleep(DELAY);
+                } catch (InterruptedException e) {
+                    // game ended
                 } catch (Exception e) {
                     System.out.println("Error in GameThread:");
                     e.printStackTrace();
