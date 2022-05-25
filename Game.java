@@ -131,6 +131,11 @@ public class Game
     }
 
 
+    /**
+     * sets the filepaths
+     * @param arr the array
+     * @return a String array
+     */
     public String[] init(String[] arr)
     {
         arr[0] = "Trash" + " " + "TrashWarImagesAndSounds" + File.separator + "cardboard.jpg";
@@ -153,6 +158,11 @@ public class Game
     }
 
 
+    /**
+     * creates a gameOver tab
+     * @param score the score
+     * @throws Exception
+     */
     public void newYouLost(int score)
         throws Exception
     {
@@ -160,6 +170,11 @@ public class Game
     }
 
 
+    /**
+     * creates a gameOver tab
+     * @param score the score
+     * @throws Exception
+     */
     public void newYouWon(int score)
         throws Exception
     {
@@ -167,6 +182,10 @@ public class Game
     }
 
 
+    /**
+     * shows congrats message
+     * @throws Exception
+     */
     public void showCongratsWithPause() throws Exception
     {
 
@@ -181,10 +200,18 @@ public class Game
 
     }
 
+    /**
+     * 
+     * @return the centerdeck
+     */
     public CenterDeck getCenterDeck(){
         return cd;
     }
 
+    /**
+     * set the centerdeck to visible based on state
+     * @param state a boolean
+     */
     public void changeVisibilityOfCenterDeck(boolean state)  {
        centerDeck.setVisible(state);
 
