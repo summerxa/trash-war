@@ -155,11 +155,11 @@ public class Game
     }
 
 
-    public void newYouLost(int score)
-        throws Exception
-    {
-        new YouLost();
-    }
+    // public void newYouLost(int score)
+    //     throws Exception
+    // {
+    //     new YouLost();
+    // }
 
 
     public void newYouWon(int score)

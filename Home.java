@@ -197,6 +197,7 @@ public class Home extends Draw{
                     }
                     else{
                         // new Game(new Server());
+                        frame.setVisible(false);
                         pc.startGame();
                     }
                    
