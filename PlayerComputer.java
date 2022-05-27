@@ -103,9 +103,11 @@ public abstract class PlayerComputer {
             if (diff > 0) {
                 clearDeck();
                 if (cur.getPoints() < WIN_POINTS) {
-                    congratulate();
+                    showPopup(true);
                     // If the game stops, we will show a win/lose popup instead of congrats
                 }
+            } else {
+                showPopup(false);
             }
         }
     }
@@ -124,20 +126,21 @@ public abstract class PlayerComputer {
     /**
      * Notifies game window to display a popup once the player
      * slaps the center deck at the right time.
+     * @param congratulate True if this is a congrats popup, false if burn.
      */
-    private void congratulate() {
+    private void showPopup(boolean congratulate) {
         if (!SwingUtilities.isEventDispatchThread()) {
             // move this method call to main thread
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    congratulate();
+                    showPopup(congratulate);
                 }
             });
             return;
         }
         try {
-            gameWindow.showCongratsWithPause();
+            gameWindow.showCongratsWithPause(congratulate);
         } catch (Exception e) {
             System.out.println("Error while displaying congratulations window:");
             e.printStackTrace();
