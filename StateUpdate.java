@@ -41,7 +41,7 @@ public class StateUpdate {
     /**
      * A null card's string representation.
      */
-    public static final String NULLCARD = "null";
+    public static final String NULL_CARD = "null";
 
     private String player = null;
     private int type;
@@ -166,7 +166,7 @@ public class StateUpdate {
             case DEAL_CARD:
                 // if card is null, calling getType() will cause NullPointerException,
                 // so just use a filler string
-                String cardString = NULLCARD;
+                String cardString = NULL_CARD;
                 if (card != null) {
                     cardString = card.getType();
                 }
