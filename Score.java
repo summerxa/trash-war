@@ -14,18 +14,20 @@ public class Score
     /**
      * Ordered Array of ten players with highest scores from greatest to least
      */
-    private int[] globalScores;
+    private static int[] globalScores;
     /**
      * Score of player who just finished playing the game
      */
-    private int   currentScore;
+    private static int   currentScore;
 
     /**
      * The Constructor that sets the globalScores
+     * @throws Exception
      */
-    public Score(int score)
+    public Score(int score) throws Exception
     {
         globalScores = new int[10];
+        globalScores = assignScores(globalScores);
         currentScore = score;
 
     }
@@ -53,25 +55,30 @@ public class Score
     /**
      * Sets the new global scores
      */
-    public void newGlobalScores()
+    public int[] newGlobalScores(int[] arr, int points)
     {
 
         int i = 0;
-        int curr = currentScore;
+        int curr = points;
 
-        while ((i < globalScores.length) && (currentScore <= globalScores[i]))
+        while ((i < arr.length) && (currentScore >= arr[i]))
         {
             i++;
         }
 
-        while (i < globalScores.length)
+        while (i < arr.length)
         {
-            int temp = globalScores[i];
-            globalScores[i] = curr;
+            int temp = arr[i];
+            arr[i] = curr;
             curr = temp;
             i++;
 
         }
+         if(i==arr.length){
+             arr[arr.length-1] = curr;
+         }
+
+        return arr;
     }
 
 
@@ -95,11 +102,11 @@ public class Score
     }
 
 
-    public static void main(String args[])
+    public static void main(String args[]) throws Exception
     {
         Score sc = new Score(5);
         sc.setCurrent(13);
-        sc.newGlobalScores();
+        sc.newGlobalScores(globalScores, currentScore);
 
         int[] result = sc.getGlobalScores();
         for (int num : result)

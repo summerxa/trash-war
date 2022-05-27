@@ -186,10 +186,10 @@ public class Game
      * shows congrats message
      * @throws Exception
      */
-    public void showCongratsWithPause() throws Exception
+    public void showCongratsWithPause(boolean isTrue) throws Exception
     {
 
-        Congrats c = new Congrats();
+        Congrats c = new Congrats(isTrue);
         new java.util.Timer().schedule(new java.util.TimerTask() {
             @Override
             public void run()

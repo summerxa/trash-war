@@ -25,16 +25,19 @@ import javax.imageio.ImageIO;
 
 public class Congrats extends Draw{
 
+    private boolean b;
+
     JFrame frame = new JFrame();
     public static void main(String[] args) throws Exception{
-        new Congrats();
+        new Congrats(false);
     }
 
     /**
      * calls design
      * @throws Exception 
      */
-    public Congrats() throws Exception {
+    public Congrats(boolean inTrue) throws Exception {
+        b = inTrue;
         design();
         
 
@@ -55,7 +58,10 @@ public class Congrats extends Draw{
         //JFrame frame = new JFrame();
         frame.setSize(400, 300);
         frame.setLocation(450, 100);
-        Image myPicture = ImageIO.read(new File("TrashWarImagesAndSounds/congrats-congratulations.gif"));
+        String pathName = "";
+        if(b) pathName ="TrashWarImagesAndSounds" + File.separator + "congrats-congratulations.gif";
+        else pathName = "TrashWarImagesAndSounds" + File.separator + "burn image.jpg";
+        Image myPicture = ImageIO.read(new File(pathName));
         myPicture = getScaledImage(myPicture, 400, 300);
         JLabel l = new JLabel(new ImageIcon(myPicture));
         JPanel panel = new JPanel();
