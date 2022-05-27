@@ -1,6 +1,5 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
 import java.awt.event.*;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,9 +10,7 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 /**
@@ -23,209 +20,230 @@ import javax.imageio.ImageIO;
  * @version 04/29/2022
  * @author Sources - Meenakshi, Anne
  */
-public class Home extends Draw{
-    public static JButton playerButton;
-    public static JButton hostsButton;
-    public JFrame frame;
-    public JLabel labell;
-  //  public JTextField text;
-    public JLabel lab = new JLabel(  "                           Hosts IP Address:");
-    public JLabel space9 = new JLabel("");
-    public JButton b = new JButton("Start");
+public class Home
+    extends Draw
+{
+    /**
+     * playersButton to join game
+     */
+    private static JButton playerButton;
+    /**
+     * hostsButton to join game
+     */
+    private static JButton hostsButton;
+    /**
+     * frame that holds all of the GUI components
+     */
+    private JFrame         frame;
+    /**
+     * label that directs user to enter hosts ip address
+     */
+    private JLabel         hostsIpAddressLabel       = new JLabel("                           Hosts IP Address:");
+    /**
+     * separator that separates labels
+     */
+    private JLabel         labelSeparator    = new JLabel("");
+    /**
+     * button to officially start the game
+     */
+    private JButton        startButton         = new JButton("Start");
     /**
      * textField that takes the hosts IP Adress
      */
-    private JTextField textfield = new JTextField();
+    private JTextField     IPAddresstextfield = new JTextField();
     /**
-     * Player computer object that temporarily stores the server/client obejct while waiting to start game
+     * Player computer object that temporarily stores the server/client obejct
+     * while waiting to start game
      */
-    private PlayerComputer pc; 
+    private PlayerComputer pc;
 
+    // public static void main(String[] args)
+    //     throws Exception
+    // {
+    //     new Home();
+    // }
 
-    public static void main(String[] args) throws Exception {
-        new Home();
-    }
 
     /**
      * Constructor for Home Class
+     * calls the design method
      * @throws Exception
      */
-    public Home() throws Exception{
+    public Home()
+        throws Exception
+    {
         design();
 
     }
 
-  
 
-   /**
-    * Design for the Home Screen
- * @throws IOException
-    */
-    public void design() throws Exception{
-        lab.setVisible(false);
+    /**
+     * Design for the Home Screen
+     * 
+     * @throws IOException
+     */
+    public void design()
+        throws Exception
+    {
+        hostsIpAddressLabel.setVisible(false);
         frame = new JFrame();
         frame.setSize(2000, 1000);
-        JLabel label = new JLabel(" Trash War ");
-        label.setFont(new Font("AvantGarde", Font.BOLD, 100));
-        label.setForeground(Color.BLUE);
-        JLabel space2 = new JLabel("   sss    ");
-        space2.setFont(new Font("AvantGarde", Font.BOLD, 100));
-        space2.setForeground(Color.BLUE);
+        JLabel trashWarLabel = new JLabel(" Trash War ");
+        trashWarLabel.setFont(new Font("AvantGarde", Font.BOLD, 100));
+        trashWarLabel.setForeground(Color.BLUE);
         JPanel panel2 = new JPanel();
         panel2.setBackground(Color.WHITE);
-       Image myPicture = ImageIO.read(new File(getClass().getResource("TrashWarImagesAndSounds" + File.separator + "re.png.jpg").toURI()));
-
-       // Image myPicture = ImageIO.read(new File("TrashWarImagesAndSounds\\orangepeel.jpg"));
+        Image myPicture = ImageIO.read(
+            new File(
+                getClass().getResource("TrashWarImagesAndSounds" + File.separator + "re.png.jpg")
+                    .toURI()));
         myPicture = getScaledImage(myPicture, 250, 250);
-        JLabel l = new JLabel(new ImageIcon(myPicture));
+        JLabel recycleImage = new JLabel(new ImageIcon(myPicture));
         JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-        label.setBounds(100, 150, 0, 0);
-        JLabel space3 = new JLabel("                       ");
-        JLabel space4 = new JLabel("                       ");
-        JLabel space5 = new JLabel("                                  ");
-        JLabel space6 = new JLabel(
-                "                                                                                                                                                                                "
-                        + "                                                                                                                                                                                                                   ");
-        
+        trashWarLabel.setBounds(100, 150, 0, 0);
+        JLabel spaceSeparator1 = new JLabel("                       ");
+        JLabel spaceSeparator2 = new JLabel("                       ");
+        JLabel spaceSeparator3 = new JLabel("                                  ");
+        JLabel spaceSeparator4 = new JLabel(
+            "                                                                                                                                                                                "
+                + "                                                                                                                                                                                                                   ");
+
         Clicklistener click = new Clicklistener();
 
         playerButton = new JButton("   Play Game     ");
         playerButton.addActionListener(click);
         hostsButton = new JButton("Host a Game");
         hostsButton.addActionListener(click);
-        b.addActionListener(click);
-        labell = new JLabel("                            Give player your IP Address");
-        textfield = new JTextField("");
+        startButton.addActionListener(click);
+        IPAddresstextfield = new JTextField("");
         playerButton.setPreferredSize(new Dimension(300, 50));
         hostsButton.setPreferredSize(new Dimension(300, 50));
 
         JPanel panel = new JPanel();
-        JPanel newp = new JPanel();
-        JPanel pa = new JPanel();
+        JPanel panel3 = new JPanel();
+        JPanel panel4 = new JPanel();
         panel.setBackground(Color.WHITE);
-        panel.add(label);
-        panel.add(l);
-        panel2.add(space4);
+        panel.add(trashWarLabel);
+        panel.add(recycleImage);
+        panel2.add(spaceSeparator2);
         panel2.add(picLabel);
         panel2.add(panel);
-        panel2.add(space3);
-        panel2.add(space6);
+        panel2.add(spaceSeparator1);
+        panel2.add(spaceSeparator4);
         panel2.add(playerButton);
-        panel2.add(space5);
+        panel2.add(spaceSeparator3);
         panel2.add(hostsButton);
-        newp.setLayout(new GridLayout());
-        newp.add(lab);
-        lab.setBorder(new EmptyBorder(5,5,5,5));
-        newp.add(textfield);
-      pa.add(b);
-      b.setVisible(false);
-        newp.add(labell);
-        newp.add(space9);
-       newp.setBackground(Color.WHITE);
-        panel2.add(newp);
-        panel2.add(pa);
-        pa.setBackground(Color.WHITE);
-       newp.setBorder(new EmptyBorder(50, 50, 50, 50));
-        labell.setVisible(false);
-        labell.setFont(new Font("AvantGarde", Font.BOLD, 15));
-        labell.setForeground(Color.RED);
-        
+        panel3.setLayout(new GridLayout());
+        panel3.add(hostsIpAddressLabel);
+        hostsIpAddressLabel.setBorder(new EmptyBorder(5, 5, 5, 5));
+        panel3.add(IPAddresstextfield);
+        panel4.add(startButton);
+        startButton.setVisible(false);
+        panel3.add(hostsIpAddressLabel);
+        panel3.add(labelSeparator);
+        panel3.setBackground(Color.WHITE);
+        panel2.add(panel3);
+        panel2.add(panel4);
+        panel4.setBackground(Color.WHITE);
+        panel3.setBorder(new EmptyBorder(50, 50, 50, 50));
+
         frame.add(panel2);
         frame.setVisible(true);
-        textfield.setVisible(false);
+        IPAddresstextfield.setVisible(false);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
 
     }
 
+
     /**
      * Method to help re-scale an image
+     * 
      * @param srcImg
      * @param w
      * @param h
      * @return
      */
-    private static Image getScaledImage(Image srcImg, int w, int h) {
-        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = resizedImg.createGraphics();
+    private static Image getScaledImage(Image srcImg, int w, int h)
+    {
+        BufferedImage newImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = newImg.createGraphics();
 
-        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g2.drawImage(srcImg, 0, 0, w, h, null);
-        g2.dispose();
+        g.setRenderingHint(
+            RenderingHints.KEY_INTERPOLATION,
+            RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g.drawImage(srcImg, 0, 0, w, h, null);
+        g.dispose();
 
-        return resizedImg;
+        return newImg;
     }
-   
+
     /**
      * Class to help detect button clicks
      */
-    class Clicklistener implements ActionListener {
+    class Clicklistener
+        implements ActionListener
+    {
         /**
-         * method from actionlistener interface used to check if an ActionEvent's source is from the corresponding button
+         * method from actionlistener interface used to check if an
+         * ActionEvent's source is from the corresponding button
          */
-        public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == playerButton) {
-                try {
-                    
-                   
-                    labell.setVisible(false);
-                    b.setVisible(true);
-                   lab.setVisible(true);
-                   textfield.setVisible(true);
+        public void actionPerformed(ActionEvent e)
+        {
+            if (e.getSource() == playerButton)
+            {
+                try
+                {
+                    startButton.setVisible(true);
+                    hostsIpAddressLabel.setVisible(true);
+                    IPAddresstextfield.setVisible(true);
 
-                   
-
-                
-                // b.setVisible(false);
-                // lab.setVisible(false);
-                // text.setVisible(false);
-                // labell.setVisible(true);
-                    
-                    
-                    
-
-                } catch (Exception e1) {
+                }
+                catch (Exception e1)
+                {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
             }
 
-            if (e.getSource() == hostsButton) {
-                try {
-                    labell.setVisible(false);
-                    b.setVisible(true);
-                   lab.setVisible(false);
-                   textfield.setVisible(false);
+            if (e.getSource() == hostsButton)
+            {
+                try
+                {
+                   
+                    startButton.setVisible(true);
+                    hostsIpAddressLabel.setVisible(false);
+                    IPAddresstextfield.setVisible(false);
 
-                   pc = new Server();
+                    pc = new Server();
 
-                    
-                    
-                 
-                } catch (Exception e1) {
-                    // TODO Auto-generated catch block
+                }
+                catch (Exception e1)
+                {
                     e1.printStackTrace();
                 }
             }
 
-            if(e.getSource() == b){
-                try {
-                    if(textfield.isVisible()){
-                        String value = textfield.getText();
+            if (e.getSource() == startButton)
+            {
+                try
+                {
+                    if (IPAddresstextfield.isVisible())
+                    {
+                        String value = IPAddresstextfield.getText();
                         frame.setVisible(false);
-                        // new Game(new Client(value));
                         pc = new Client(value);
                     }
-                    else{
-                        // new Game(new Server());
+                    else
+                    {
                         frame.setVisible(false);
                         pc.startGame();
                     }
-                   
-                 
-                } catch (Exception e1) {
+
+                }
+                catch (Exception e1)
+                {
                     e1.printStackTrace();
-                    
+
                 }
             }
         }

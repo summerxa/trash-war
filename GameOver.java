@@ -1,24 +1,16 @@
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import java.awt.Component;
 import java.awt.event.*;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 /**
- * You Lost Screen GUI
+ * Game Over Screen GUI which either shows that you won or lost and also shows
+ * your total points
  * 
  * @author Vaishnavi Kunapuli
  * @version 04/29/2022
@@ -28,19 +20,41 @@ import javax.imageio.ImageIO;
 public class GameOver
     extends Draw
 {
-
+    /**
+     * keeps track of the players' scores
+     */
     private int     score;
+    /**
+     * checks whether the player won or lost
+     */
     private boolean isWin;
-    public String   filePath;
-    public JButton  button;
+    /**
+     * stores the image file path of either the youLose image or youWin image
+     */
+    private String  filePath;
+    /**
+     * Take the user to the next screen
+     */
+    private JButton nextButton;
 
-    public static void main(String[] args)
-        throws Exception
-    {
-        new GameOver(true, 8);
-    }
+    /**
+     * Jframe that holds all the GUI components
+     */
+    private JFrame frame;
+
+    // public static void main(String[] args)
+    //     throws Exception
+    // {
+    //     new GameOver(true, 8);
+    // }
 
 
+    /**
+     * GameOver constructor
+     * @param isWin
+     * @param score
+     * @throws Exception
+     */
     public GameOver(boolean isWin, int score)
         throws Exception
     {
@@ -60,63 +74,78 @@ public class GameOver
 
 
     /**
-     * Design for the YouLost Screen
+     * Design for the GameOver Screen
      * 
      * @throws Exception
      */
     public void design()
         throws Exception
     {
-        JFrame frame = new JFrame();
+        frame = new JFrame();
         frame.setSize(400, 300);
         frame.setLocation(450, 100);
         Image myPicture = ImageIO.read(new File(filePath));
         myPicture = getScaledImage(myPicture, 400, 200);
-        JLabel l = new JLabel(new ImageIcon(myPicture));
-        String s = Integer.toString(score);
-        JLabel points = new JLabel("Total Score: "   + s);
+        JLabel gameOverStateImage = new JLabel(new ImageIcon(myPicture));
+        String scoreString = Integer.toString(score);
+        JLabel points = new JLabel("Total Score: " + scoreString);
         points.setBorder(new EmptyBorder(10, 10, 5, 10));
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, 1));
 
-        button = new JButton("Next");
-        button.setBorder(new EmptyBorder(10, 10,5, 10));
+        nextButton = new JButton("Next");
+        nextButton.setBorder(new EmptyBorder(10, 10, 5, 10));
         Clicklistener click = new Clicklistener();
-        button.addActionListener(click);
+        nextButton.addActionListener(click);
 
-        panel.add(l);
+        panel.add(gameOverStateImage);
         panel.add(points);
-        panel.add(button);
+        panel.add(nextButton);
         frame.add(panel);
         frame.setVisible(true);
 
     }
 
 
+    /**
+     * Method to help re-scale an image
+     * 
+     * @param srcImg
+     * @param w
+     * @param h
+     * @return
+     */
     private static Image getScaledImage(Image srcImg, int w, int h)
     {
-        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = resizedImg.createGraphics();
+        BufferedImage newImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = newImg.createGraphics();
 
-        g2.setRenderingHint(
+        g.setRenderingHint(
             RenderingHints.KEY_INTERPOLATION,
             RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g2.drawImage(srcImg, 0, 0, w, h, null);
-        g2.dispose();
+        g.drawImage(srcImg, 0, 0, w, h, null);
+        g.dispose();
 
-        return resizedImg;
+        return newImg;
     }
 
+   /**
+     * Class to help detect button clicks
+     */
     class Clicklistener
         implements ActionListener
     {
+        /**
+         * method from actionlistener interface used to check if an
+         * ActionEvent's source is from the corresponding button
+         */
         public void actionPerformed(ActionEvent e)
         {
-            if (e.getSource() == button)
+            if (e.getSource() == nextButton)
             {
                 try
                 {
-
+                    frame.setVisible(false);
                     new Leaderboard(score);
 
                 }

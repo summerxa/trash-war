@@ -1,6 +1,8 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Font;
 
 /**
  * GUI for Leaderboard
@@ -10,53 +12,74 @@ import java.awt.*;
  * @author Sources - Meenakshi, Anne
  */
 
-public class Leaderboard extends Draw{
+public class Leaderboard
+    extends Draw
+{
 
-    private int points;
+    /**
+     * holds points of the players
+     */
+    private int     points;
 
-    public static void main(String[ ]args) throws Exception {
+    /**
+     * frame that holds all gui components
+     */
+    private JFrame  frame;
+
+    public static void main(String[] args)
+        throws Exception
+    {
         new Leaderboard(8);
     }
 
-    public Leaderboard(int score) throws Exception {
+
+    /**
+     * Leaderboard Constructor initializes points and calls design method to set
+     * up the GUI
+     * 
+     * @param score
+     * @throws Exception
+     */
+    public Leaderboard(int score)
+        throws Exception
+    {
         this.points = score;
         design();
 
     }
 
-   /**
-    * Design for the Leaderboard Screen
-    */
-    public void design()throws Exception {
+
+    /**
+     * Design for the Leaderboard Screen
+     */
+    public void design()
+        throws Exception
+    {
         Score score = new Score(points);
-        
-        int[] arr= score.returnScores();
+        int[] arr = score.returnScores();
         arr = score.assignScores(arr);
         arr = score.newGlobalScores(arr, points);
-
-        JFrame frame = new JFrame();
-        frame.setSize(400,480);
+        frame = new JFrame();
+        frame.setSize(400, 500);
         frame.setLocation(450, 100);
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel,1));
-        JLabel lab = new JLabel("Leaderboard");
-        lab.setFont(new Font("AvantGarde", Font.BOLD, 50));
-        lab.setForeground(Color.BLUE);
-        panel.add(lab);
-        JLabel label;
-        for(int i = 0; i < arr.length; i++ ){
+        panel.setLayout(new BoxLayout(panel, 1));
+        JLabel leaderboardLabel = new JLabel("Leaderboard");
+        leaderboardLabel.setFont(new Font("AvantGarde", Font.BOLD, 50));
+        leaderboardLabel.setForeground(Color.BLUE);
+        panel.add(leaderboardLabel);
+        JLabel allScores;
+        for (int i = 0; i < arr.length; i++)
+        {
             System.out.println("Arr i: " + arr[i]);
-            label = new JLabel(Integer.toString(arr[i]));
-            label.setBorder(new EmptyBorder(10,10,10,10));
-            
-            panel.add(label);
+            allScores = new JLabel(Integer.toString(arr[i]));
+            allScores.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+            panel.add(allScores);
         }
         frame.add(panel);
         frame.setVisible(true);
 
-        
-
-
     }
-    
+
 }

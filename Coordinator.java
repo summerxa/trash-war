@@ -9,6 +9,12 @@
  */
 public class Coordinator {
 
+    /**
+     * main method
+     * this is where the thread enters the program from
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception{
         new Home();
          

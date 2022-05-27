@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.io.File;
 import javax.imageio.ImageIO;
-import javax.management.monitor.Monitor;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.*;
@@ -18,13 +17,33 @@ import java.io.IOException;
 
 public class Game
 {
-
-    public JButton         playerDeck1;
-    public JButton         playerDeck2;
-    public JButton         centerDeck;
-    public JPanel          panel;
-    CenterDeck             cd   = new CenterDeck();
-    JButton                slap = new JButton("Slap!");
+    /**
+     * Clients card deck
+     */
+    private JButton        playerDeck1;
+    /**
+     * Player's card deck
+     */
+    private JButton        playerDeck2;
+    /**
+     * center card deck
+     */
+    private JButton        centerDeck;
+    /**
+     * Jpanel on Jframe which holds main gui components
+     */
+    private JPanel         panel;
+    /**
+     * CenterDeck object
+     */
+    private CenterDeck     cd   = new CenterDeck();
+    /**
+     * slap button that the player clicks if they think a pattern was detected
+     */
+    private JButton        slap = new JButton("Slap!");
+    /**
+     * PlayerComputer object
+     */
     private PlayerComputer pc;
 
     // public static void main(String[] args)
@@ -34,6 +53,12 @@ public class Game
     // new Game();
     // }
 
+    /**
+     * Game constructor
+     * 
+     * @param playercomp
+     * @throws Exception
+     */
     public Game(PlayerComputer playercomp)
         throws Exception
     {
@@ -74,7 +99,6 @@ public class Game
         slap.addActionListener(click);
         centerDeck.addActionListener(click);
         centerDeck.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        //centerDeck.setEnabled(false);
         Color color = new Color(207, 185, 151);
         centerDeck.setBackground(color);
         Image myPicture =
@@ -91,9 +115,7 @@ public class Game
         playerDeck2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         JPanel panel2 = new JPanel();
         panel.setBorder(new EmptyBorder(10, 100, 0, 100));
-        // panel2.setBorder(new EmptyBorder(50, 100, 0, 100));
         panel2.add(playerDeck1);
-       // centerDeck.setContentAreaFilled(false);
         panel.setBackground(color);
         panel2.setBackground(color);
         panel2.add(space);
@@ -109,13 +131,20 @@ public class Game
         panel.add(centerDeck);
         panel.add(panel2);
         frame.add(panel);
-        JLayeredPane layered = new JLayeredPane();
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
     }
 
 
+     /**
+     * Method to help re-scale an image
+     * 
+     * @param srcImg
+     * @param w
+     * @param h
+     * @return
+     */
     private static Image getScaledImage(Image srcImg, int w, int h)
     {
         BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
@@ -132,35 +161,10 @@ public class Game
 
 
     /**
-     * sets the filepaths
-     * @param arr the array
-     * @return a String array
-     */
-    public String[] init(String[] arr)
-    {
-        arr[0] = "Trash" + " " + "TrashWarImagesAndSounds" + File.separator + "cardboard.jpg";
-        arr[1] = "Trash" + " " + "TrashWarImagesAndSounds" + File.separator + "cermicpot.jpg";
-        arr[2] = "Trash" + " " + "TrashWarImagesAndSounds" + File.separator + "diaper.jpg";
-        arr[3] = "Trash" + " " + "TrashWarImagesAndSounds" + File.separator + "trash.jpg";
-
-        arr[4] = "Recycle" + " " + "TrashWarImagesAndSounds" + File.separator + "aluminum.jpg";
-        arr[5] = "Recycle" + " " + "TrashWarImagesAndSounds" + File.separator + "bottle.jpg";
-        arr[6] = "Recycle" + " " + "TrashWarImagesAndSounds" + File.separator + "glass.jpg";
-        arr[7] = "Recycle" + " " + "TrashWarImagesAndSounds" + File.separator + "recycle.jpg";
-
-        arr[8] = "Compost" + " " + "TrashWarImagesAndSounds" + File.separator + "branches.jpg";
-        arr[9] = "Compost" + " " + "TrashWarImagesAndSounds" + File.separator + "orangepeel.jpg";
-        arr[10] = "Compost" + " " + "TrashWarImagesAndSounds" + File.separator + "bananapeel.jpg";
-        arr[11] = "Compost" + " " + "TrashWarImagesAndSounds" + File.separator + "compost.jpg";
-
-        return arr;
-
-    }
-
-
-    /**
-     * creates a gameOver tab
-     * @param score the score
+     * creates a gameOver tab for the loser
+     * 
+     * @param score
+     *            the score
      * @throws Exception
      */
     public void newYouLost(int score)
@@ -171,8 +175,10 @@ public class Game
 
 
     /**
-     * creates a gameOver tab
-     * @param score the score
+     * creates a gameOver tab for the winner
+     * 
+     * @param score
+     *            the score
      * @throws Exception
      */
     public void newYouWon(int score)
@@ -184,9 +190,11 @@ public class Game
 
     /**
      * shows congrats message
+     * 
      * @throws Exception
      */
-    public void showCongratsWithPause(boolean isTrue) throws Exception
+    public void showCongratsWithPause(boolean isTrue)
+        throws Exception
     {
 
         Result c = new Result(isTrue);
@@ -200,33 +208,42 @@ public class Game
 
     }
 
+
     /**
-     * 
      * @return the centerdeck
      */
-    public CenterDeck getCenterDeck(){
+    public CenterDeck getCenterDeck()
+    {
         return cd;
     }
 
+
     /**
      * set the centerdeck to visible based on state
-     * @param state a boolean
+     * 
+     * @param state
+     *            a boolean
      */
-    public void changeVisibilityOfCenterDeck(boolean state)  {
-       if(!state){
-           centerDeck.setIcon(null);
-       }
+    public void changeVisibilityOfCenterDeck(boolean state)
+    {
+        if (!state)
+        {
+            centerDeck.setIcon(null);
+        }
 
     }
 
-    // public void newCongrats() throws Exception{
-    // new Congrats();
-    // }
 
+    /**
+     * Draw method that draws the card passed in the parameter
+     * 
+     * @param card
+     * @throws IOException
+     */
     public void draw(Card card)
         throws IOException
     {
-        
+
         String filePath = card.getFilePath();
         Image myPicture = ImageIO.read(new File(filePath));
         myPicture = getScaledImage(myPicture, 250, 300);
@@ -237,9 +254,16 @@ public class Game
 
     }
 
+     /**
+     * Class to help detect button clicks
+     */
     class Clicklistener
         implements ActionListener
     {
+        /**
+         * method from actionlistener interface used to check if an
+         * ActionEvent's source is from the corresponding button
+         */
         public void actionPerformed(ActionEvent e)
         {
             if (e.getSource() == playerDeck1)

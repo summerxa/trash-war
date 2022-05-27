@@ -4,9 +4,8 @@ import java.io.FileReader;
 /**
  * Identifies the global scores and current score of the player
  * 
- * @author Vaishnavi Kunapuli
+ * @author All
  * @version 04/29/2022
- * @author Sources - Meenakshi, Anne
  */
 
 public class Score
@@ -32,7 +31,12 @@ public class Score
 
     }
 
-
+    /**
+     * Reads data from file and assigns them into the array 
+     * @param arr
+     * @return
+     * @throws Exception
+     */
     public int[] assignScores(int[] arr)
         throws Exception
     {
@@ -94,6 +98,7 @@ public class Score
 
 
     /**
+     * sends the list of global scores
      * @returns the list of global scores
      */
     public int[] getGlobalScores()
@@ -102,17 +107,22 @@ public class Score
     }
 
 
-    public static void main(String args[]) throws Exception
-    {
-        Score sc = new Score(5);
-        sc.setCurrent(13);
-        sc.newGlobalScores(globalScores, currentScore);
+    // /**
+    //  * Main method
+    //  * @param args
+    //  * @throws Exception
+    //  */
+    // public static void main(String args[]) throws Exception
+    // {
+    //     Score sc = new Score(5);
+    //     sc.setCurrent(13);
+    //     sc.newGlobalScores(globalScores, currentScore);
 
-        int[] result = sc.getGlobalScores();
-        for (int num : result)
-        {
-            System.out.println(num);
-        }
-    }
+    //     int[] result = sc.getGlobalScores();
+    //     for (int num : result)
+    //     {
+    //         System.out.println(num);
+    //     }
+    // }
 
 }
