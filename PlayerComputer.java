@@ -39,6 +39,8 @@ public abstract class PlayerComputer {
      */
     protected boolean isPlaying = false;
 
+    private Score scores;
+
     /**
      * Starts the game.
      */
@@ -75,6 +77,29 @@ public abstract class PlayerComputer {
     public synchronized void stopGame() {
         isPlaying = false;
         showWinLose();
+        initScores();
+    }
+
+    /**
+     * Initializes the scoreboard.
+     */
+    private void initScores() {
+        if (!SwingUtilities.isEventDispatchThread()) {
+            // move this method call to main thread
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    initScores();
+                }
+            });
+            return;
+        }
+        try {
+            scores = new Score(getSelf().getPoints());
+        } catch (Exception e) {
+            System.out.println("Error initializing leaderboard:");
+            e.printStackTrace();
+        }
     }
     
     /**
@@ -103,9 +128,11 @@ public abstract class PlayerComputer {
             if (diff > 0) {
                 clearDeck();
                 if (cur.getPoints() < WIN_POINTS) {
-                    congratulate();
+                    showPopup(true);
                     // If the game stops, we will show a win/lose popup instead of congrats
                 }
+            } else {
+                showPopup(false);
             }
         }
     }
@@ -124,20 +151,21 @@ public abstract class PlayerComputer {
     /**
      * Notifies game window to display a popup once the player
      * slaps the center deck at the right time.
+     * @param congratulate True if this is a congrats popup, false if burn.
      */
-    private void congratulate() {
+    private void showPopup(boolean congratulate) {
         if (!SwingUtilities.isEventDispatchThread()) {
             // move this method call to main thread
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    congratulate();
+                    showPopup(congratulate);
                 }
             });
             return;
         }
         try {
-            gameWindow.showCongratsWithPause();
+            gameWindow.showCongratsWithPause(congratulate);
         } catch (Exception e) {
             System.out.println("Error while displaying congratulations window:");
             e.printStackTrace();
@@ -159,7 +187,7 @@ public abstract class PlayerComputer {
             return;
         }
         try {
-            Player self = getMatch(name);
+            Player self = getSelf();
             int score = self.getPoints();
             if (score >= WIN_POINTS) {
                 gameWindow.newYouWon(score);

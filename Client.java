@@ -20,8 +20,6 @@ public class Client extends PlayerComputer {
     private GameThread gThread;
     
     private DataOutputStream oStream;
-
-    private Score scores;
     
     /**
      * Constructs a client and connects to a server.

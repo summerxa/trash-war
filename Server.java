@@ -12,8 +12,6 @@ import java.util.Scanner;
 public class Server extends PlayerComputer {
     private ServerThread sThread;
     private GameThread gThread;
-    
-    private Score scores;
 
     /**
      * Constructs a server that begins accepting players.
