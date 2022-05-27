@@ -79,16 +79,16 @@ public class CenterDeck
 
 
     /**
-     * Checks if the top card and card directly beneath it are of the same
+     * Checks if the top card and card two spots beneath it are of the same
      * type(Recycle, Compost, or Trash)
      * 
      * @return
      */
     public boolean sandwich()
     {
-        if (centerDeckCards.size() >= 2) {
+        if (centerDeckCards.size() >= 3) {
             return centerDeckCards.get(centerDeckCards.size() - 1).getType()
-            .equals(centerDeckCards.get(centerDeckCards.size() - 2).getType());
+            .equals(centerDeckCards.get(centerDeckCards.size() - 3).getType());
             
         }
         else

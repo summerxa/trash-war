@@ -20,7 +20,7 @@ public class GameThread extends Thread {
     /**
      * Delay between update sends, in milliseconds.
      */
-    public static final int DELAY = 250;
+    public static final int DELAY = 100;
 
     private volatile boolean isRunning; // thread-safe
     private PlayerComputer self;

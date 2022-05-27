@@ -1,10 +1,8 @@
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.DataInputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * A client that connects to the game. Its main purpose is to sync
@@ -30,7 +28,6 @@ public class Client extends PlayerComputer {
      */
     public Client(String address, String playerName) throws UnknownHostException, IOException {
         name = playerName;
-        // TODO initialize scores
         connectToServer(address);
     }
 
@@ -93,7 +90,6 @@ public class Client extends PlayerComputer {
     public void updatePoints(String player, int diff) {
         if (isPlaying) {
             super.updatePoints(player, diff);
-            // TODO refresh scoreboard
         }
     }
 
