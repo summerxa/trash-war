@@ -39,6 +39,8 @@ public abstract class PlayerComputer {
      */
     protected boolean isPlaying = false;
 
+    private Score scores;
+
     /**
      * Starts the game.
      */
@@ -75,6 +77,29 @@ public abstract class PlayerComputer {
     public synchronized void stopGame() {
         isPlaying = false;
         showWinLose();
+        initScores();
+    }
+
+    /**
+     * Initializes the scoreboard.
+     */
+    private void initScores() {
+        if (!SwingUtilities.isEventDispatchThread()) {
+            // move this method call to main thread
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    initScores();
+                }
+            });
+            return;
+        }
+        try {
+            scores = new Score(getSelf().getPoints());
+        } catch (Exception e) {
+            System.out.println("Error initializing leaderboard:");
+            e.printStackTrace();
+        }
     }
     
     /**
@@ -162,7 +187,7 @@ public abstract class PlayerComputer {
             return;
         }
         try {
-            Player self = getMatch(name);
+            Player self = getSelf();
             int score = self.getPoints();
             if (score >= WIN_POINTS) {
                 gameWindow.newYouWon(score);
