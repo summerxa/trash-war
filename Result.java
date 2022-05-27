@@ -23,21 +23,21 @@ import javax.imageio.ImageIO;
  * @author Sources - Meenakshi, Anne
  */
 
-public class Congrats extends Draw{
+public class Result extends Draw{
 
     private boolean b;
 
     JFrame frame = new JFrame();
     public static void main(String[] args) throws Exception{
-        new Congrats(false);
+        new Result(false);
     }
 
     /**
      * calls design
      * @throws Exception 
      */
-    public Congrats(boolean inTrue) throws Exception {
-        b = inTrue;
+    public Result(boolean isTrue) throws Exception {
+        b = isTrue;
         design();
         
 

@@ -189,7 +189,7 @@ public class Game
     public void showCongratsWithPause(boolean isTrue) throws Exception
     {
 
-        Congrats c = new Congrats(isTrue);
+        Result c = new Result(isTrue);
         new java.util.Timer().schedule(new java.util.TimerTask() {
             @Override
             public void run()
