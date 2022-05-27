@@ -212,7 +212,7 @@ public class Home extends Draw{
                 try {
                     if(textfield.isVisible()){
                         String value = textfield.getText();
-                    
+                        frame.setVisible(false);
                         // new Game(new Client(value));
                         pc = new Client(value);
                     }

@@ -9,7 +9,8 @@
  */
 public class Coordinator {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception{
+        new Home();
          
     }
     
