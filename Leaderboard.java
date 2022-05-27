@@ -18,6 +18,7 @@ public class Leaderboard extends Draw{
 
     public Leaderboard(int score) {
         this.points = score;
+        design();
 
     }
 
