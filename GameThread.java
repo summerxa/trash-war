@@ -221,7 +221,7 @@ public class GameThread extends Thread {
                         break;
                     case StateUpdate.DEAL_CARD:
                         Card card = null;
-                        if (!upd[1].equals(StateUpdate.NULLCARD)) {
+                        if (!upd[1].equals(StateUpdate.NULL_CARD)) {
                             card = new Card(upd[1], upd[2]);
                         }
                         self.drawCard(card);
