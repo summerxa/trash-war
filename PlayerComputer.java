@@ -22,9 +22,21 @@ public abstract class PlayerComputer {
      */
     public static final int WIN_POINTS = 5; // TODO revert before submitting code
 
+    /**
+     * The GUI game window.
+     */
     protected Game gameWindow;
-    protected Player self;
+    /**
+     * Name of this player.
+     */
+    protected String name;
+    /**
+     * List of all players.
+     */
     protected List<Player> players;
+    /**
+     * Boolean value determining whether the game is currently running.
+     */
     protected boolean isPlaying = false;
 
     /**
@@ -36,7 +48,7 @@ public abstract class PlayerComputer {
     }
 
     /**
-     * Launches the game window.
+     * Launches the game window by initializing a new Game object.
      */
     private void launchGame() {
         if (!SwingUtilities.isEventDispatchThread()) {
@@ -58,9 +70,9 @@ public abstract class PlayerComputer {
     }
     
     /**
-     * Stops the game.
+     * Stops the game with synchronization.
      */
-    public void stopGame() {
+    public synchronized void stopGame() {
         isPlaying = false;
         showWinLose();
     }
@@ -74,22 +86,23 @@ public abstract class PlayerComputer {
      * Overloaded version of slapCard for Server class.
      * @param player the player who slapped the card.
      */
-    public void slapCard(Player player) {
+    public void slapCard(String player) {
         // do nothing
     }
     
     /**
-     * Updates the score of a given player.
+     * Updates the score of a given player with synchronization.
      * @param player the player whose score to update.
      * @param diff how much the score changed by,
      *             positive for add points and negative for subtract.
      */
-    public void updatePoints(Player player, int diff) {
+    public synchronized void updatePoints(String player, int diff) {
         if (isPlaying) {
-            player.addPoints(diff);
+            Player cur = getMatch(player);
+            cur.addPoints(diff);
             if (diff > 0) {
                 clearDeck();
-                if (player.getPoints() < WIN_POINTS) {
+                if (cur.getPoints() < WIN_POINTS) {
                     congratulate();
                     // If the game stops, we will show a win/lose popup instead of congrats
                 }
@@ -103,6 +116,8 @@ public abstract class PlayerComputer {
     private void clearDeck() {
         if (isPlaying) {
             gameWindow.getCenterDeck().emptyDeck();
+            gameWindow.changeVisibilityOfCenterDeck(false);
+            // Make centerdeck invisible (empty)
         }
     }
 
@@ -144,8 +159,9 @@ public abstract class PlayerComputer {
             return;
         }
         try {
+            Player self = getMatch(name);
             int score = self.getPoints();
-            if (self.getPoints() >= WIN_POINTS) {
+            if (score >= WIN_POINTS) {
                 gameWindow.newYouWon(score);
             } else {
                 gameWindow.newYouLost(score);
@@ -209,7 +225,7 @@ public abstract class PlayerComputer {
      * @return this person's player object.
      */
     public Player getSelf() {
-        return self;
+        return getMatch(name);
     }
     
     /**

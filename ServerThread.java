@@ -34,7 +34,7 @@ public class ServerThread extends Thread {
         s = null;
         try {
             ss = new ServerSocket(Server.PORT);
-            ss.setSoTimeout(2000); // refreshes every 2 seconds to see if thread was stopped
+            // ss.setSoTimeout(2000); // refreshes every 2 seconds to see if thread was stopped
         } catch (Exception e) {
             ss = null;
             System.out.println("Error in ServerThread:");
@@ -52,8 +52,8 @@ public class ServerThread extends Thread {
                 try {
                     s = ss.accept();
                     stopThread(); // once player has joined, we can stop waiting
-                } catch (SocketTimeoutException te) {
-                    continue; // 2 seconds have passed, check to see if isRunning is true
+                // } catch (SocketTimeoutException te) {
+                //     continue; // 2 seconds have passed, check to see if isRunning is true
                 } catch (Exception e) {
                     System.out.println("Error in ServerThread:");
                     e.printStackTrace();

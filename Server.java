@@ -20,8 +20,8 @@ public class Server extends PlayerComputer {
      * @param playerName the name of this player.
      */
     public Server(String playerName) {
-        self = new Player(playerName);
-        sThread = new ServerThread(self);
+        name = playerName;
+        sThread = new ServerThread(new Player(name));
         sThread.start();
     }
 
@@ -62,6 +62,8 @@ public class Server extends PlayerComputer {
         gThread.stopGame();
         try {
             gThread.join(); // wait for game thread to notify client
+        } catch (InterruptedException e) {
+            // game ended
         } catch (Exception e) {
             System.out.println("Error in Server:");
             e.printStackTrace();
@@ -74,7 +76,7 @@ public class Server extends PlayerComputer {
      */
     public void slapCard() {
         if (isPlaying) {
-            slapCard(self);
+            slapCard(name);
         }
     }
 
@@ -82,7 +84,7 @@ public class Server extends PlayerComputer {
      * Handles any player slapping a card.
      * @param player the player who slapped the card.
      */
-    public void slapCard(Player player) {
+    public void slapCard(String player) {
         if (isPlaying) {
             CenterDeck cd = gameWindow.getCenterDeck();
             if (!cd.isEmpty()) {
@@ -101,12 +103,12 @@ public class Server extends PlayerComputer {
      * @param player the player whose score changed.
      * @param diff the change in score of the player.
      */
-    public void updatePoints(Player player, int diff) {
+    public void updatePoints(String player, int diff) {
         if (isPlaying) {
             super.updatePoints(player, diff);
             gThread.updatePoints(player, diff);
             // TODO refresh scoreboard
-            if (player.getPoints() >= WIN_POINTS) {
+            if (getMatch(player).getPoints() >= WIN_POINTS) {
                 stopGame();
                 /* Since the server is handling both server and client point changes,
                    if the client reaches 50 points before the server does,
@@ -145,41 +147,5 @@ public class Server extends PlayerComputer {
                 e.printStackTrace();
             }
         }
-    }
-
-    /**
-     * For debugging purposes only. Simulates a short sequence of actions.
-     * @param args command-line arguments (not used)
-     */
-    // TODO delete this later
-    public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-
-        System.out.println("#### Created server, waiting for client to join...");
-        Server aTest = new Server("sErVeR");
-
-        System.out.println("#### Enter to start game");
-        scan.nextLine();
-        System.out.println("#### Starting...");
-        aTest.startGame();
-
-        System.out.println("#### Players: ");
-        for (Player p : aTest.getPlayers()) {
-            System.out.println(p.getName() + " - " + p.getPoints());
-        }
-
-        System.out.println("#### Make CoolClient have 5 points, enter to continue");
-        scan.nextLine();
-        aTest.updatePoints(aTest.getMatch("CoolClient"), 5);
-
-        System.out.println("#### Make sErVeR have 123 points, enter to continue");
-        scan.nextLine();
-        aTest.updatePoints(aTest.getMatch("sErVeR"), 123);
-
-        System.out.println("#### Enter to stop game");
-        scan.nextLine();
-        aTest.stopGame();
-
-        scan.close();
     }
 }

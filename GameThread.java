@@ -74,6 +74,8 @@ public class GameThread extends Thread {
                 readUpdates();
                 try {
                     Thread.sleep(DELAY);
+                } catch (InterruptedException e) {
+                    // game ended
                 } catch (Exception e) {
                     System.out.println("Error in GameThread:");
                     e.printStackTrace();
@@ -82,6 +84,8 @@ public class GameThread extends Thread {
                 readUpdates();
                 try {
                     Thread.sleep(DELAY);
+                } catch (InterruptedException e) {
+                    // game ended
                 } catch (Exception e) {
                     System.out.println("Error in GameThread:");
                     e.printStackTrace();
@@ -89,7 +93,6 @@ public class GameThread extends Thread {
                 sendUpdates();
             }
         }
-        sendUpdates();
         
         try {
             iStream.close();
@@ -106,7 +109,7 @@ public class GameThread extends Thread {
      * has slapped a card.
      * @param player the player who slapped a card.
      */
-    public void slapCard(Player player) {
+    public void slapCard(String player) {
         if (self instanceof Client) {
             addUpdate(new StateUpdate(player));
         }
@@ -118,7 +121,7 @@ public class GameThread extends Thread {
      * @param player the player whose score changed.
      * @param diff the change in score of the player.
      */
-    public void updatePoints(Player player, int diff) {
+    public void updatePoints(String player, int diff) {
         if (self instanceof Server) {
             addUpdate(new StateUpdate(player, diff));
         }
@@ -200,25 +203,26 @@ public class GameThread extends Thread {
             String[] allStrings = readIn.split(StateUpdate.U_DELIM);
             for (String s : allStrings) {
                 if (stopTheGame) {
+                    stopThread();
                     break; // a stop game state has been reached, stop immediately
                 }
                 String[] upd = s.split(StateUpdate.F_DELIM);
                 int curType = Integer.parseInt(upd[0]);
                 String name = null;
-                if (curType != StateUpdate.BGIN_GAME && curType != StateUpdate.STOP_GAME) {
+                if (curType == StateUpdate.CARD_SLAP || curType == StateUpdate.NEW_SCORE) {
                     name = StateUpdate.decode64(upd[1]);
                 }
                 switch (curType) {
                     case StateUpdate.CARD_SLAP:
-                        self.slapCard(self.getMatch(name));
+                        self.slapCard(name);
                         break;
                     case StateUpdate.NEW_SCORE:
-                        self.updatePoints(self.getMatch(name), Integer.parseInt(upd[2]));
+                        self.updatePoints(name, Integer.parseInt(upd[2]));
                         break;
                     case StateUpdate.DEAL_CARD:
                         Card card = null;
-                        if (!upd[2].equals(StateUpdate.NULLCARD)) {
-                            card = new Card(upd[2], upd[3]);
+                        if (!upd[1].equals(StateUpdate.NULLCARD)) {
+                            card = new Card(upd[1], upd[2]);
                         }
                         self.drawCard(card);
                         break;
@@ -250,5 +254,7 @@ public class GameThread extends Thread {
      */
     public void stopThread() {
         isRunning = false;
+        sendUpdates();
+        interrupt();
     }
 }

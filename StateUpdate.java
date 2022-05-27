@@ -52,9 +52,9 @@ public class StateUpdate {
      * Constructs a card slap update.
      * @param player the player who slapped a card.
      */
-    public StateUpdate(Player player) {
+    public StateUpdate(String player) {
         type = CARD_SLAP;
-        this.player = encode64(player.getName());
+        this.player = encode64(player);
     }
 
     /**
@@ -62,9 +62,9 @@ public class StateUpdate {
      * @param player the player whose score changed.
      * @param diff the player's change in score.
      */
-    public StateUpdate(Player player, int diff) {
+    public StateUpdate(String player, int diff) {
         type = NEW_SCORE;
-        this.player = encode64(player.getName());
+        this.player = encode64(player);
         this.diff = diff;
     }
 
@@ -170,7 +170,7 @@ public class StateUpdate {
                 if (card != null) {
                     cardString = card.getType();
                 }
-                String ret = type + F_DELIM + player + F_DELIM + cardString;
+                String ret = type + F_DELIM + cardString;
                 if (card != null) {
                     ret += F_DELIM + card.getFilePath();
                 }
