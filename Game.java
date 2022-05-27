@@ -74,7 +74,7 @@ public class Game
         slap.addActionListener(click);
         centerDeck.addActionListener(click);
         centerDeck.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        centerDeck.setEnabled(false);
+        //centerDeck.setEnabled(false);
         Color color = new Color(207, 185, 151);
         centerDeck.setBackground(color);
         Image myPicture =
@@ -93,7 +93,7 @@ public class Game
         panel.setBorder(new EmptyBorder(10, 100, 0, 100));
         // panel2.setBorder(new EmptyBorder(50, 100, 0, 100));
         panel2.add(playerDeck1);
-        centerDeck.setContentAreaFilled(false);
+       // centerDeck.setContentAreaFilled(false);
         panel.setBackground(color);
         panel2.setBackground(color);
         panel2.add(space);
@@ -213,7 +213,9 @@ public class Game
      * @param state a boolean
      */
     public void changeVisibilityOfCenterDeck(boolean state)  {
-       centerDeck.setVisible(state);
+       if(!state){
+           centerDeck.setIcon(null);
+       }
 
     }
 

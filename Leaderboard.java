@@ -35,7 +35,7 @@ public class Leaderboard extends Draw{
         arr = score.newGlobalScores(arr, points);
 
         JFrame frame = new JFrame();
-        frame.setSize(300,480);
+        frame.setSize(400,480);
         frame.setLocation(450, 100);
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel,1));
