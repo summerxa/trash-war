@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 /**
  * The server of the game. Its main purpose is to process incoming updates
  * and send updates on the game state to the client player.
@@ -46,7 +44,6 @@ public class Server extends PlayerComputer {
                 System.out.println("Player list has size " + players.size());
             }
         }
-        // TODO initialize scores
         gThread = new GameThread(this, sThread.getSocket());
         gThread.start();
         gThread.startGame();
@@ -105,7 +102,6 @@ public class Server extends PlayerComputer {
         if (isPlaying) {
             super.updatePoints(player, diff);
             gThread.updatePoints(player, diff);
-            // TODO refresh scoreboard
             if (getMatch(player).getPoints() >= WIN_POINTS) {
                 stopGame();
                 /* Since the server is handling both server and client point changes,

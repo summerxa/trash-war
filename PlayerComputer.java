@@ -20,7 +20,7 @@ public abstract class PlayerComputer {
     /**
      * Number of points you need to win the game.
      */
-    public static final int WIN_POINTS = 5; // TODO revert before submitting code
+    public static final int WIN_POINTS = 50;
 
     /**
      * The GUI game window.
