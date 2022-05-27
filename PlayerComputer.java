@@ -81,7 +81,9 @@ public abstract class PlayerComputer {
     }
 
     /**
-     * Initializes the scoreboard.
+     * Initializes the scoreboard. The scoreboard will later construct
+     * a GUI window, which is why this method call must be done on
+     * the main thread.
      */
     private void initScores() {
         if (!SwingUtilities.isEventDispatchThread()) {
@@ -150,7 +152,7 @@ public abstract class PlayerComputer {
 
     /**
      * Notifies game window to display a popup once the player
-     * slaps the center deck at the right time.
+     * slaps the center deck.
      * @param congratulate True if this is a congrats popup, false if burn.
      */
     private void showPopup(boolean congratulate) {
