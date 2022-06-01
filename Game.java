@@ -28,6 +28,12 @@ public class Game
     /**
      * center card deck
      */
+
+     /**
+      * Jframe that contains all the GUI components
+      */
+    private JFrame frame;
+
     private JButton        centerDeck;
     /**
      * Jpanel on Jframe which holds main gui components
@@ -79,7 +85,7 @@ public class Game
         throws IOException
     {
 
-        JFrame frame = new JFrame();
+        frame = new JFrame();
         frame.setSize(2000, 1000);
 
         JLabel space = new JLabel("                                                   ");
@@ -170,6 +176,7 @@ public class Game
     public void newYouLost(int score)
         throws Exception
     {
+        frame.setVisible(false);
         new GameOver(false, score);
     }
 
@@ -184,6 +191,7 @@ public class Game
     public void newYouWon(int score)
         throws Exception
     {
+        frame.setVisible(false);
         new GameOver(true, score);
     }
 

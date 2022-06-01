@@ -20,7 +20,7 @@ public abstract class PlayerComputer {
     /**
      * Number of points you need to win the game.
      */
-    public static final int WIN_POINTS = 3;
+    public static final int WIN_POINTS = 10 ;
 
     /**
      * The GUI game window.
