@@ -129,12 +129,11 @@ public abstract class PlayerComputer {
             cur.addPoints(diff);
             if (diff > 0) {
                 clearDeck();
-                if (cur.getPoints() < WIN_POINTS) {
-                    showPopup(true);
-                    // If the game stops, we will show a win/lose popup instead of congrats
-                }
-            } else {
-                showPopup(false);
+            }
+            if (player.equals(name) && cur.getPoints() < WIN_POINTS) { 
+                // Only show popup for player who clicked deck
+                // If the game stops, we will show a win/lose popup instead of congrats
+                showPopup(diff > 0);
             }
         }
     }
